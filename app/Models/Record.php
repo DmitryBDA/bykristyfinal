@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
     use HasFactory;
+
+    public function setAttr($name, $value)
+    {
+        $this->attributes[$name] = $value;
+    }
 }

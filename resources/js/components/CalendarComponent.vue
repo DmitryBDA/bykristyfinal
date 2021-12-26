@@ -47,7 +47,10 @@ export default {
     },
     methods: {
         showRecords(){
-
+            axios
+                .get('/api/calendar/show-records').then((response)=>{
+                this.calendarOptions.events = response.data
+            })
         }
     }
 }
@@ -57,4 +60,44 @@ export default {
         <FullCalendar :options="calendarOptions" />
     </div>
 </template>
+<style>
+
+.fc-title {
+    color: #fff;
+}
+.fc-title:hover {
+    cursor: pointer;
+}
+
+.greenEvent {
+    background-color:#1d8b1d;
+}
+
+.yellowEvent {
+    background-color:#a7a739;
+}
+
+.redEvent {
+    background-color:#bf0d0d;
+}
+.greyEvent {
+    background-color:grey;
+}
+
+.hiddenevent{
+    font-size: 9px;
+}
+.fc-daygrid-block-event .fc-event-time{
+    font-weight: 400!important;
+}
+.fc-daygrid-day-top a{
+    color: black;
+}
+.fc-event-time{
+    color: white;
+}
+.fc-daygrid-event-dot{
+    display: none;
+}
+</style>
 

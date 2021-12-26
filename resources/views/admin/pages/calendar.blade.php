@@ -1,5 +1,9 @@
 @extends('admin.layouts.main')
 
+@section('custom_css')
+    <link rel="stylesheet" href="/plugins/fullcalendar/main.css">
+@endsection
+
 @section('title', 'Главная')
 
 @section('content')
