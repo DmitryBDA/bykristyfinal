@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\IndexController as AdminIndexController;
+use App\Http\Controllers\User\IndexController as UserIndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +19,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', [App\Http\Controllers\User\IndexController::class, 'index'])->name('index');
+Route::get('/', [UserIndexController::class, 'index'])->name('index');
+
+Route::middleware(['role:admin'])->prefix('admin')->group(function () {
+    Route::get('/', [AdminIndexController::class, 'index'])->name('mainAdmin');
+});
