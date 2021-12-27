@@ -57,8 +57,13 @@ export default {
         },
         dateClick(event){
             this.date = event.dateStr
-            const elem = this.$refs.modal_add_record.$refs._open_modal_add_record;
-            elem.click();
+            this.$refs.modal_add_record.inputTime = [{
+                    typeRecord:false,
+                    value:'00:00',
+                    status: 1,
+                    title: ''
+                }]
+            this.$refs.modal_add_record.$refs._open_modal_add_record.click()
         }
     }
 }

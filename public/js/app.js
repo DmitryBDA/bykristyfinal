@@ -19392,8 +19392,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     dateClick: function dateClick(event) {
       this.date = event.dateStr;
-      var elem = this.$refs.modal_add_record.$refs._open_modal_add_record;
-      elem.click();
+      this.$refs.modal_add_record.inputTime = [{
+        typeRecord: false,
+        value: '00:00',
+        status: 1,
+        title: ''
+      }];
+
+      this.$refs.modal_add_record.$refs._open_modal_add_record.click();
     }
   }
 });
@@ -19488,13 +19494,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['date'],
   watch: {},
   data: function data() {
-    return {};
+    return {
+      inputTime: [{
+        typeRecord: false,
+        value: '00:00',
+        status: 1,
+        title: ''
+      }],
+      isDisabled: false
+    };
   },
-  methods: {}
+  methods: {
+    inputAdd: function inputAdd(type) {
+      this.inputTime.push({
+        typeRecord: type,
+        value: '00:00',
+        status: type ? 4 : 1,
+        title: ''
+      });
+
+      if (this.isDisabled) {
+        this.isDisabled = false;
+      }
+    },
+    inputDelete: function inputDelete(idx) {
+      this.inputTime.splice(idx, 1);
+
+      if (this.inputTime.length === 0) {
+        this.isDisabled = true;
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -43278,14 +43313,124 @@ var render = function () {
                   [
                     _vm._m(1),
                     _vm._v(" "),
-                    _c("p", [_vm._v("Добавьте новую запись")]),
+                    _vm.inputTime.length === 0
+                      ? _c("p", [_vm._v("Добавьте новую запись")])
+                      : _vm._e(),
                     _vm._v(" "),
-                    [_vm._m(2)],
+                    _vm._l(_vm.inputTime, function (item, idx) {
+                      return [
+                        _c(
+                          "div",
+                          { staticClass: "input-group mb-3 _time_record" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: item.value,
+                                  expression: "item.value",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "time" },
+                              domProps: { value: item.value },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(item, "value", $event.target.value)
+                                },
+                              },
+                            }),
+                            _vm._v(" "),
+                            item.typeRecord
+                              ? _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: item.title,
+                                      expression: "item.title",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text" },
+                                  domProps: { value: item.title },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        item,
+                                        "title",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "input-group-append",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.inputDelete(idx)
+                                  },
+                                },
+                              },
+                              [_vm._m(2, true)]
+                            ),
+                          ]
+                        ),
+                      ]
+                    }),
                   ],
                   2
                 ),
                 _vm._v(" "),
-                _vm._m(3),
+                _c("div", { staticClass: "card-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary ml-0",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.inputAdd(false)
+                        },
+                      },
+                    },
+                    [_vm._v("Добавить")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary ml-0 ",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.inputAdd(true)
+                        },
+                      },
+                    },
+                    [_vm._v("Личное")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary mr-0 ",
+                      attrs: { disabled: _vm.isDisabled, type: "submit" },
+                    },
+                    [_vm._v("Сохранить")]
+                  ),
+                ]),
               ]
             ),
           ]),
@@ -43326,7 +43471,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group _time_records" }, [
+    return _c("div", { staticClass: "form-group" }, [
       _c("label", [_vm._v("Время")]),
     ])
   },
@@ -43334,46 +43479,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group mb-3 _time_record" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "time", name: "time", value: "12:00" },
-      }),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", name: "title", value: "10:00" },
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group-append" }, [
-        _c("span", { staticClass: "input-group-text" }, [
-          _c("i", { staticClass: "fas fa-times" }),
-        ]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary ml-0", attrs: { type: "button" } },
-        [_vm._v("Добавить")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary ml-0 ", attrs: { type: "button" } },
-        [_vm._v("Личное")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary mr-0 ", attrs: { type: "submit" } },
-        [_vm._v("Сохранить")]
-      ),
+    return _c("span", { staticClass: "input-group-text" }, [
+      _c("i", { staticClass: "fas fa-times" }),
     ])
   },
 ]
