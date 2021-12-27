@@ -36,28 +36,13 @@
                 </div>
             </div>
         </div>
-        <button style="display: none" data-toggle="modal" data-target="#modal-add-records"
-                ref="_open_modal_add_record"></button>
+        <button style="display: none" data-toggle="modal" data-target="#modal-add-records" ref="_open_modal_add_record"></button>
     </div>
 </template>
 
 <script>
 export default {
     props: ['date'],
-    watch: {},
-    data() {
-        return {
-            inputTime: [
-                {
-                    typeRecord: false,
-                    value: '00:00',
-                    status: 1,
-                    title: ''
-                }
-            ],
-            isDisabled: false,
-        }
-    },
     methods: {
         inputAdd: function (type) {
             this.inputTime.push({
@@ -66,9 +51,8 @@ export default {
                 status: type ? 4 : 1,
                 title: ''
             })
-            if (this.isDisabled) {
-                this.isDisabled = false
-            }
+
+            this.isDisabled = false
         },
         inputDelete(idx) {
             this.inputTime.splice(idx, 1)

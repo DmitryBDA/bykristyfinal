@@ -19494,21 +19494,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['date'],
-  watch: {},
-  data: function data() {
-    return {
-      inputTime: [{
-        typeRecord: false,
-        value: '00:00',
-        status: 1,
-        title: ''
-      }],
-      isDisabled: false
-    };
-  },
   methods: {
     inputAdd: function inputAdd(type) {
       this.inputTime.push({
@@ -19517,10 +19504,7 @@ __webpack_require__.r(__webpack_exports__);
         status: type ? 4 : 1,
         title: ''
       });
-
-      if (this.isDisabled) {
-        this.isDisabled = false;
-      }
+      this.isDisabled = false;
     },
     inputDelete: function inputDelete(idx) {
       this.inputTime.splice(idx, 1);
