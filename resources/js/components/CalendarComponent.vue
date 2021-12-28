@@ -72,6 +72,7 @@ export default {
     <div>
         <FullCalendar :options="calendarOptions" />
         <modal-add-record :date="this.date" ref="modal_add_record"></modal-add-record>
+        <modal-action-record></modal-action-record>
     </div>
 </template>
 <style>

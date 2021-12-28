@@ -19441,6 +19441,110 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalActionRecord.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalActionRecord.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {},
+  methods: {},
+  validations: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalAddRecord.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalAddRecord.vue?vue&type=script&lang=js& ***!
@@ -19568,6 +19672,7 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 Vue.component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
 Vue.component('calendar-component', (__webpack_require__(/*! ./components/CalendarComponent.vue */ "./resources/js/components/CalendarComponent.vue")["default"]));
 Vue.component('modal-add-record', (__webpack_require__(/*! ./components/ModalAddRecord.vue */ "./resources/js/components/ModalAddRecord.vue")["default"]));
+Vue.component('modal-action-record', (__webpack_require__(/*! ./components/ModalActionRecord.vue */ "./resources/js/components/ModalActionRecord.vue")["default"]));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -43047,6 +43152,45 @@ component.options.__file = "resources/js/components/ExampleComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/ModalActionRecord.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/ModalActionRecord.vue ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ModalActionRecord_vue_vue_type_template_id_a34906ce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalActionRecord.vue?vue&type=template&id=a34906ce& */ "./resources/js/components/ModalActionRecord.vue?vue&type=template&id=a34906ce&");
+/* harmony import */ var _ModalActionRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalActionRecord.vue?vue&type=script&lang=js& */ "./resources/js/components/ModalActionRecord.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ModalActionRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ModalActionRecord_vue_vue_type_template_id_a34906ce___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ModalActionRecord_vue_vue_type_template_id_a34906ce___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ModalActionRecord.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/ModalAddRecord.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/ModalAddRecord.vue ***!
@@ -43118,6 +43262,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ModalActionRecord.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/ModalActionRecord.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalActionRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalActionRecord.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalActionRecord.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalActionRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/ModalAddRecord.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/ModalAddRecord.vue?vue&type=script&lang=js& ***!
@@ -43181,6 +43341,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ModalActionRecord.vue?vue&type=template&id=a34906ce&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/ModalActionRecord.vue?vue&type=template&id=a34906ce& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalActionRecord_vue_vue_type_template_id_a34906ce___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalActionRecord_vue_vue_type_template_id_a34906ce___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalActionRecord_vue_vue_type_template_id_a34906ce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalActionRecord.vue?vue&type=template&id=a34906ce& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalActionRecord.vue?vue&type=template&id=a34906ce&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ModalAddRecord.vue?vue&type=template&id=bc9a8660&":
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/ModalAddRecord.vue?vue&type=template&id=bc9a8660& ***!
@@ -43223,6 +43400,8 @@ var render = function () {
         ref: "modal_add_record",
         attrs: { date: this.date },
       }),
+      _vm._v(" "),
+      _c("modal-action-record"),
     ],
     1
   )
@@ -43273,6 +43452,205 @@ var staticRenderFns = [
           ]),
         ]),
       ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalActionRecord.vue?vue&type=template&id=a34906ce&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalActionRecord.vue?vue&type=template&id=a34906ce& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "modal-action-with-records" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c("h4", { staticClass: "modal-title" }, [
+                _vm._v("Выбор действия"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  ref: "close_modal_action_records",
+                  staticClass: "close",
+                  attrs: {
+                    type: "button",
+                    "data-dismiss": "modal",
+                    "aria-label": "Close",
+                  },
+                },
+                [
+                  _c("span", { attrs: { "aria-hidden": "true" } }, [
+                    _vm._v("×"),
+                  ]),
+                ]
+              ),
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+          ]),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("button", {
+      ref: "open_modal_action_records",
+      staticStyle: { display: "none" },
+      attrs: {
+        "data-toggle": "modal",
+        "data-target": "#modal-action-with-records",
+      },
+    }),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", {}, [
+      _c(
+        "form",
+        {
+          staticClass: "form-horizontal _form_action_record",
+          attrs: { "data-record-id": "12" },
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("p", [_vm._v("Выбранный день: 22.12.2021 (четверг)")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                _vm._v("Время"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-9" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "time", name: "time" },
+                }),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                _vm._v("Услуга"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-9" }, [
+                _c(
+                  "select",
+                  { staticClass: "form-control _input_form_for_record" },
+                  [
+                    _c("option", { attrs: { value: "1" } }, [_vm._v("fsdf")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [_vm._v("fsdf")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [_vm._v("fsdfsd")]),
+                  ]
+                ),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                _vm._v("Имя"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-9" }, [
+                _c("input", {
+                  staticClass: "form-control input-lg add_name",
+                  attrs: { type: "text", name: "name", autocomplete: "off" },
+                }),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                _vm._v("Телефон"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3 col-sm-9" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "text", name: "phone" },
+                }),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "input-group-append",
+                    attrs: { href: "whatsapp://send?phone=+79149098288" },
+                  },
+                  [
+                    _c("span", { staticClass: "input-group-text" }, [
+                      _c("i", {
+                        staticClass: "fa fa-whatsapp",
+                        attrs: { "aria-hidden": "true" },
+                      }),
+                    ]),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "input-group-append",
+                    attrs: { href: "tel:+79149098288" },
+                  },
+                  [
+                    _c("span", { staticClass: "input-group-text" }, [
+                      _c("i", {
+                        staticClass: "fa fa-volume-control-phone",
+                        attrs: { "aria-hidden": "true" },
+                      }),
+                    ]),
+                  ]
+                ),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer" }, [
+            _c("button", { staticClass: "btn btn-info" }, [_vm._v("Записать")]),
+            _vm._v(" "),
+            _c("button", { staticClass: "btn btn-info" }, [
+              _vm._v("Подтвердить"),
+            ]),
+            _vm._v(" "),
+            _c("button", { staticClass: "btn btn-info" }, [_vm._v("Отменить")]),
+            _vm._v(" "),
+            _c("button", { staticClass: "btn btn-success float-center" }, [
+              _vm._v("Сохранить"),
+            ]),
+            _vm._v(" "),
+            _c("button", { staticClass: "btn btn-danger float-right" }, [
+              _vm._v("Удалить"),
+            ]),
+          ]),
+        ]
+      ),
     ])
   },
 ]
