@@ -18,6 +18,16 @@ class Record extends Model
         'user_id',
     ];
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id','user_id');
+    }
+
+    public function service()
+    {
+        return $this->hasOne(Service::class, 'id','service_id');
+    }
+
     public function setAttr($name, $value)
     {
         $this->attributes[$name] = $value;

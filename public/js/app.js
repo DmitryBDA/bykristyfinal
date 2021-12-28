@@ -19369,7 +19369,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         weekends: true,
         events: this.showRecords,
-        // eventClick: this.handleEventClick,
+        eventClick: this.clickRecord,
         // eventsSet: this.handleEvents,
         dateClick: this.dateClick
         /* you can update a remote database when these fire:
@@ -19379,7 +19379,8 @@ __webpack_require__.r(__webpack_exports__);
         */
 
       },
-      date: null
+      date: null,
+      dataRecord: []
     };
   },
   methods: {
@@ -19390,8 +19391,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.calendarOptions.events = response.data;
       });
     },
-    dateClick: function dateClick(event) {
-      this.date = event.dateStr;
+    dateClick: function dateClick(record) {
+      this.date = record.dateStr;
       this.$refs.modal_add_record.inputTime = [{
         typeRecord: false,
         value: '00:00',
@@ -19400,6 +19401,16 @@ __webpack_require__.r(__webpack_exports__);
       }];
 
       this.$refs.modal_add_record.$refs._open_modal_add_record.click();
+    },
+    clickRecord: function clickRecord(record) {
+      var _this2 = this;
+
+      this.recordId = record.event._def.publicId;
+      axios.post('/api/calendar/get-data-record', {
+        recordId: this.recordId
+      }).then(function (response) {
+        _this2.dataRecord = response.data;
+      });
     }
   }
 });
@@ -19538,6 +19549,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['dataRecord'],
   mounted: function mounted() {},
   methods: {},
   validations: {}
@@ -43401,7 +43413,7 @@ var render = function () {
         attrs: { date: this.date },
       }),
       _vm._v(" "),
-      _c("modal-action-record"),
+      _c("modal-action-record", { attrs: { dataRecord: _vm.dataRecord } }),
     ],
     1
   )
@@ -43516,7 +43528,6 @@ var render = function () {
     _vm._v(" "),
     _c("button", {
       ref: "open_modal_action_records",
-      staticStyle: { display: "none" },
       attrs: {
         "data-toggle": "modal",
         "data-target": "#modal-action-with-records",

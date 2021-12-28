@@ -36,7 +36,7 @@ export default {
                 },
                 weekends: true,
                 events:  this.showRecords,
-                // eventClick: this.handleEventClick,
+                eventClick: this.clickRecord,
                 // eventsSet: this.handleEvents,
                 dateClick: this.dateClick
                 /* you can update a remote database when these fire:
@@ -46,6 +46,7 @@ export default {
                 */
             },
             date:null,
+            dataRecord: [],
         }
     },
     methods: {
@@ -55,8 +56,8 @@ export default {
                 this.calendarOptions.events = response.data
             })
         },
-        dateClick(event){
-            this.date = event.dateStr
+        dateClick(record){
+            this.date = record.dateStr
             this.$refs.modal_add_record.inputTime = [{
                     typeRecord:false,
                     value:'00:00',
@@ -64,7 +65,14 @@ export default {
                     title: ''
                 }]
             this.$refs.modal_add_record.$refs._open_modal_add_record.click()
-        }
+        },
+        clickRecord(record) {
+            this.recordId = record.event._def.publicId
+            axios.post('/api/calendar/get-data-record', {recordId:this.recordId})
+                .then((response)=>{
+                    this.dataRecord = response.data;
+                })
+        },
     }
 }
 </script>
@@ -72,7 +80,7 @@ export default {
     <div>
         <FullCalendar :options="calendarOptions" />
         <modal-add-record :date="this.date" ref="modal_add_record"></modal-add-record>
-        <modal-action-record></modal-action-record>
+        <modal-action-record :dataRecord="dataRecord"></modal-action-record>
     </div>
 </template>
 <style>

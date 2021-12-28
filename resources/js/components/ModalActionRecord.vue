@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-        <button style="display: none" data-toggle="modal" data-target="#modal-action-with-records"
+        <button style="" data-toggle="modal" data-target="#modal-action-with-records"
                 ref="open_modal_action_records"></button>
     </div>
 </template>
@@ -86,7 +86,7 @@
 <script>
 
 export default {
-
+    props:['dataRecord'],
     mounted() {
 
     },

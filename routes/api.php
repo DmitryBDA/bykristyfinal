@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('/calendar/show-records', [CalendarController::class,'showRecords'])->name('calendar.showRecords');
 Route::post('/calendar/create-records', [CalendarController::class,'createRecords'])->name('calendar.createRecords');
+Route::post('/calendar/get-data-record', [CalendarController::class,'getDataRecord'])->name('calendar.getDataRecord');
