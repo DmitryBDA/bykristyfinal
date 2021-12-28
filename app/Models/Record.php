@@ -9,6 +9,15 @@ class Record extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'start',
+        'end',
+        'status',
+        'service_id',
+        'user_id',
+    ];
+
     public function setAttr($name, $value)
     {
         $this->attributes[$name] = $value;

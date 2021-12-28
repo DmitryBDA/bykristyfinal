@@ -26,4 +26,9 @@ class CalendarController extends Controller
         $recordList = $this->recordRepository->getActiveRecords();
         return response()->json($recordList);
     }
+
+    public function createRecords(Request $request)
+    {
+        $this->recordRepository->addRecords($request);
+    }
 }

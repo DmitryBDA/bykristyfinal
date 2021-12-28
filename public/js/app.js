@@ -19496,6 +19496,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['date'],
+  data: function data() {
+    return {
+      inputTime: [{
+        typeRecord: false,
+        value: '00:00',
+        status: 1,
+        title: ''
+      }],
+      isDisabled: false
+    };
+  },
   methods: {
     inputAdd: function inputAdd(type) {
       this.inputTime.push({
@@ -19512,6 +19523,18 @@ __webpack_require__.r(__webpack_exports__);
       if (this.inputTime.length === 0) {
         this.isDisabled = true;
       }
+    },
+    saveRecords: function saveRecords(event) {
+      var _this = this;
+
+      axios.post('/api/calendar/create-records', {
+        timeRecords: this.inputTime,
+        date: this.date
+      }).then(function (response) {
+        _this.$parent.showRecords();
+
+        _this.$refs._close_modal_add_records.click();
+      });
     }
   }
 });
@@ -43282,20 +43305,52 @@ var render = function () {
       [
         _c("div", { staticClass: "modal-dialog" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(0),
+            _c("div", { staticClass: "modal-header" }, [
+              _c("h4", { staticClass: "modal-title" }, [
+                _vm._v("Добавить запись"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: {
+                    type: "button",
+                    "data-dismiss": "modal",
+                    "aria-label": "Close",
+                  },
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      ref: "_close_modal_add_records",
+                      attrs: { "aria-hidden": "true" },
+                    },
+                    [_vm._v("×")]
+                  ),
+                ]
+              ),
+            ]),
             _vm._v(" "),
             _c(
               "form",
               {
                 staticClass: "_form_add-records",
                 attrs: { "data-date": _vm.date },
+                on: {
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.saveRecords($event)
+                  },
+                },
               },
               [
                 _c(
                   "div",
                   { staticClass: "card-body" },
                   [
-                    _vm._m(1),
+                    _vm._m(0),
                     _vm._v(" "),
                     _vm.inputTime.length === 0
                       ? _c("p", [_vm._v("Добавьте новую запись")])
@@ -43367,7 +43422,7 @@ var render = function () {
                                   },
                                 },
                               },
-                              [_vm._m(2, true)]
+                              [_vm._m(1, true)]
                             ),
                           ]
                         ),
@@ -43430,27 +43485,6 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Добавить запись")]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close",
-          },
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      ),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

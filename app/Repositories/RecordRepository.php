@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Record as Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class RecordRepository extends CoreRepository
@@ -44,6 +45,24 @@ class RecordRepository extends CoreRepository
         }
 
         return $recordList;
+    }
+
+    public function addRecords(Request $request){
+
+        $data = $request->date;
+        $arrRecords = $request->timeRecords;
+
+        foreach ($arrRecords as $record) {
+
+            $date = $request->date . ' ' . $record['value'];
+            $arrData = [
+                'title' => $record['title'] ? $record['title'] : '',
+                'start' => $date,
+                'end' => $date,
+                'status' => $record['status']
+            ];
+            $event = $this->startCondition()::create($arrData);
+        }
     }
 
 }

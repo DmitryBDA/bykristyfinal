@@ -6,11 +6,11 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Добавить запись</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true" ref="_close_modal_add_records">&times;</span>
                         </button>
                     </div>
 
-                    <form class="_form_add-records" :data-date="date">
+                    <form @submit.prevent="saveRecords($event)" class="_form_add-records" :data-date="date">
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Время</label>
@@ -43,6 +43,19 @@
 <script>
 export default {
     props: ['date'],
+    data() {
+        return {
+            inputTime: [
+                {
+                    typeRecord:false,
+                    value:'00:00',
+                    status: 1,
+                    title: ''
+                }
+            ],
+            isDisabled:false,
+        }
+    },
     methods: {
         inputAdd: function (type) {
             this.inputTime.push({
@@ -59,6 +72,13 @@ export default {
             if (this.inputTime.length === 0) {
                 this.isDisabled = true
             }
+        },
+        saveRecords(event){
+             axios.post('/api/calendar/create-records', {timeRecords:this.inputTime, date:this.date})
+                 .then((response)=>{
+                     this.$parent.showRecords()
+                     this.$refs._close_modal_add_records.click()
+             })
         },
     }
 
