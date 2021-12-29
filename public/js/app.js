@@ -19546,10 +19546,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['dataRecord'],
+  data: function data() {
+    return {
+      recordId: null,
+      time: null,
+      days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+      dayWeek: null,
+      date: null,
+      selectedService: 1,
+      services: null,
+      name: null,
+      phone: null
+    };
+  },
+  watch: {
+    dataRecord: function dataRecord(val) {
+      this.recordId = this.dataRecord.id;
+      this.time = new Date(this.dataRecord.start).toLocaleTimeString().slice(0, -3);
+      this.dayWeek = this.days[new Date(this.dataRecord.start).getDay()];
+      this.date = new Date(this.dataRecord.start).toLocaleDateString();
+      this.services = this.dataRecord.services;
+      this.selectedService = this.dataRecord.service_id ? this.dataRecord.service_id : 1;
+      this.name = this.dataRecord.user ? this.dataRecord.user.surname + ' ' + this.dataRecord.user.name : '';
+      this.phone = this.dataRecord.user ? this.dataRecord.user.phone : '';
+      this.$refs.open_modal_action_records.click();
+    }
+  },
   mounted: function mounted() {},
   methods: {},
   validations: {}
@@ -43520,7 +43544,189 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _vm._m(0),
+            _c("div", {}, [
+              _c(
+                "form",
+                {
+                  staticClass: "form-horizontal _form_action_record",
+                  attrs: { "data-record-id": _vm.recordId },
+                },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Выбранный день: " +
+                          _vm._s(_vm.date) +
+                          " " +
+                          _vm._s(_vm.dayWeek)
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                        _vm._v("Время"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.time,
+                              expression: "time",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "time" },
+                          domProps: { value: _vm.time },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.time = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                        _vm._v("Услуга"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectedService,
+                                expression: "selectedService",
+                              },
+                            ],
+                            staticClass: "form-control _input_form_for_record",
+                            on: {
+                              change: function ($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function (o) {
+                                    return o.selected
+                                  })
+                                  .map(function (o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.selectedService = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                            },
+                          },
+                          _vm._l(_vm.services, function (item) {
+                            return _c(
+                              "option",
+                              { domProps: { value: item.id } },
+                              [_vm._v(_vm._s(item.name))]
+                            )
+                          }),
+                          0
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                        _vm._v("Имя"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.name,
+                              expression: "name",
+                            },
+                          ],
+                          staticClass: "form-control input-lg add_name",
+                          attrs: { type: "text", autocomplete: "off" },
+                          domProps: { value: _vm.name },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.name = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                        _vm._v("Телефон"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group mb-3 col-sm-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.phone,
+                              expression: "phone",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.phone },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.phone = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm.phone
+                          ? _c(
+                              "a",
+                              {
+                                staticClass: "input-group-append",
+                                attrs: {
+                                  href: "whatsapp://send?phone=+7" + _vm.phone,
+                                },
+                              },
+                              [_vm._m(0)]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.phone
+                          ? _c(
+                              "a",
+                              {
+                                staticClass: "input-group-append",
+                                attrs: { href: "tel:+7" + _vm.phone },
+                              },
+                              [_vm._m(1)]
+                            )
+                          : _vm._e(),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2),
+                ]
+              ),
+            ]),
           ]),
         ]),
       ]
@@ -43528,6 +43734,7 @@ var render = function () {
     _vm._v(" "),
     _c("button", {
       ref: "open_modal_action_records",
+      staticStyle: { display: "none" },
       attrs: {
         "data-toggle": "modal",
         "data-target": "#modal-action-with-records",
@@ -43540,128 +43747,42 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", {}, [
-      _c(
-        "form",
-        {
-          staticClass: "form-horizontal _form_action_record",
-          attrs: { "data-record-id": "12" },
-        },
-        [
-          _c("div", { staticClass: "card-body" }, [
-            _c("p", [_vm._v("Выбранный день: 22.12.2021 (четверг)")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                _vm._v("Время"),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-9" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "time", name: "time" },
-                }),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                _vm._v("Услуга"),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-9" }, [
-                _c(
-                  "select",
-                  { staticClass: "form-control _input_form_for_record" },
-                  [
-                    _c("option", { attrs: { value: "1" } }, [_vm._v("fsdf")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "2" } }, [_vm._v("fsdf")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "3" } }, [_vm._v("fsdfsd")]),
-                  ]
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                _vm._v("Имя"),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-9" }, [
-                _c("input", {
-                  staticClass: "form-control input-lg add_name",
-                  attrs: { type: "text", name: "name", autocomplete: "off" },
-                }),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                _vm._v("Телефон"),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3 col-sm-9" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "phone" },
-                }),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "input-group-append",
-                    attrs: { href: "whatsapp://send?phone=+79149098288" },
-                  },
-                  [
-                    _c("span", { staticClass: "input-group-text" }, [
-                      _c("i", {
-                        staticClass: "fa fa-whatsapp",
-                        attrs: { "aria-hidden": "true" },
-                      }),
-                    ]),
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "input-group-append",
-                    attrs: { href: "tel:+79149098288" },
-                  },
-                  [
-                    _c("span", { staticClass: "input-group-text" }, [
-                      _c("i", {
-                        staticClass: "fa fa-volume-control-phone",
-                        attrs: { "aria-hidden": "true" },
-                      }),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-footer" }, [
-            _c("button", { staticClass: "btn btn-info" }, [_vm._v("Записать")]),
-            _vm._v(" "),
-            _c("button", { staticClass: "btn btn-info" }, [
-              _vm._v("Подтвердить"),
-            ]),
-            _vm._v(" "),
-            _c("button", { staticClass: "btn btn-info" }, [_vm._v("Отменить")]),
-            _vm._v(" "),
-            _c("button", { staticClass: "btn btn-success float-center" }, [
-              _vm._v("Сохранить"),
-            ]),
-            _vm._v(" "),
-            _c("button", { staticClass: "btn btn-danger float-right" }, [
-              _vm._v("Удалить"),
-            ]),
-          ]),
-        ]
-      ),
+    return _c("span", { staticClass: "input-group-text" }, [
+      _c("i", {
+        staticClass: "fa fa-whatsapp",
+        attrs: { "aria-hidden": "true" },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-text" }, [
+      _c("i", {
+        staticClass: "fa fa-volume-control-phone",
+        attrs: { "aria-hidden": "true" },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("button", { staticClass: "btn btn-info" }, [_vm._v("Записать")]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-info" }, [_vm._v("Подтвердить")]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-info" }, [_vm._v("Отменить")]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-success float-center" }, [
+        _vm._v("Сохранить"),
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-danger float-right" }, [
+        _vm._v("Удалить"),
+      ]),
     ])
   },
 ]
