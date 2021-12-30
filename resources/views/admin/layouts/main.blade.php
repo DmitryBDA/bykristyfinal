@@ -124,5 +124,8 @@
 <script src="/dist/js/adminlte.js"></script>
 
 <script src="{{mix('js/app.js')}}"></script>
+<script>
+
+</script>
 </body>
 </html>

@@ -65,12 +65,15 @@ export default {
                     title: ''
                 }]
             this.$refs.modal_add_record.$refs._open_modal_add_record.click()
+
         },
         clickRecord(record) {
             this.recordId = record.event._def.publicId
             axios.post('/api/calendar/get-data-record', {recordId:this.recordId})
                 .then((response)=>{
                     this.dataRecord = response.data;
+                    var myModal = new bootstrap.Modal(document.getElementById('modal-action-with-records'));
+                    myModal.show();
                 })
         },
     }

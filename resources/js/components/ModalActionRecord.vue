@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal fade" id="modal-action-with-records">
+        <div class="modal fade" id="modal-action-with-records" ref="modal_action_record">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -64,10 +64,10 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button class="btn btn-info">Записать</button>
-                                <button class="btn btn-info">Подтвердить</button>
-                                <button class="btn btn-info">Отменить</button>
-                                <button class="btn btn-success float-center">Сохранить</button>
+                                <button v-if="statusRecord == 1" class="btn btn-info">Записать</button>
+                                <button v-if="statusRecord == 2" class="btn btn-info">Подтвердить</button>
+                                <button v-if="statusRecord !== 1" class="btn btn-info">Отменить</button>
+                                <button v-if="isEdit" class="btn btn-success float-center">Сохранить</button>
                                 <button class="btn btn-danger float-right" >Удалить</button>
                             </div>
                             <!-- /.card-footer -->
@@ -95,7 +95,9 @@ export default {
             selectedService:1,
             services:null,
             name: null,
-            phone: null
+            phone: null,
+            statusRecord: null,
+            isEdit: false,
         }
     },
     watch: {
@@ -108,8 +110,8 @@ export default {
             this.selectedService = this.dataRecord.service_id ? this.dataRecord.service_id : 1
             this.name = this.dataRecord.user ? this.dataRecord.user.surname + ' ' + this.dataRecord.user.name : ''
             this.phone = this.dataRecord.user ? this.dataRecord.user.phone : ''
-
-            this.$refs.open_modal_action_records.click()
+            this.statusRecord = this.dataRecord.status
+            //this.$refs.open_modal_action_records.click()
         },
     },
     mounted() {
