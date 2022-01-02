@@ -22,3 +22,6 @@ Route::get('/calendar/show-records', [CalendarController::class,'showRecords'])-
 Route::post('/calendar/create-records', [CalendarController::class,'createRecords'])->name('calendar.createRecords');
 Route::post('/calendar/get-data-record', [CalendarController::class,'getDataRecord'])->name('calendar.getDataRecord');
 Route::post('/calendar/add-user-to-record', [CalendarController::class,'addUserToRecord'])->name('calendar.addUserToRecord');
+Route::post('/calendar/cancel-record', [CalendarController::class,'cancelRecord'])->name('calendar.cancelRecord');
+Route::post('/calendar/confirm-record', [CalendarController::class,'confirmRecord'])->name('calendar.confirmRecord');
+Route::post('/calendar/delete-record', [CalendarController::class,'deleteRecord'])->name('calendar.deleteRecord');

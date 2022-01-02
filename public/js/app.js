@@ -19595,6 +19595,42 @@ __webpack_require__.r(__webpack_exports__);
         var elem = _this.$refs.close_modal_action_records;
         elem.click();
       });
+    },
+    confirmRecord: function confirmRecord() {
+      var _this2 = this;
+
+      axios.post('/api/calendar/confirm-record', {
+        recordId: this.recordId
+      }).then(function (response) {
+        _this2.$parent.showRecords();
+
+        var elem = _this2.$refs.close_modal_action_records;
+        elem.click();
+      });
+    },
+    cancelRecord: function cancelRecord() {
+      var _this3 = this;
+
+      axios.post('/api/calendar/cancel-record', {
+        recordId: this.recordId
+      }).then(function (response) {
+        _this3.$parent.showRecords();
+
+        var elem = _this3.$refs.close_modal_action_records;
+        elem.click();
+      });
+    },
+    deleteRecord: function deleteRecord() {
+      var _this4 = this;
+
+      axios.post('/api/calendar/delete-record', {
+        recordId: this.recordId
+      }).then(function (response) {
+        _this4.$parent.showRecords();
+
+        var elem = _this4.$refs.close_modal_action_records;
+        elem.click();
+      });
     }
   },
   validations: {}
@@ -43766,15 +43802,35 @@ var render = function () {
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.statusRecord == 2
-                      ? _c("button", { staticClass: "btn btn-info" }, [
-                          _vm._v("Подтвердить"),
-                        ])
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info",
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.confirmRecord()
+                              },
+                            },
+                          },
+                          [_vm._v("Подтвердить")]
+                        )
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.statusRecord !== 1
-                      ? _c("button", { staticClass: "btn btn-info" }, [
-                          _vm._v("Отменить"),
-                        ])
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info",
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.cancelRecord()
+                              },
+                            },
+                          },
+                          [_vm._v("Отменить")]
+                        )
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.isEdit
@@ -43787,7 +43843,15 @@ var render = function () {
                     _vm._v(" "),
                     _c(
                       "button",
-                      { staticClass: "btn btn-danger float-right" },
+                      {
+                        staticClass: "btn btn-danger float-right",
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            return _vm.deleteRecord()
+                          },
+                        },
+                      },
                       [_vm._v("Удалить")]
                     ),
                   ]),

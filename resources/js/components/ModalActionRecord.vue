@@ -65,10 +65,10 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button v-if="statusRecord == 1" @click.prevent="recordUser()" class="btn btn-info">Записать</button>
-                                <button v-if="statusRecord == 2" class="btn btn-info">Подтвердить</button>
-                                <button v-if="statusRecord !== 1" class="btn btn-info">Отменить</button>
+                                <button v-if="statusRecord == 2"  @click.prevent="confirmRecord()" class="btn btn-info">Подтвердить</button>
+                                <button v-if="statusRecord !== 1" @click.prevent="cancelRecord()" class="btn btn-info">Отменить</button>
                                 <button v-if="isEdit" class="btn btn-success float-center">Сохранить</button>
-                                <button class="btn btn-danger float-right" >Удалить</button>
+                                <button class="btn btn-danger float-right" @click.prevent="deleteRecord()" >Удалить</button>
                             </div>
                             <!-- /.card-footer -->
                         </form>
@@ -133,6 +133,39 @@ export default {
                     elem.click();
                 })
 
+        },
+        confirmRecord(){
+            axios.post('/api/calendar/confirm-record', {
+                    recordId: this.recordId,
+                }
+            )
+                .then((response) => {
+                    this.$parent.showRecords()
+                    const elem = this.$refs.close_modal_action_records
+                    elem.click();
+                })
+        },
+        cancelRecord(){
+            axios.post('/api/calendar/cancel-record', {
+                recordId: this.recordId,
+                }
+            )
+                .then((response) => {
+                    this.$parent.showRecords()
+                    const elem = this.$refs.close_modal_action_records
+                    elem.click();
+                })
+        },
+        deleteRecord(){
+            axios.post('/api/calendar/delete-record', {
+                recordId: this.recordId,
+                }
+            )
+                .then((response) => {
+                    this.$parent.showRecords()
+                    const elem = this.$refs.close_modal_action_records
+                    elem.click();
+                })
         },
 
     },
