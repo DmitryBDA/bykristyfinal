@@ -64,7 +64,7 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button v-if="statusRecord == 1" class="btn btn-info">Записать</button>
+                                <button v-if="statusRecord == 1" @click.prevent="recordUser()" class="btn btn-info">Записать</button>
                                 <button v-if="statusRecord == 2" class="btn btn-info">Подтвердить</button>
                                 <button v-if="statusRecord !== 1" class="btn btn-info">Отменить</button>
                                 <button v-if="isEdit" class="btn btn-success float-center">Сохранить</button>
@@ -118,7 +118,22 @@ export default {
 
     },
     methods: {
+        recordUser() {
+            axios.post('/api/calendar/add-user-to-record', {
+                    recordId: this.recordId,
+                    serviceId: this.selectedService,
+                    name: this.name,
+                    time: this.time,
+                    phone: this.phone
+                }
+            )
+                .then((response) => {
+                    this.$parent.showRecords()
+                    const elem = this.$refs.close_modal_action_records
+                    elem.click();
+                })
 
+        },
 
     },
     validations: {

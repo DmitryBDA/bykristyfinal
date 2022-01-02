@@ -19579,7 +19579,24 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {},
-  methods: {},
+  methods: {
+    recordUser: function recordUser() {
+      var _this = this;
+
+      axios.post('/api/calendar/add-user-to-record', {
+        recordId: this.recordId,
+        serviceId: this.selectedService,
+        name: this.name,
+        time: this.time,
+        phone: this.phone
+      }).then(function (response) {
+        _this.$parent.showRecords();
+
+        var elem = _this.$refs.close_modal_action_records;
+        elem.click();
+      });
+    }
+  },
   validations: {}
 });
 
@@ -43733,9 +43750,19 @@ var render = function () {
                   _vm._v(" "),
                   _c("div", { staticClass: "card-footer" }, [
                     _vm.statusRecord == 1
-                      ? _c("button", { staticClass: "btn btn-info" }, [
-                          _vm._v("Записать"),
-                        ])
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info",
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.recordUser()
+                              },
+                            },
+                          },
+                          [_vm._v("Записать")]
+                        )
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.statusRecord == 2
