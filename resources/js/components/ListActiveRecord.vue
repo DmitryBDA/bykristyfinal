@@ -1,5 +1,5 @@
 <template>
-    <div>
+
         <section class="content">
             <div class="container-fluid">
 
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </section>
-    </div>
+
 </template>
 
 <script>
