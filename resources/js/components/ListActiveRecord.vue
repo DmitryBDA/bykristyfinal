@@ -20,7 +20,7 @@
                                 </div>
                             </div>
                             <div class="card-body" style="display: none; padding: 0 0 0 5px">
-                                <input class="form-control filter mb-2" type="text" placeholder="Ведите для поиска">
+                                <input v-model="search" class="form-control filter mb-2" type="text" placeholder="Ведите для поиска">
                                 <div class="timeline">
                                     <template v-for="(item, idx) in listRecords">
                                         <div class="time-label">
@@ -65,11 +65,20 @@
 export default {
     data() {
         return {
-            listRecords: []
+            listRecords: [],
+            search:''
         }
     },
+    watch: {
+        search: function (val) {
+            axios.post('/api/calendar/get-list-active-records', {strSearch:val})
+                .then((response) => {
+                    this.listRecords = response.data
+                })
+        },
+    },
     mounted() {
-        axios.get('/api/calendar/get-list-active-records')
+        axios.post('/api/calendar/get-list-active-records',{strSearch:''})
             .then((response) => {
                 this.listRecords = response.data
             })

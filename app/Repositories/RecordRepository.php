@@ -65,12 +65,16 @@ class RecordRepository extends CoreRepository
         }
     }
 
-    public function getListActiveRecords()
+    public function getListActiveRecords($strSearch)
     {
         $tekDate = Carbon::today()->format('Y-m-d');
         //Получить список записей
         $recordList = $this->startCondition()
             ->whereDate('start', '>=', $tekDate)
+            ->whereHas('user', $filter = function ($query) use ($strSearch) {
+                $query->where('name', 'LIKE', "%$strSearch%")
+                    ->orWhere('surname', 'LIKE', "%$strSearch%");
+            })
             ->where('status', 3)
             ->orWhere('status', 2)
             ->with('user')

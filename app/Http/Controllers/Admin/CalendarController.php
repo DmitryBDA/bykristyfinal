@@ -98,8 +98,9 @@ class CalendarController extends Controller
         return response()->json($obRecord);
     }
 
-    public function getListActiveRecords(){
-        $recordList = $this->recordRepository->getListActiveRecords();
+    public function getListActiveRecords(Request $request){
+        $strSearch = $request->strSearch;
+        $recordList = $this->recordRepository->getListActiveRecords($strSearch);
         return response()->json($recordList);
     }
 }

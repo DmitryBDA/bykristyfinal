@@ -20,6 +20,7 @@ export default {
                 ],
                 headerToolbar: {
                 },
+                height: 700,
                 timeZone: 'UTC',
                 firstDay: 1,
                 locale:'ru',
