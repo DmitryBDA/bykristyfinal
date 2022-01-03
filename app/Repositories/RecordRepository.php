@@ -65,4 +65,53 @@ class RecordRepository extends CoreRepository
         }
     }
 
+    public function getListActiveRecords()
+    {
+        $tekDate = Carbon::today()->format('Y-m-d');
+        //Получить список записей
+        $recordList = $this->startCondition()
+            ->whereDate('start', '>=', $tekDate)
+            ->where('status', 3)
+            ->orWhere('status', 2)
+            ->with('user')
+            ->orderBy('start', 'asc')
+            ->get();
+
+        $arEventList = [];
+
+        $index = 0;
+        if($recordList->isNotEmpty()){
+
+            $nowDate = Carbon::create($recordList->first()->start)->format('d.m.Y');
+
+            foreach ($recordList as $event){
+                $date = Carbon::create($event->start)->format('d.m.Y');
+                if($nowDate !== $date){
+                    $index = 0;
+                }
+
+                $arEventList[$date][$index]['time'] = Carbon::create($event->start)->format('H:s');
+                $arEventList[$date][$index]['phone'] = $event->user->phone;
+                $arEventList[$date][$index]['name'] = $event->user->surname . ' ' .$event->user->name ;
+
+                $nowDate = Carbon::create($event->start)->format('d.m.Y');
+                $index++;
+            }
+
+            $eventList = $arEventList;
+        }
+
+        $recordList = [];
+        $index = 0;
+        foreach ($arEventList as $key => $item){
+            $recordList[$index]['date'] = Carbon::create($key)->format('d.m.Y');
+            $recordList[$index]['value'] = $item;
+
+            $index++;
+        }
+
+
+        return $recordList;
+    }
+
 }

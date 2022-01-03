@@ -25,3 +25,4 @@ Route::post('/calendar/add-user-to-record', [CalendarController::class,'addUserT
 Route::post('/calendar/cancel-record', [CalendarController::class,'cancelRecord'])->name('calendar.cancelRecord');
 Route::post('/calendar/confirm-record', [CalendarController::class,'confirmRecord'])->name('calendar.confirmRecord');
 Route::post('/calendar/delete-record', [CalendarController::class,'deleteRecord'])->name('calendar.deleteRecord');
+Route::get('/calendar/get-list-active-records', [CalendarController::class,'getListActiveRecords'])->name('calendar.getListActiveRecords');

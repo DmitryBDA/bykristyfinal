@@ -19508,26 +19508,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      listRecords: [{
-        'date': '12.12.2021',
-        'value': {
-          'list1': {
-            'time': '12:00',
-            'name': 'Ирина Алексеева'
-          },
-          'list2': {
-            'time': '15:00',
-            'name': 'Белоусов Дмитрий'
-          }
-        }
-      }]
+      listRecords: []
     };
   },
-  mounted: function mounted() {},
-  methods: {}
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/calendar/get-list-active-records').then(function (response) {
+      _this.listRecords = response.data;
+    });
+  },
+  methods: {
+    listUp: function listUp() {
+      $('html, body').animate({
+        scrollTop: $("._title_active_list").offset().top // класс объекта к которому приезжаем
+
+      }, 500); // Скорость прокрутки
+    }
+  }
 });
 
 /***/ }),
@@ -24985,7 +25006,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fc-title {\n    color: #fff;\n}\n.fc-title:hover {\n    cursor: pointer;\n}\n.greenEvent {\n    background-color:#1d8b1d;\n}\n.yellowEvent {\n    background-color:#a7a739;\n}\n.redEvent {\n    background-color:#bf0d0d;\n}\n.greyEvent {\n    background-color:grey;\n}\n.hiddenevent{\n    font-size: 9px;\n}\n.fc-daygrid-block-event .fc-event-time{\n    font-weight: 400!important;\n}\n.fc-daygrid-day-top a{\n    color: black;\n}\n.fc-event-time{\n    color: white;\n}\n.fc-daygrid-event-dot{\n    display: none;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fc-title {\r\n    color: #fff;\n}\n.fc-title:hover {\r\n    cursor: pointer;\n}\n.greenEvent {\r\n    background-color:#1d8b1d;\n}\n.yellowEvent {\r\n    background-color:#a7a739;\n}\n.redEvent {\r\n    background-color:#bf0d0d;\n}\n.greyEvent {\r\n    background-color:grey;\n}\n.hiddenevent{\r\n    font-size: 9px;\n}\n.fc-daygrid-block-event .fc-event-time{\r\n    font-weight: 400!important;\n}\n.fc-daygrid-day-top a{\r\n    color: black;\n}\n.fc-event-time{\r\n    color: white;\n}\n.fc-daygrid-event-dot{\r\n    display: none;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -43726,50 +43747,136 @@ var render = function () {
       _c("div", { staticClass: "container-fluid" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              { staticClass: "timeline" },
-              [
-                _vm._l(_vm.listRecords, function (item, idx) {
-                  return [
-                    _c("div", { staticClass: "time-label" }, [
-                      _c("span", { staticClass: "bg-green" }, [
-                        _vm._v(_vm._s(item.date)),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", [
-                      _c(
-                        "div",
-                        { staticClass: "timeline-item" },
-                        [
-                          _vm._l(item.value, function (elem) {
-                            return [
-                              _c("span", { staticClass: "time" }, [
-                                _c("i", { staticClass: "fas fa-clock" }),
-                                _vm._v(" " + _vm._s(elem.time)),
-                              ]),
-                              _vm._v(" "),
-                              _c("h3", { staticClass: "timeline-header" }, [
-                                _vm._v(
-                                  _vm._s(elem.name) +
-                                    "\n                                            "
-                                ),
-                                _vm._m(0, true),
-                                _vm._v(" "),
-                                _vm._m(1, true),
-                              ]),
-                            ]
-                          }),
-                        ],
-                        2
-                      ),
-                    ]),
-                  ]
-                }),
-              ],
-              2
-            ),
+            _c("div", { staticClass: "card collapsed-card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title _title_active_list" }, [
+                  _vm._v("Активные записи"),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-tool",
+                      attrs: {
+                        type: "button",
+                        "data-card-widget": "collapse",
+                        title: "Collapse",
+                      },
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fas fa-plus",
+                        on: { click: _vm.listUp },
+                      }),
+                    ]
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "card-body",
+                  staticStyle: { display: "none", padding: "0 0 0 5px" },
+                },
+                [
+                  _c("input", {
+                    staticClass: "form-control filter mb-2",
+                    attrs: { type: "text", placeholder: "Ведите для поиска" },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "timeline" },
+                    [
+                      _vm._l(_vm.listRecords, function (item, idx) {
+                        return [
+                          _c("div", { staticClass: "time-label" }, [
+                            _c("span", { staticClass: "bg-green" }, [
+                              _vm._v(_vm._s(item.date)),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            [
+                              _vm._l(item.value, function (elem) {
+                                return [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "timeline-item",
+                                      staticStyle: { position: "relative" },
+                                    },
+                                    [
+                                      _c("span", { staticClass: "time" }, [
+                                        _c("i", {
+                                          staticClass: "fas fa-clock",
+                                        }),
+                                        _vm._v(" " + _vm._s(elem.time)),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "h3",
+                                        { staticClass: "timeline-header" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(elem.name) +
+                                              "\n                                                    "
+                                          ),
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass: "input-group-append",
+                                              staticStyle: {
+                                                position: "absolute",
+                                                width: "40px",
+                                                right: "44px",
+                                                top: "3px",
+                                              },
+                                              attrs: {
+                                                href:
+                                                  "whatsapp://send?phone=+7" +
+                                                  elem.phone,
+                                              },
+                                            },
+                                            [_vm._m(0, true)]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass: "input-group-append",
+                                              staticStyle: {
+                                                position: "absolute",
+                                                width: "40px",
+                                                right: "0px",
+                                                top: "3px",
+                                              },
+                                              attrs: {
+                                                href: "tel:+7" + elem.phone,
+                                              },
+                                            },
+                                            [_vm._m(1, true)]
+                                          ),
+                                        ]
+                                      ),
+                                    ]
+                                  ),
+                                ]
+                              }),
+                            ],
+                            2
+                          ),
+                        ]
+                      }),
+                    ],
+                    2
+                  ),
+                ]
+              ),
+            ]),
           ]),
         ]),
       ]),
@@ -43781,53 +43888,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "input-group-append",
-        staticStyle: {
-          position: "absolute",
-          width: "40px",
-          right: "44px",
-          top: "3px",
-        },
-        attrs: { href: "whatsapp://send?phone=+7543453453" },
-      },
-      [
-        _c("span", { staticClass: "input-group-text" }, [
-          _c("i", {
-            staticClass: "fa fa-whatsapp",
-            attrs: { "aria-hidden": "true" },
-          }),
-        ]),
-      ]
-    )
+    return _c("span", { staticClass: "input-group-text" }, [
+      _c("i", {
+        staticClass: "fa fa-whatsapp",
+        attrs: { "aria-hidden": "true" },
+      }),
+    ])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "input-group-append",
-        staticStyle: {
-          position: "absolute",
-          width: "40px",
-          right: "0px",
-          top: "3px",
-        },
-        attrs: { href: "tel:+75454645" },
-      },
-      [
-        _c("span", { staticClass: "input-group-text" }, [
-          _c("i", {
-            staticClass: "fa fa-volume-control-phone",
-            attrs: { "aria-hidden": "true" },
-          }),
-        ]),
-      ]
-    )
+    return _c("span", { staticClass: "input-group-text" }, [
+      _c("i", {
+        staticClass: "fa fa-volume-control-phone",
+        attrs: { "aria-hidden": "true" },
+      }),
+    ])
   },
 ]
 render._withStripped = true
