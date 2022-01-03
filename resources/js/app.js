@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('calendar-component', require('./components/CalendarComponent.vue').default);
 Vue.component('modal-add-record', require('./components/ModalAddRecord.vue').default);
 Vue.component('modal-action-record', require('./components/ModalActionRecord.vue').default);
+Vue.component('list-active-record', require('./components/ListActiveRecord.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

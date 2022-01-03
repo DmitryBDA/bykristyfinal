@@ -2,6 +2,15 @@
 
 @section('custom_css')
     <link rel="stylesheet" href="/plugins/fullcalendar/main.css">
+    <style>
+        .timeline>div>.timeline-item{
+            margin-left: 0!important;
+            margin-right: 0!important;
+        }
+        .timeline>div>.timeline-item>.time{
+            float: left;
+        }
+    </style>
 @endsection
 
 @section('title', 'Главная')
@@ -45,6 +54,8 @@
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
         </section>
+
+        <list-active-record></list-active-record>
     </div>
     <!-- /.content-wrapper -->
 @endsection
