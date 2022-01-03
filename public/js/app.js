@@ -19352,6 +19352,7 @@ __webpack_require__.r(__webpack_exports__);
         plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_3__["default"] // needed for dateClick
         ],
         headerToolbar: {},
+        height: 700,
         timeZone: 'UTC',
         firstDay: 1,
         locale: 'ru',
@@ -19531,14 +19532,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      listRecords: []
+      listRecords: [],
+      search: ''
     };
   },
-  mounted: function mounted() {
-    var _this = this;
+  watch: {
+    search: function search(val) {
+      var _this = this;
 
-    axios.get('/api/calendar/get-list-active-records').then(function (response) {
-      _this.listRecords = response.data;
+      axios.post('/api/calendar/get-list-active-records', {
+        strSearch: val
+      }).then(function (response) {
+        _this.listRecords = response.data;
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    axios.post('/api/calendar/get-list-active-records', {
+      strSearch: ''
+    }).then(function (response) {
+      _this2.listRecords = response.data;
     });
   },
   methods: {
@@ -43742,141 +43757,154 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("section", { staticClass: "content" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c("div", { staticClass: "card collapsed-card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h3", { staticClass: "card-title _title_active_list" }, [
-                  _vm._v("Активные записи"),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-tools" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-tool",
-                      attrs: {
-                        type: "button",
-                        "data-card-widget": "collapse",
-                        title: "Collapse",
-                      },
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fas fa-plus",
-                        on: { click: _vm.listUp },
-                      }),
-                    ]
-                  ),
-                ]),
+  return _c("section", { staticClass: "content" }, [
+    _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card collapsed-card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _c("h3", { staticClass: "card-title _title_active_list" }, [
+                _vm._v("Активные записи"),
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "card-body",
-                  staticStyle: { display: "none", padding: "0 0 0 5px" },
-                },
-                [
-                  _c("input", {
-                    staticClass: "form-control filter mb-2",
-                    attrs: { type: "text", placeholder: "Ведите для поиска" },
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "timeline" },
-                    [
-                      _vm._l(_vm.listRecords, function (item, idx) {
-                        return [
-                          _c("div", { staticClass: "time-label" }, [
-                            _c("span", { staticClass: "bg-green" }, [
-                              _vm._v(_vm._s(item.date)),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            [
-                              _vm._l(item.value, function (elem) {
-                                return [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "timeline-item",
-                                      staticStyle: { position: "relative" },
-                                    },
-                                    [
-                                      _c("span", { staticClass: "time" }, [
-                                        _c("i", {
-                                          staticClass: "fas fa-clock",
-                                        }),
-                                        _vm._v(" " + _vm._s(elem.time)),
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "h3",
-                                        { staticClass: "timeline-header" },
-                                        [
-                                          _vm._v(
-                                            _vm._s(elem.name) +
-                                              "\n                                                    "
-                                          ),
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "input-group-append",
-                                              staticStyle: {
-                                                position: "absolute",
-                                                width: "40px",
-                                                right: "44px",
-                                                top: "3px",
-                                              },
-                                              attrs: {
-                                                href:
-                                                  "whatsapp://send?phone=+7" +
-                                                  elem.phone,
-                                              },
-                                            },
-                                            [_vm._m(0, true)]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "input-group-append",
-                                              staticStyle: {
-                                                position: "absolute",
-                                                width: "40px",
-                                                right: "0px",
-                                                top: "3px",
-                                              },
-                                              attrs: {
-                                                href: "tel:+7" + elem.phone,
-                                              },
-                                            },
-                                            [_vm._m(1, true)]
-                                          ),
-                                        ]
-                                      ),
-                                    ]
-                                  ),
-                                ]
-                              }),
-                            ],
-                            2
-                          ),
-                        ]
-                      }),
-                    ],
-                    2
-                  ),
-                ]
-              ),
+              _c("div", { staticClass: "card-tools" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-tool",
+                    attrs: {
+                      type: "button",
+                      "data-card-widget": "collapse",
+                      title: "Collapse",
+                    },
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fas fa-plus",
+                      on: { click: _vm.listUp },
+                    }),
+                  ]
+                ),
+              ]),
             ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "card-body",
+                staticStyle: { display: "none", padding: "0 0 0 5px" },
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.search,
+                      expression: "search",
+                    },
+                  ],
+                  staticClass: "form-control filter mb-2",
+                  attrs: { type: "text", placeholder: "Ведите для поиска" },
+                  domProps: { value: _vm.search },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.search = $event.target.value
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "timeline" },
+                  [
+                    _vm._l(_vm.listRecords, function (item, idx) {
+                      return [
+                        _c("div", { staticClass: "time-label" }, [
+                          _c("span", { staticClass: "bg-green" }, [
+                            _vm._v(_vm._s(item.date)),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          [
+                            _vm._l(item.value, function (elem) {
+                              return [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "timeline-item",
+                                    staticStyle: { position: "relative" },
+                                  },
+                                  [
+                                    _c("span", { staticClass: "time" }, [
+                                      _c("i", { staticClass: "fas fa-clock" }),
+                                      _vm._v(" " + _vm._s(elem.time)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "h3",
+                                      { staticClass: "timeline-header" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(elem.name) +
+                                            "\n                                                "
+                                        ),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "input-group-append",
+                                            staticStyle: {
+                                              position: "absolute",
+                                              width: "40px",
+                                              right: "44px",
+                                              top: "3px",
+                                            },
+                                            attrs: {
+                                              href:
+                                                "whatsapp://send?phone=+7" +
+                                                elem.phone,
+                                            },
+                                          },
+                                          [_vm._m(0, true)]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "input-group-append",
+                                            staticStyle: {
+                                              position: "absolute",
+                                              width: "40px",
+                                              right: "0px",
+                                              top: "3px",
+                                            },
+                                            attrs: {
+                                              href: "tel:+7" + elem.phone,
+                                            },
+                                          },
+                                          [_vm._m(1, true)]
+                                        ),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]
+                            }),
+                          ],
+                          2
+                        ),
+                      ]
+                    }),
+                  ],
+                  2
+                ),
+              ]
+            ),
           ]),
         ]),
       ]),
