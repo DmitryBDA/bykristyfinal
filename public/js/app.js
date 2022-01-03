@@ -19762,12 +19762,14 @@ __webpack_require__.r(__webpack_exports__);
       this.search_data = [];
 
       if (this.name != '') {
-        axios.post('/api/calendar/search-autocomplete', {
-          str: this.name
-        }).then(function (response) {
-          _this5.search_data = response.data;
-          _this5.isActiveSearch = true;
-        });
+        if (this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1) {
+          axios.post('/api/calendar/search-autocomplete', {
+            str: this.name
+          }).then(function (response) {
+            _this5.search_data = response.data;
+            _this5.isActiveSearch = true;
+          });
+        }
       }
     },
     pasteName: function pasteName(name, phone) {
