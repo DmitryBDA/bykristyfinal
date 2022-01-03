@@ -36,8 +36,16 @@
                                     <div class="col-sm-9">
                                         <input type="text"
                                                class="form-control input-lg add_name"
+                                               @keyup="getDataAutocomplete()"
                                                v-model="name"
                                                autocomplete="off">
+                                        <div v-if="isActiveSearch" class="panel-footer"
+                                             style="position: absolute;z-index: 1;">
+                                            <ul class="list-group">
+                                                <a href="#" @click.prevent="pasteName(name, phone)" class="list-group-item"
+                                                   v-for="(name, phone) in search_data">{{ name }}</a>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -98,6 +106,8 @@ export default {
             phone: null,
             statusRecord: null,
             isEdit: false,
+            isActiveSearch:false,
+            search_data: [],
         }
     },
     watch: {
@@ -166,6 +176,23 @@ export default {
                     const elem = this.$refs.close_modal_action_records
                     elem.click();
                 })
+        },
+        getDataAutocomplete() {
+            this.search_data = []
+
+            if (this.name != '') {
+                axios.post('/api/calendar/search-autocomplete', {str: this.name})
+                    .then((response) => {
+                        this.search_data = response.data
+                        this.isActiveSearch = true
+                    })
+            }
+
+        },
+        pasteName(name, phone) {
+            this.name = name
+            this.phone = phone
+            this.isActiveSearch = false
         },
 
     },

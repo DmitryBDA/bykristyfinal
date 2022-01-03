@@ -10,6 +10,9 @@
         .timeline>div>.timeline-item>.time{
             float: left;
         }
+        .list-group-item{
+            padding: 3px 8px;
+        }
     </style>
 @endsection
 

@@ -43,4 +43,19 @@ class UserRepository extends CoreRepository
         return $user;
     }
 
+    public function searchAutocomplete($query){
+        $users = $this->startCondition()
+            ->where('name', 'LIKE', '%'.$query.'%')
+            ->orWhere('surname', 'LIKE', '%'.$query.'%')
+            ->get();
+
+        $name = [];
+        if($users){
+            foreach ($users as $user) {
+                $name[$user->phone] = $user->surname . ' ' . $user->name;
+            }
+        }
+        return $name;
+    }
+
 }

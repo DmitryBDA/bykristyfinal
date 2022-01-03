@@ -19662,6 +19662,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['dataRecord'],
   data: function data() {
@@ -19676,7 +19684,9 @@ __webpack_require__.r(__webpack_exports__);
       name: null,
       phone: null,
       statusRecord: null,
-      isEdit: false
+      isEdit: false,
+      isActiveSearch: false,
+      search_data: []
     };
   },
   watch: {
@@ -19745,6 +19755,25 @@ __webpack_require__.r(__webpack_exports__);
         var elem = _this4.$refs.close_modal_action_records;
         elem.click();
       });
+    },
+    getDataAutocomplete: function getDataAutocomplete() {
+      var _this5 = this;
+
+      this.search_data = [];
+
+      if (this.name != '') {
+        axios.post('/api/calendar/search-autocomplete', {
+          str: this.name
+        }).then(function (response) {
+          _this5.search_data = response.data;
+          _this5.isActiveSearch = true;
+        });
+      }
+    },
+    pasteName: function pasteName(name, phone) {
+      this.name = name;
+      this.phone = phone;
+      this.isActiveSearch = false;
     }
   },
   validations: {}
@@ -44105,6 +44134,9 @@ var render = function () {
                           attrs: { type: "text", autocomplete: "off" },
                           domProps: { value: _vm.name },
                           on: {
+                            keyup: function ($event) {
+                              return _vm.getDataAutocomplete()
+                            },
                             input: function ($event) {
                               if ($event.target.composing) {
                                 return
@@ -44113,6 +44145,45 @@ var render = function () {
                             },
                           },
                         }),
+                        _vm._v(" "),
+                        _vm.isActiveSearch
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "panel-footer",
+                                staticStyle: {
+                                  position: "absolute",
+                                  "z-index": "1",
+                                },
+                              },
+                              [
+                                _c(
+                                  "ul",
+                                  { staticClass: "list-group" },
+                                  _vm._l(
+                                    _vm.search_data,
+                                    function (name, phone) {
+                                      return _c(
+                                        "a",
+                                        {
+                                          staticClass: "list-group-item",
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function ($event) {
+                                              $event.preventDefault()
+                                              return _vm.pasteName(name, phone)
+                                            },
+                                          },
+                                        },
+                                        [_vm._v(_vm._s(name))]
+                                      )
+                                    }
+                                  ),
+                                  0
+                                ),
+                              ]
+                            )
+                          : _vm._e(),
                       ]),
                     ]),
                     _vm._v(" "),

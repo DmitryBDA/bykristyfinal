@@ -103,4 +103,11 @@ class CalendarController extends Controller
         $recordList = $this->recordRepository->getListActiveRecords($strSearch);
         return response()->json($recordList);
     }
+
+    public function searchAutocomplete(Request $request)
+    {
+        $query = $request->str;
+        $arNames = $this->userRepository->searchAutocomplete($query);
+        return response()->json($arNames);
+    }
 }
