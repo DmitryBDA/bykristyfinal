@@ -85,7 +85,7 @@
             </div>
         </div>
         <button style="display: none" data-toggle="modal" data-target="#modal-action-with-records" ref="open_modal_action_records"></button>
-        <button type="button" class="btn btn-success swalDefaultSuccess" @click.prevent="succesSave" ref="mess_about_success_save">Сохранено</button>
+        <button style="display: none" type="button" class="btn btn-success swalDefaultSuccess" @click.prevent="succesSave" ref="mess_about_success_save">Сохранено</button>
     </div>
 </template>
 
