@@ -19688,7 +19688,8 @@ __webpack_require__.r(__webpack_exports__);
       statusRecord: null,
       isEdit: true,
       isActiveSearch: false,
-      search_data: []
+      search_data: [],
+      Toast: null
     };
   },
   watch: {
@@ -19704,7 +19705,14 @@ __webpack_require__.r(__webpack_exports__);
       this.statusRecord = this.dataRecord.status; //this.$refs.open_modal_action_records.click()
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  },
   methods: {
     recordUser: function recordUser() {
       var _this = this;
@@ -19732,9 +19740,7 @@ __webpack_require__.r(__webpack_exports__);
         time: this.time,
         phone: this.phone
       }).then(function (response) {
-        _this2.$parent.showRecords();
-
-        var elem = _this2.$refs.close_modal_action_records;
+        var elem = _this2.$refs.mess_about_success_save;
         elem.click();
       });
     },
@@ -19789,6 +19795,12 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       }
+    },
+    succesSave: function succesSave() {
+      this.Toast.fire({
+        icon: 'success',
+        title: 'Сохранено'
+      });
     },
     pasteName: function pasteName(name, phone) {
       this.name = name;
@@ -44357,6 +44369,22 @@ var render = function () {
         "data-target": "#modal-action-with-records",
       },
     }),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        ref: "mess_about_success_save",
+        staticClass: "btn btn-success swalDefaultSuccess",
+        attrs: { type: "button" },
+        on: {
+          click: function ($event) {
+            $event.preventDefault()
+            return _vm.succesSave.apply(null, arguments)
+          },
+        },
+      },
+      [_vm._v("Сохранено")]
+    ),
   ])
 }
 var staticRenderFns = [

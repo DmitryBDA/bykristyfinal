@@ -84,8 +84,8 @@
                 </div>
             </div>
         </div>
-        <button style="display: none" data-toggle="modal" data-target="#modal-action-with-records"
-                ref="open_modal_action_records"></button>
+        <button style="display: none" data-toggle="modal" data-target="#modal-action-with-records" ref="open_modal_action_records"></button>
+        <button type="button" class="btn btn-success swalDefaultSuccess" @click.prevent="succesSave" ref="mess_about_success_save">Сохранено</button>
     </div>
 </template>
 
@@ -108,6 +108,7 @@ export default {
             isEdit: true,
             isActiveSearch:false,
             search_data: [],
+            Toast:null
         }
     },
     watch: {
@@ -125,7 +126,12 @@ export default {
         },
     },
     mounted() {
-
+        this.Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
     },
     methods: {
         recordUser() {
@@ -154,8 +160,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    this.$parent.showRecords()
-                    const elem = this.$refs.close_modal_action_records
+                    const elem = this.$refs.mess_about_success_save
                     elem.click();
                 })
         },
@@ -205,6 +210,12 @@ export default {
                 }
             }
 
+        },
+        succesSave(){
+            this.Toast.fire({
+                icon: 'success',
+                title: 'Сохранено'
+            })
         },
         pasteName(name, phone) {
             this.name = name
