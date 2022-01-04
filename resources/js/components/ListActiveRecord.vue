@@ -71,10 +71,12 @@ export default {
     },
     watch: {
         search: function (val) {
-            axios.post('/api/calendar/get-list-active-records', {strSearch:val})
-                .then((response) => {
-                    this.listRecords = response.data
-                })
+            if(val.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1){
+                axios.post('/api/calendar/get-list-active-records', {strSearch:val})
+                    .then((response) => {
+                        this.listRecords = response.data
+                    })
+            }
         },
     },
     mounted() {

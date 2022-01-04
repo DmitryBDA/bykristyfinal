@@ -75,7 +75,7 @@
                                 <button v-if="statusRecord == 1" @click.prevent="recordUser()" class="btn btn-info">Записать</button>
                                 <button v-if="statusRecord == 2"  @click.prevent="confirmRecord()" class="btn btn-info">Подтвердить</button>
                                 <button v-if="statusRecord !== 1" @click.prevent="cancelRecord()" class="btn btn-info">Отменить</button>
-                                <button v-if="isEdit" class="btn btn-success float-center">Сохранить</button>
+                                <button v-if="statusRecord !== 1 && isEdit" @click.prevent="saveDataRecord()" class="btn btn-success float-center">Сохранить</button>
                                 <button class="btn btn-danger float-right" @click.prevent="deleteRecord()" >Удалить</button>
                             </div>
                             <!-- /.card-footer -->
@@ -105,7 +105,7 @@ export default {
             name: null,
             phone: null,
             statusRecord: null,
-            isEdit: false,
+            isEdit: true,
             isActiveSearch:false,
             search_data: [],
         }
@@ -143,6 +143,21 @@ export default {
                     elem.click();
                 })
 
+        },
+        saveDataRecord(){
+            axios.post('/api/calendar/save-data-record', {
+                    recordId: this.recordId,
+                    serviceId: this.selectedService,
+                    name: this.name,
+                    time: this.time,
+                    phone: this.phone
+                }
+            )
+                .then((response) => {
+                    this.$parent.showRecords()
+                    const elem = this.$refs.close_modal_action_records
+                    elem.click();
+                })
         },
         confirmRecord(){
             axios.post('/api/calendar/confirm-record', {

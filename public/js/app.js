@@ -19540,11 +19540,13 @@ __webpack_require__.r(__webpack_exports__);
     search: function search(val) {
       var _this = this;
 
-      axios.post('/api/calendar/get-list-active-records', {
-        strSearch: val
-      }).then(function (response) {
-        _this.listRecords = response.data;
-      });
+      if (val.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1) {
+        axios.post('/api/calendar/get-list-active-records', {
+          strSearch: val
+        }).then(function (response) {
+          _this.listRecords = response.data;
+        });
+      }
     }
   },
   mounted: function mounted() {
@@ -19684,7 +19686,7 @@ __webpack_require__.r(__webpack_exports__);
       name: null,
       phone: null,
       statusRecord: null,
-      isEdit: false,
+      isEdit: true,
       isActiveSearch: false,
       search_data: []
     };
@@ -19720,11 +19722,15 @@ __webpack_require__.r(__webpack_exports__);
         elem.click();
       });
     },
-    confirmRecord: function confirmRecord() {
+    saveDataRecord: function saveDataRecord() {
       var _this2 = this;
 
-      axios.post('/api/calendar/confirm-record', {
-        recordId: this.recordId
+      axios.post('/api/calendar/save-data-record', {
+        recordId: this.recordId,
+        serviceId: this.selectedService,
+        name: this.name,
+        time: this.time,
+        phone: this.phone
       }).then(function (response) {
         _this2.$parent.showRecords();
 
@@ -19732,10 +19738,10 @@ __webpack_require__.r(__webpack_exports__);
         elem.click();
       });
     },
-    cancelRecord: function cancelRecord() {
+    confirmRecord: function confirmRecord() {
       var _this3 = this;
 
-      axios.post('/api/calendar/cancel-record', {
+      axios.post('/api/calendar/confirm-record', {
         recordId: this.recordId
       }).then(function (response) {
         _this3.$parent.showRecords();
@@ -19744,10 +19750,10 @@ __webpack_require__.r(__webpack_exports__);
         elem.click();
       });
     },
-    deleteRecord: function deleteRecord() {
+    cancelRecord: function cancelRecord() {
       var _this4 = this;
 
-      axios.post('/api/calendar/delete-record', {
+      axios.post('/api/calendar/cancel-record', {
         recordId: this.recordId
       }).then(function (response) {
         _this4.$parent.showRecords();
@@ -19756,8 +19762,20 @@ __webpack_require__.r(__webpack_exports__);
         elem.click();
       });
     },
-    getDataAutocomplete: function getDataAutocomplete() {
+    deleteRecord: function deleteRecord() {
       var _this5 = this;
+
+      axios.post('/api/calendar/delete-record', {
+        recordId: this.recordId
+      }).then(function (response) {
+        _this5.$parent.showRecords();
+
+        var elem = _this5.$refs.close_modal_action_records;
+        elem.click();
+      });
+    },
+    getDataAutocomplete: function getDataAutocomplete() {
+      var _this6 = this;
 
       this.search_data = [];
 
@@ -19766,8 +19784,8 @@ __webpack_require__.r(__webpack_exports__);
           axios.post('/api/calendar/search-autocomplete', {
             str: this.name
           }).then(function (response) {
-            _this5.search_data = response.data;
-            _this5.isActiveSearch = true;
+            _this6.search_data = response.data;
+            _this6.isActiveSearch = true;
           });
         }
       }
@@ -44293,10 +44311,18 @@ var render = function () {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.isEdit
+                    _vm.statusRecord !== 1 && _vm.isEdit
                       ? _c(
                           "button",
-                          { staticClass: "btn btn-success float-center" },
+                          {
+                            staticClass: "btn btn-success float-center",
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.saveDataRecord()
+                              },
+                            },
+                          },
                           [_vm._v("Сохранить")]
                         )
                       : _vm._e(),
