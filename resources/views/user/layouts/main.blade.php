@@ -16,6 +16,11 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <!-- Styles -->
     <link href="css/styles.css" rel="stylesheet"/>
+    <style>
+        .fc-direction-ltr .fc-daygrid-event .fc-event-time{
+            margin: 0!important;
+        }
+    </style>
 </head>
 <body id="page-top">
 <!-- Navigation-->
@@ -39,16 +44,32 @@
     </div>
 </nav>
 <!-- Masthead-->
-<header class="masthead">
-    <div class="container">
-        <div class="masthead-subheading">Welcome To Our Studio!</div>
-        <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
-        <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
+
+
+<div id="app">
+    <header class="masthead">
+        <div class="container">
+            <div class="masthead-subheading">Welcome To Our Studio!</div>
+            <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
+            <opencalendar-component></opencalendar-component>
+        </div>
+    </header>
+
+    <div class="modal show" id="modal-xl">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <usercalendar-component></usercalendar-component>
+                </div>
+            </div>
+        </div>
     </div>
-</header>
-<!-- Services-->
-@yield('content')
-<!-- Footer-->
+
+    @yield('content')
+
+
+</div>
+
 <footer class="footer py-4">
     <div class="container">
         <div class="row align-items-center">
@@ -301,8 +322,12 @@
     </div>
 </div>
 <!-- Bootstrap core JS-->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
+<script src="{{mix('js/usercalendar.js')}}"></script>
 </body>
 </html>

@@ -47,6 +47,28 @@ class RecordRepository extends CoreRepository
         return $recordList;
     }
 
+    public function getActiveRecordsForUsers()
+    {
+        $tekDate = Carbon::today()->format('Y-m-d');
+        //Получить список записей
+        $recordList = $this->startCondition()
+            ->whereDate('start', '>', $tekDate)
+            ->where('status', 1)
+            ->orderBy('start', 'asc')
+            ->get(['id', 'title', 'start', 'status']);
+
+        //Добавить записям класс в зависимости от статуса
+        foreach ($recordList as $elem) {
+            switch ($elem->status) {
+                case 1:
+                    $elem->setAttr('className', "greenEvent");
+                    break;
+            }
+        }
+
+        return $recordList;
+    }
+
     public function addRecords(Request $request){
 
         $data = $request->date;
