@@ -5,11 +5,11 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
-import ModalAddRecord from "./ModalAddRecord";
 
+import ModalRecordUser from "./ModalRecordUser";
 export default {
     components: {
-        ModalAddRecord,
+        ModalRecordUser,
         FullCalendar,
     },
     data: function() {
@@ -40,7 +40,7 @@ export default {
                 },
                 weekends: true,
                 events:  this.showRecords,
-                //eventClick: this.clickRecord,
+                eventClick: this.clickRecord,
                 // eventsSet: this.handleEvents,
                 //dateClick: this.dateClick
                 /* you can update a remote database when these fire:
@@ -83,15 +83,16 @@ export default {
         //     this.$refs.modal_add_record.$refs._open_modal_add_record.click()
         //
         // },
-        // clickRecord(record) {
-        //     this.recordId = record.event._def.publicId
-        //     axios.post('/api/calendar/get-data-record', {recordId:this.recordId})
-        //         .then((response)=>{
-        //             this.dataRecord = response.data;
-        //             var myModal = new bootstrap.Modal(document.getElementById('modal-action-with-records'));
-        //             myModal.show();
-        //         })
-        // },
+        clickRecord(record) {
+            const recordId = record.event._def.publicId
+
+             axios.post('/api/calendar/get-data-record', {recordId:this.recordId})
+                 .then((response)=>{
+                     console.log(response.data)
+                     //this.dataRecord = response.data;
+                     //this.$refs.modal_record_user.$refs.open_modal_record_user.click()
+                 })
+        },
     }
 }
 </script>
@@ -99,7 +100,7 @@ export default {
     <div>
         <FullCalendar :options="calendarOptions" />
         <button style="display: none" data-toggle="modal" data-target="#modal-xl" ref="testt"></button>
-<!--        <modal-add-record :date="this.date" ref="modal_add_record"></modal-add-record>-->
+        <modal-record-user-component :dataRecord="dataRecord" ref="modal_record_user"></modal-record-user-component>
 <!--        <modal-action-record :dataRecord="dataRecord"></modal-action-record>-->
     </div>
 </template>

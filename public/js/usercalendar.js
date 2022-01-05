@@ -19319,10 +19319,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalAddRecord.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalAddRecord.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalRecordUser.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalRecordUser.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -19372,49 +19372,145 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['date'],
+  props: ['dataRecord'],
   data: function data() {
     return {
-      inputTime: [{
-        typeRecord: false,
-        value: '00:00',
-        status: 1,
-        title: ''
-      }],
-      isDisabled: false
+      recordId: null,
+      time: null,
+      days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+      dayWeek: null,
+      date: null,
+      selectedService: 1,
+      services: null,
+      name: null,
+      phone: null,
+      statusRecord: null,
+      isEdit: true,
+      isActiveSearch: false,
+      search_data: [],
+      Toast: null
     };
   },
-  methods: {
-    inputAdd: function inputAdd(type) {
-      this.inputTime.push({
-        typeRecord: type,
-        value: '00:00',
-        status: type ? 4 : 1,
-        title: ''
-      });
-      this.isDisabled = false;
-    },
-    inputDelete: function inputDelete(idx) {
-      this.inputTime.splice(idx, 1);
-
-      if (this.inputTime.length === 0) {
-        this.isDisabled = true;
-      }
-    },
-    saveRecords: function saveRecords(event) {
-      var _this = this;
-
-      axios.post('/api/calendar/create-records', {
-        timeRecords: this.inputTime,
-        date: this.date
-      }).then(function (response) {
-        _this.$parent.showRecords();
-
-        _this.$refs._close_modal_add_records.click();
-      });
+  watch: {
+    dataRecord: function dataRecord(val) {
+      this.recordId = this.dataRecord.id;
+      this.time = new Date(this.dataRecord.start).toLocaleTimeString().slice(0, -3);
+      this.dayWeek = this.days[new Date(this.dataRecord.start).getDay()];
+      this.date = new Date(this.dataRecord.start).toLocaleDateString();
+      this.services = this.dataRecord.services;
+      this.selectedService = this.dataRecord.service_id ? this.dataRecord.service_id : 1;
+      this.name = this.dataRecord.user ? this.dataRecord.user.surname + ' ' + this.dataRecord.user.name : '';
+      this.phone = this.dataRecord.user ? this.dataRecord.user.phone : '';
+      this.statusRecord = this.dataRecord.status; //this.$refs.open_modal_action_records.click()
     }
-  }
+  },
+  mounted: function mounted() {},
+  methods: {
+    recordUser: function recordUser() {}
+    /*
+            saveDataRecord(){
+                axios.post('/api/calendar/save-data-record', {
+                        recordId: this.recordId,
+                        serviceId: this.selectedService,
+                        name: this.name,
+                        time: this.time,
+                        phone: this.phone
+                    }
+                )
+                    .then((response) => {
+                        const elem = this.$refs.mess_about_success_save
+                        elem.click();
+                    })
+            },
+            confirmRecord(){
+                axios.post('/api/calendar/confirm-record', {
+                        recordId: this.recordId,
+                    }
+                )
+                    .then((response) => {
+                        this.$parent.showRecords()
+                        const elem = this.$refs.close_modal_action_records
+                        elem.click();
+                    })
+            },
+            cancelRecord(){
+                axios.post('/api/calendar/cancel-record', {
+                    recordId: this.recordId,
+                    }
+                )
+                    .then((response) => {
+                        this.$parent.showRecords()
+                        const elem = this.$refs.close_modal_action_records
+                        elem.click();
+                    })
+            },
+            deleteRecord(){
+                axios.post('/api/calendar/delete-record', {
+                    recordId: this.recordId,
+                    }
+                )
+                    .then((response) => {
+                        this.$parent.showRecords()
+                        const elem = this.$refs.close_modal_action_records
+                        elem.click();
+                    })
+            },
+            getDataAutocomplete() {
+                this.search_data = []
+    
+                if (this.name != '') {
+                    if(this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1){
+                        axios.post('/api/calendar/search-autocomplete', {str: this.name})
+                            .then((response) => {
+                                this.search_data = response.data
+                                this.isActiveSearch = true
+                            })
+                    }
+                }
+    
+            },
+            succesSave(){
+                this.Toast.fire({
+                    icon: 'success',
+                    title: 'Сохранено'
+                })
+            },
+            pasteName(name, phone) {
+                this.name = name
+                this.phone = phone
+                this.isActiveSearch = false
+            },
+            */
+
+  },
+  validations: {}
 });
 
 /***/ }),
@@ -19468,7 +19564,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fullcalendar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/vue */ "./node_modules/@fullcalendar/vue/dist/main.js");
 /* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/main.js");
 /* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/main.js");
-/* harmony import */ var _ModalAddRecord__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ModalAddRecord */ "./resources/js/components/ModalAddRecord.vue");
+/* harmony import */ var _ModalRecordUser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ModalRecordUser */ "./resources/js/components/ModalRecordUser.vue");
 
  // solves problem with Vite
 
@@ -19478,7 +19574,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    ModalAddRecord: _ModalAddRecord__WEBPACK_IMPORTED_MODULE_5__["default"],
+    ModalRecordUser: _ModalRecordUser__WEBPACK_IMPORTED_MODULE_5__["default"],
     FullCalendar: _fullcalendar_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
@@ -19507,8 +19603,8 @@ __webpack_require__.r(__webpack_exports__);
           meridiem: false
         },
         weekends: true,
-        events: this.showRecords //eventClick: this.clickRecord,
-        // eventsSet: this.handleEvents,
+        events: this.showRecords,
+        eventClick: this.clickRecord // eventsSet: this.handleEvents,
         //dateClick: this.dateClick
 
         /* you can update a remote database when these fire:
@@ -19544,7 +19640,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.calendarOptions.events = response.data;
       });
-    } // dateClick(record){
+    },
+    // dateClick(record){
     //     this.date = record.dateStr
     //     this.$refs.modal_add_record.inputTime = [{
     //             typeRecord:false,
@@ -19555,16 +19652,15 @@ __webpack_require__.r(__webpack_exports__);
     //     this.$refs.modal_add_record.$refs._open_modal_add_record.click()
     //
     // },
-    // clickRecord(record) {
-    //     this.recordId = record.event._def.publicId
-    //     axios.post('/api/calendar/get-data-record', {recordId:this.recordId})
-    //         .then((response)=>{
-    //             this.dataRecord = response.data;
-    //             var myModal = new bootstrap.Modal(document.getElementById('modal-action-with-records'));
-    //             myModal.show();
-    //         })
-    // },
-
+    clickRecord: function clickRecord(record) {
+      var recordId = record.event._def.publicId;
+      axios.post('/api/calendar/get-data-record', {
+        recordId: this.recordId
+      }).then(function (response) {
+        console.log(response.data); //this.dataRecord = response.data;
+        //this.$refs.modal_record_user.$refs.open_modal_record_user.click()
+      });
+    }
   }
 });
 
@@ -19622,6 +19718,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 Vue.component('usercalendar-component', (__webpack_require__(/*! ./components/UserCalendarComponent.vue */ "./resources/js/components/UserCalendarComponent.vue")["default"]));
 Vue.component('opencalendar-component', (__webpack_require__(/*! ./components/OpenCalendar.vue */ "./resources/js/components/OpenCalendar.vue")["default"]));
+Vue.component('modal-record-user-component', (__webpack_require__(/*! ./components/ModalRecordUser.vue */ "./resources/js/components/ModalRecordUser.vue")["default"]));
 var EventBus = new Vue();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EventBus);
 var app = new Vue({
@@ -42968,10 +43065,10 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
 
 /***/ }),
 
-/***/ "./resources/js/components/ModalAddRecord.vue":
-/*!****************************************************!*\
-  !*** ./resources/js/components/ModalAddRecord.vue ***!
-  \****************************************************/
+/***/ "./resources/js/components/ModalRecordUser.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/ModalRecordUser.vue ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -42979,8 +43076,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _ModalAddRecord_vue_vue_type_template_id_bc9a8660___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalAddRecord.vue?vue&type=template&id=bc9a8660& */ "./resources/js/components/ModalAddRecord.vue?vue&type=template&id=bc9a8660&");
-/* harmony import */ var _ModalAddRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalAddRecord.vue?vue&type=script&lang=js& */ "./resources/js/components/ModalAddRecord.vue?vue&type=script&lang=js&");
+/* harmony import */ var _ModalRecordUser_vue_vue_type_template_id_02721e2e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalRecordUser.vue?vue&type=template&id=02721e2e& */ "./resources/js/components/ModalRecordUser.vue?vue&type=template&id=02721e2e&");
+/* harmony import */ var _ModalRecordUser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalRecordUser.vue?vue&type=script&lang=js& */ "./resources/js/components/ModalRecordUser.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -42990,9 +43087,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ModalAddRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ModalAddRecord_vue_vue_type_template_id_bc9a8660___WEBPACK_IMPORTED_MODULE_0__.render,
-  _ModalAddRecord_vue_vue_type_template_id_bc9a8660___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _ModalRecordUser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ModalRecordUser_vue_vue_type_template_id_02721e2e___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ModalRecordUser_vue_vue_type_template_id_02721e2e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -43002,7 +43099,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/ModalAddRecord.vue"
+component.options.__file = "resources/js/components/ModalRecordUser.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -43087,10 +43184,10 @@ component.options.__file = "resources/js/components/UserCalendarComponent.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/ModalAddRecord.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/ModalAddRecord.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
+/***/ "./resources/js/components/ModalRecordUser.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/ModalRecordUser.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -43098,8 +43195,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalAddRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalAddRecord.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalAddRecord.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalAddRecord_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalRecordUser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalRecordUser.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalRecordUser.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalRecordUser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -43148,19 +43245,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/ModalAddRecord.vue?vue&type=template&id=bc9a8660&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/ModalAddRecord.vue?vue&type=template&id=bc9a8660& ***!
-  \***********************************************************************************/
+/***/ "./resources/js/components/ModalRecordUser.vue?vue&type=template&id=02721e2e&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/ModalRecordUser.vue?vue&type=template&id=02721e2e& ***!
+  \************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalAddRecord_vue_vue_type_template_id_bc9a8660___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalAddRecord_vue_vue_type_template_id_bc9a8660___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalRecordUser_vue_vue_type_template_id_02721e2e___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalRecordUser_vue_vue_type_template_id_02721e2e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalAddRecord_vue_vue_type_template_id_bc9a8660___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalAddRecord.vue?vue&type=template&id=bc9a8660& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalAddRecord.vue?vue&type=template&id=bc9a8660&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalRecordUser_vue_vue_type_template_id_02721e2e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalRecordUser.vue?vue&type=template&id=02721e2e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalRecordUser.vue?vue&type=template&id=02721e2e&");
 
 
 /***/ }),
@@ -43199,10 +43296,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalAddRecord.vue?vue&type=template&id=bc9a8660&":
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalAddRecord.vue?vue&type=template&id=bc9a8660& ***!
-  \**************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalRecordUser.vue?vue&type=template&id=02721e2e&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalRecordUser.vue?vue&type=template&id=02721e2e& ***!
+  \***************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -43218,18 +43315,23 @@ var render = function () {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "modal fade", attrs: { id: "modal-add-records" } },
+      {
+        ref: "open_modal_record_user",
+        staticClass: "modal fade",
+        attrs: { id: "modal-record-records" },
+      },
       [
         _c("div", { staticClass: "modal-dialog" }, [
           _c("div", { staticClass: "modal-content" }, [
             _c("div", { staticClass: "modal-header" }, [
               _c("h4", { staticClass: "modal-title" }, [
-                _vm._v("Добавить запись"),
+                _vm._v("Выбор действия"),
               ]),
               _vm._v(" "),
               _c(
                 "button",
                 {
+                  ref: "close_modal_action_records",
                   staticClass: "close",
                   attrs: {
                     type: "button",
@@ -43238,166 +43340,181 @@ var render = function () {
                   },
                 },
                 [
-                  _c(
-                    "span",
-                    {
-                      ref: "_close_modal_add_records",
-                      attrs: { "aria-hidden": "true" },
-                    },
-                    [_vm._v("×")]
-                  ),
+                  _c("span", { attrs: { "aria-hidden": "true" } }, [
+                    _vm._v("×"),
+                  ]),
                 ]
               ),
             ]),
             _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "_form_add-records",
-                attrs: { "data-date": _vm.date },
-                on: {
-                  submit: function ($event) {
-                    $event.preventDefault()
-                    return _vm.saveRecords($event)
-                  },
+            _c("div", {}, [
+              _c(
+                "form",
+                {
+                  staticClass: "form-horizontal _form_action_record",
+                  attrs: { "data-record-id": _vm.recordId },
                 },
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "card-body" },
-                  [
-                    _vm._m(0),
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("p", [
+                      _vm._v(
+                        "Выбранный день: " +
+                          _vm._s(_vm.date) +
+                          " " +
+                          _vm._s(_vm.dayWeek)
+                      ),
+                    ]),
                     _vm._v(" "),
-                    _vm.inputTime.length === 0
-                      ? _c("p", [_vm._v("Добавьте новую запись")])
-                      : _vm._e(),
+                    _c("div", { staticClass: "form-group row mb-2" }, [
+                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                        _vm._v("Время"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.time,
+                              expression: "time",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { disabled: "", type: "time" },
+                          domProps: { value: _vm.time },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.time = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                    ]),
                     _vm._v(" "),
-                    _vm._l(_vm.inputTime, function (item, idx) {
-                      return [
+                    _c("div", { staticClass: "form-group row mb-2" }, [
+                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                        _vm._v("Услуга"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
                         _c(
-                          "div",
-                          { staticClass: "input-group mb-3 _time_record" },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: item.value,
-                                  expression: "item.value",
-                                },
-                              ],
-                              staticClass: "form-control",
-                              attrs: { type: "time" },
-                              domProps: { value: item.value },
-                              on: {
-                                input: function ($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(item, "value", $event.target.value)
-                                },
-                              },
-                            }),
-                            _vm._v(" "),
-                            item.typeRecord
-                              ? _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: item.title,
-                                      expression: "item.title",
-                                    },
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text" },
-                                  domProps: { value: item.title },
-                                  on: {
-                                    input: function ($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        item,
-                                        "title",
-                                        $event.target.value
-                                      )
-                                    },
-                                  },
-                                })
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "div",
+                          "select",
+                          {
+                            directives: [
                               {
-                                staticClass: "input-group-append",
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.inputDelete(idx)
-                                  },
-                                },
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectedService,
+                                expression: "selectedService",
                               },
-                              [_vm._m(1, true)]
-                            ),
-                          ]
+                            ],
+                            staticClass: "form-control _input_form_for_record",
+                            on: {
+                              change: function ($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function (o) {
+                                    return o.selected
+                                  })
+                                  .map(function (o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.selectedService = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                            },
+                          },
+                          _vm._l(_vm.services, function (item) {
+                            return _c(
+                              "option",
+                              { domProps: { value: item.id } },
+                              [_vm._v(_vm._s(item.name))]
+                            )
+                          }),
+                          0
                         ),
-                      ]
-                    }),
-                  ],
-                  2
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-footer" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary ml-0",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.inputAdd(false)
-                        },
-                      },
-                    },
-                    [_vm._v("Добавить")]
-                  ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row mb-2" }, [
+                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                        _vm._v("Имя"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.name,
+                              expression: "name",
+                            },
+                          ],
+                          staticClass: "form-control input-lg add_name",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.name },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.name = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row mb-2" }, [
+                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                        _vm._v("Телефон"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.phone,
+                              expression: "phone",
+                            },
+                          ],
+                          staticClass: "form-control input-lg add_name",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.phone },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.phone = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                    ]),
+                  ]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary ml-0 ",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.inputAdd(true)
-                        },
-                      },
-                    },
-                    [_vm._v("Личное")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary mr-0 ",
-                      attrs: { disabled: _vm.isDisabled, type: "submit" },
-                    },
-                    [_vm._v("Сохранить")]
-                  ),
-                ]),
-              ]
-            ),
+                  _vm._m(0),
+                ]
+              ),
+            ]),
           ]),
         ]),
       ]
     ),
     _vm._v(" "),
     _c("button", {
-      ref: "_open_modal_add_record",
+      ref: "open_modal_record_user",
       staticStyle: { display: "none" },
-      attrs: { "data-toggle": "modal", "data-target": "#modal-add-records" },
+      attrs: { "data-toggle": "modal", "data-target": "#modal-record-records" },
     }),
   ])
 }
@@ -43406,16 +43523,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Время")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "input-group-text" }, [
-      _c("i", { staticClass: "fas fa-times" }),
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("button", { staticClass: "btn btn-info" }, [_vm._v("Записать")]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-danger float-right" }, [
+        _vm._v("Закрыть"),
+      ]),
     ])
   },
 ]
@@ -43484,6 +43597,11 @@ var render = function () {
         ref: "testt",
         staticStyle: { display: "none" },
         attrs: { "data-toggle": "modal", "data-target": "#modal-xl" },
+      }),
+      _vm._v(" "),
+      _c("modal-record-user-component", {
+        ref: "modal_record_user",
+        attrs: { dataRecord: _vm.dataRecord },
       }),
     ],
     1
