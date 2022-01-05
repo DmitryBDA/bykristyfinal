@@ -64,7 +64,7 @@
             </div>
         </div>
     </div>
-
+    <modal-record-user-component ref="modal_record_user"></modal-record-user-component>
     @yield('content')
 
 

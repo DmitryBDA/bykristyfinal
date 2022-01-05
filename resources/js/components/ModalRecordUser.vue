@@ -68,8 +68,9 @@
 
 <script>
 
+import EventBus from "../usercalendar";
+
 export default {
-    props:['dataRecord'],
     data: function() {
         return {
             recordId:null,
@@ -89,21 +90,25 @@ export default {
         }
     },
     watch: {
-        dataRecord: function (val) {
-            this.recordId = this.dataRecord.id
-            this.time = new Date(this.dataRecord.start).toLocaleTimeString().slice(0,-3)
-            this.dayWeek = this.days[new Date(this.dataRecord.start).getDay()]
-            this.date = new Date(this.dataRecord.start).toLocaleDateString()
-            this.services = this.dataRecord.services
-            this.selectedService = this.dataRecord.service_id ? this.dataRecord.service_id : 1
-            this.name = this.dataRecord.user ? this.dataRecord.user.surname + ' ' + this.dataRecord.user.name : ''
-            this.phone = this.dataRecord.user ? this.dataRecord.user.phone : ''
-            this.statusRecord = this.dataRecord.status
-            //this.$refs.open_modal_action_records.click()
-        },
+
     },
     mounted() {
-
+        EventBus.$on("openModalRecordUser", (data) => {
+            data.services.unshift({
+                name:'Не выбрано',
+                id:0
+            })
+            this.recordId = data.id
+            this.time = new Date(data.start).toLocaleTimeString().slice(0,-3)
+            this.dayWeek = this.days[new Date(data.start).getDay()]
+            this.date = new Date(data.start).toLocaleDateString()
+            this.services = data.services
+            this.selectedService = 0
+            this.name = data.user ? data.user.surname + ' ' + data.user.name : ''
+            this.phone = data.user ? data.user.phone : ''
+            this.statusRecord = data.status
+            this.$refs.open_modal_record_user.click()
+        });
     },
     methods: {
         recordUser() {

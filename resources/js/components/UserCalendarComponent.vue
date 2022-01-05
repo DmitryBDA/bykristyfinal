@@ -72,6 +72,10 @@ export default {
                     this.calendarOptions.events = response.data
             })
         },
+        openModalRecordUser(data) {
+            //As an ES6 module.
+            EventBus.$emit("openModalRecordUser", data);
+        },
         // dateClick(record){
         //     this.date = record.dateStr
         //     this.$refs.modal_add_record.inputTime = [{
@@ -86,11 +90,10 @@ export default {
         clickRecord(record) {
             const recordId = record.event._def.publicId
 
-             axios.post('/api/calendar/get-data-record', {recordId:this.recordId})
+             axios.post('/api/calendar/get-data-record-user', {recordId:recordId})
                  .then((response)=>{
-                     console.log(response.data)
-                     //this.dataRecord = response.data;
-                     //this.$refs.modal_record_user.$refs.open_modal_record_user.click()
+                     this.dataRecord = response.data;
+                     this.openModalRecordUser(this.dataRecord)
                  })
         },
     }
@@ -100,7 +103,6 @@ export default {
     <div>
         <FullCalendar :options="calendarOptions" />
         <button style="display: none" data-toggle="modal" data-target="#modal-xl" ref="testt"></button>
-        <modal-record-user-component :dataRecord="dataRecord" ref="modal_record_user"></modal-record-user-component>
 <!--        <modal-action-record :dataRecord="dataRecord"></modal-action-record>-->
     </div>
 </template>

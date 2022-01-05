@@ -60,6 +60,16 @@ class CalendarController extends Controller
 
     }
 
+    public function getDataRecordUser(Request $request){
+        $recordId = $request->recordId;
+        $services = Service::all();
+
+        $record = Record::where('id' , $recordId)->first();
+        $record->setAttr('services', $services);
+
+        return response()->json($record);
+    }
+
     public function addUserToRecord(Request $request){
         $data = $request->all();
         $record = Record::find($data['recordId']);
