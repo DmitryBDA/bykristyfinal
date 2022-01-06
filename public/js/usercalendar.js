@@ -19663,7 +19663,7 @@ __webpack_require__.r(__webpack_exports__);
         eventDisplay: 'block',
         initialView: 'dayGridMonth',
         nextDayThreshold: '00:00:00',
-        editable: true,
+        editable: false,
         selectable: true,
         eventTimeFormat: {
           // like '14:30:00'

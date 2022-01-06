@@ -31,7 +31,7 @@ export default {
                 eventDisplay: 'block',
                 initialView: 'dayGridMonth',
                 nextDayThreshold: '00:00:00',
-                editable: true,
+                editable: false,
                 selectable: true,
                 eventTimeFormat: { // like '14:30:00'
                     hour: '2-digit',
