@@ -23,7 +23,7 @@ export default {
                     left: 'title',
                     right: 'prev,next'
                 },
-                height: 700,
+                height: 600,
                 timeZone: 'UTC',
                 firstDay: 1,
                 locale:'ru',
