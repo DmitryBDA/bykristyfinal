@@ -150,4 +150,28 @@ class CalendarController extends Controller
         $arNames = $this->userRepository->searchAutocomplete($query);
         return response()->json($arNames);
     }
+
+    public function recordUser(Request $request){
+        $data = $request->all();
+        $record = Record::find($data['recordId']);
+
+        if($record->status != 1){
+            return response()->json('busy');
+        }
+        $phone = str_replace(['+7', '(', ')', ' ', '-'],'',$data['phone']);
+        $user = User::where('phone', $phone)->first();
+
+        if (!$user) {
+            $user = $this->userRepository->createUser($request);
+        }
+
+        $record->update([
+            'user_id' => $user->id,
+            'service_id' => $data['serviceId'],
+            'status' => 2
+        ]);
+
+        return response()->json($record);
+
+    }
 }

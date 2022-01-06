@@ -60,6 +60,9 @@ export default {
             this.clickOpenCalendar = true
             this.showRecords();
         });
+        EventBus.$on("updateCalendar", () => {
+            this.showRecords();
+        });
     },
     methods: {
         showRecords(){
