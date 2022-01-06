@@ -23,7 +23,7 @@
 
                                 </div>
 
-                                <div class="form-group row">
+                                <div v-if="statusRecord !== 4" class="form-group row">
                                     <label class="col-sm-3 col-form-label">Услуга</label>
                                     <div class="col-sm-9">
                                         <select v-model="selectedService" class="form-control _input_form_for_record">
@@ -31,7 +31,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div v-if="statusRecord !== 4" class="form-group row">
                                     <label class="col-sm-3 col-form-label">Имя</label>
                                     <div class="col-sm-9">
                                         <input type="text"
@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                                <div v-if="statusRecord !== 4" class="form-group row">
                                     <label class="col-sm-3 col-form-label">Телефон</label>
                                     <div class="input-group mb-3 col-sm-9">
                                         <input type="text" v-model="phone"
@@ -69,12 +69,21 @@
                                     </div>
                                 </div>
 
+                                <div v-if="statusRecord === 4" class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Название</label>
+                                    <div class="col-sm-9">
+                                        <input type="text"
+                                               class="form-control input-lg add_name"
+                                               v-model="title">
+                                    </div>
+                                </div>
+
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button v-if="statusRecord == 1" @click.prevent="recordUser()" class="btn btn-info">Записать</button>
-                                <button v-if="statusRecord == 2"  @click.prevent="confirmRecord()" class="btn btn-info">Подтвердить</button>
-                                <button v-if="statusRecord !== 1" @click.prevent="cancelRecord()" class="btn btn-info">Отменить</button>
+                                <button v-if="statusRecord === 1" @click.prevent="recordUser()" class="btn btn-info">Записать</button>
+                                <button v-if="statusRecord === 2"  @click.prevent="confirmRecord()" class="btn btn-info">Подтвердить</button>
+                                <button v-if="statusRecord !== 1 && statusRecord !== 4" @click.prevent="cancelRecord()" class="btn btn-info">Отменить</button>
                                 <button v-if="statusRecord !== 1 && isEdit" @click.prevent="saveDataRecord()" class="btn btn-success float-center">Сохранить</button>
                                 <button class="btn btn-danger float-right" @click.prevent="deleteRecord()" >Удалить</button>
                             </div>
@@ -103,6 +112,7 @@ export default {
             selectedService:1,
             services:null,
             name: null,
+            title: '',
             phone: null,
             statusRecord: null,
             isEdit: true,
@@ -120,6 +130,7 @@ export default {
             this.services = this.dataRecord.services
             this.selectedService = this.dataRecord.service_id ? this.dataRecord.service_id : 1
             this.name = this.dataRecord.user ? this.dataRecord.user.surname + ' ' + this.dataRecord.user.name : ''
+            this.title = this.dataRecord.title
             this.phone = this.dataRecord.user ? this.dataRecord.user.phone : ''
             this.statusRecord = this.dataRecord.status
             //this.$refs.open_modal_action_records.click()
@@ -140,7 +151,7 @@ export default {
                     serviceId: this.selectedService,
                     name: this.name,
                     time: this.time,
-                    phone: this.phone
+                    phone: this.phone,
                 }
             )
                 .then((response) => {
@@ -156,10 +167,12 @@ export default {
                     serviceId: this.selectedService,
                     name: this.name,
                     time: this.time,
-                    phone: this.phone
+                    phone: this.phone,
+                    title: this.title
                 }
             )
                 .then((response) => {
+                    this.$parent.showRecords()
                     const elem = this.$refs.mess_about_success_save
                     elem.click();
                 })

@@ -13,6 +13,9 @@
         .list-group-item{
             padding: 3px 8px;
         }
+        .fc-event-title-container{
+            display: none!important;
+        }
     </style>
 @endsection
 

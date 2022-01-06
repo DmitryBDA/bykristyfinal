@@ -19381,7 +19381,8 @@ __webpack_require__.r(__webpack_exports__);
 
       },
       date: null,
-      dataRecord: []
+      dataRecord: [],
+      messageTitleRecord: null
     };
   },
   methods: {
@@ -19672,6 +19673,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['dataRecord'],
   data: function data() {
@@ -19684,6 +19694,7 @@ __webpack_require__.r(__webpack_exports__);
       selectedService: 1,
       services: null,
       name: null,
+      title: '',
       phone: null,
       statusRecord: null,
       isEdit: true,
@@ -19701,6 +19712,7 @@ __webpack_require__.r(__webpack_exports__);
       this.services = this.dataRecord.services;
       this.selectedService = this.dataRecord.service_id ? this.dataRecord.service_id : 1;
       this.name = this.dataRecord.user ? this.dataRecord.user.surname + ' ' + this.dataRecord.user.name : '';
+      this.title = this.dataRecord.title;
       this.phone = this.dataRecord.user ? this.dataRecord.user.phone : '';
       this.statusRecord = this.dataRecord.status; //this.$refs.open_modal_action_records.click()
     }
@@ -19738,8 +19750,11 @@ __webpack_require__.r(__webpack_exports__);
         serviceId: this.selectedService,
         name: this.name,
         time: this.time,
-        phone: this.phone
+        phone: this.phone,
+        title: this.title
       }).then(function (response) {
+        _this2.$parent.showRecords();
+
         var elem = _this2.$refs.mess_about_success_save;
         elem.click();
       });
@@ -25082,7 +25097,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fc-title {\r\n    color: #fff;\n}\n.fc-title:hover {\r\n    cursor: pointer;\n}\n.greenEvent {\r\n    background-color:#1d8b1d;\n}\n.yellowEvent {\r\n    background-color:#a7a739;\n}\n.redEvent {\r\n    background-color:#bf0d0d;\n}\n.greyEvent {\r\n    background-color:grey;\n}\n.hiddenevent{\r\n    font-size: 9px;\n}\n.fc-daygrid-block-event .fc-event-time{\r\n    font-weight: 400!important;\n}\n.fc-daygrid-day-top a{\r\n    color: black;\n}\n.fc-event-time{\r\n    color: white;\n}\n.fc-daygrid-event-dot{\r\n    display: none;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fc-title {\n    color: #fff;\n}\n.fc-title:hover {\n    cursor: pointer;\n}\n.greenEvent {\n    background-color:#1d8b1d;\n}\n.yellowEvent {\n    background-color:#a7a739;\n}\n.redEvent {\n    background-color:#bf0d0d;\n}\n.greyEvent {\n    background-color:grey;\n}\n.hiddenevent{\n    font-size: 9px;\n}\n.fc-daygrid-block-event .fc-event-time{\n    font-weight: 400!important;\n}\n.fc-daygrid-day-top a{\n    color: black;\n}\n.fc-event-time{\n    color: white;\n}\n.fc-daygrid-event-dot{\n    display: none;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -44101,181 +44116,241 @@ var render = function () {
                       ]),
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Услуга"),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
+                    _vm.statusRecord !== 4
+                      ? _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-sm-3 col-form-label" },
+                            [_vm._v("Услуга")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-9" }, [
+                            _c(
+                              "select",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.selectedService,
-                                expression: "selectedService",
-                              },
-                            ],
-                            staticClass: "form-control _input_form_for_record",
-                            on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.selectedService = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              },
-                            },
-                          },
-                          _vm._l(_vm.services, function (item) {
-                            return _c(
-                              "option",
-                              { domProps: { value: item.id } },
-                              [_vm._v(_vm._s(item.name))]
-                            )
-                          }),
-                          0
-                        ),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Имя"),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.name,
-                              expression: "name",
-                            },
-                          ],
-                          staticClass: "form-control input-lg add_name",
-                          attrs: { type: "text", autocomplete: "off" },
-                          domProps: { value: _vm.name },
-                          on: {
-                            keyup: function ($event) {
-                              return _vm.getDataAutocomplete()
-                            },
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.name = $event.target.value
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _vm.isActiveSearch
-                          ? _c(
-                              "div",
-                              {
-                                staticClass: "panel-footer",
-                                staticStyle: {
-                                  position: "absolute",
-                                  "z-index": "1",
-                                },
-                              },
-                              [
-                                _c(
-                                  "ul",
-                                  { staticClass: "list-group" },
-                                  _vm._l(
-                                    _vm.search_data,
-                                    function (name, phone) {
-                                      return _c(
-                                        "a",
-                                        {
-                                          staticClass: "list-group-item",
-                                          attrs: { href: "#" },
-                                          on: {
-                                            click: function ($event) {
-                                              $event.preventDefault()
-                                              return _vm.pasteName(name, phone)
-                                            },
-                                          },
-                                        },
-                                        [_vm._v(_vm._s(name))]
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.selectedService,
+                                    expression: "selectedService",
+                                  },
+                                ],
+                                staticClass:
+                                  "form-control _input_form_for_record",
+                                on: {
+                                  change: function ($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call(
+                                        $event.target.options,
+                                        function (o) {
+                                          return o.selected
+                                        }
                                       )
-                                    }
-                                  ),
-                                  0
-                                ),
-                              ]
-                            )
-                          : _vm._e(),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Телефон"),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "input-group mb-3 col-sm-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.phone,
-                              expression: "phone",
-                            },
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: { value: _vm.phone },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.phone = $event.target.value
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _vm.phone
-                          ? _c(
-                              "a",
-                              {
-                                staticClass: "input-group-append",
-                                attrs: {
-                                  href: "whatsapp://send?phone=+7" + _vm.phone,
+                                      .map(function (o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.selectedService = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  },
                                 },
                               },
-                              [_vm._m(0)]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.phone
-                          ? _c(
-                              "a",
-                              {
-                                staticClass: "input-group-append",
-                                attrs: { href: "tel:+7" + _vm.phone },
+                              _vm._l(_vm.services, function (item) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: item.id } },
+                                  [_vm._v(_vm._s(item.name))]
+                                )
+                              }),
+                              0
+                            ),
+                          ]),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.statusRecord !== 4
+                      ? _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-sm-3 col-form-label" },
+                            [_vm._v("Имя")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-9" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.name,
+                                  expression: "name",
+                                },
+                              ],
+                              staticClass: "form-control input-lg add_name",
+                              attrs: { type: "text", autocomplete: "off" },
+                              domProps: { value: _vm.name },
+                              on: {
+                                keyup: function ($event) {
+                                  return _vm.getDataAutocomplete()
+                                },
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.name = $event.target.value
+                                },
                               },
-                              [_vm._m(1)]
-                            )
-                          : _vm._e(),
-                      ]),
-                    ]),
+                            }),
+                            _vm._v(" "),
+                            _vm.isActiveSearch
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass: "panel-footer",
+                                    staticStyle: {
+                                      position: "absolute",
+                                      "z-index": "1",
+                                    },
+                                  },
+                                  [
+                                    _c(
+                                      "ul",
+                                      { staticClass: "list-group" },
+                                      _vm._l(
+                                        _vm.search_data,
+                                        function (name, phone) {
+                                          return _c(
+                                            "a",
+                                            {
+                                              staticClass: "list-group-item",
+                                              attrs: { href: "#" },
+                                              on: {
+                                                click: function ($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.pasteName(
+                                                    name,
+                                                    phone
+                                                  )
+                                                },
+                                              },
+                                            },
+                                            [_vm._v(_vm._s(name))]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                )
+                              : _vm._e(),
+                          ]),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.statusRecord !== 4
+                      ? _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-sm-3 col-form-label" },
+                            [_vm._v("Телефон")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "input-group mb-3 col-sm-9" },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.phone,
+                                    expression: "phone",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text" },
+                                domProps: { value: _vm.phone },
+                                on: {
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.phone = $event.target.value
+                                  },
+                                },
+                              }),
+                              _vm._v(" "),
+                              _vm.phone
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "input-group-append",
+                                      attrs: {
+                                        href:
+                                          "whatsapp://send?phone=+7" +
+                                          _vm.phone,
+                                      },
+                                    },
+                                    [_vm._m(0)]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.phone
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "input-group-append",
+                                      attrs: { href: "tel:+7" + _vm.phone },
+                                    },
+                                    [_vm._m(1)]
+                                  )
+                                : _vm._e(),
+                            ]
+                          ),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.statusRecord === 4
+                      ? _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-sm-3 col-form-label" },
+                            [_vm._v("Название")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-9" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.title,
+                                  expression: "title",
+                                },
+                              ],
+                              staticClass: "form-control input-lg add_name",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.title },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.title = $event.target.value
+                                },
+                              },
+                            }),
+                          ]),
+                        ])
+                      : _vm._e(),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "card-footer" }, [
-                    _vm.statusRecord == 1
+                    _vm.statusRecord === 1
                       ? _c(
                           "button",
                           {
@@ -44291,7 +44366,7 @@ var render = function () {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.statusRecord == 2
+                    _vm.statusRecord === 2
                       ? _c(
                           "button",
                           {
@@ -44307,7 +44382,7 @@ var render = function () {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.statusRecord !== 1
+                    _vm.statusRecord !== 1 && _vm.statusRecord !== 4
                       ? _c(
                           "button",
                           {

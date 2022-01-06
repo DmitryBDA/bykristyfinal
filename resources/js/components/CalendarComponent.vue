@@ -48,6 +48,7 @@ export default {
             },
             date:null,
             dataRecord: [],
+            messageTitleRecord:null,
         }
     },
     methods: {
@@ -72,9 +73,12 @@ export default {
             this.recordId = record.event._def.publicId
             axios.post('/api/calendar/get-data-record', {recordId:this.recordId})
                 .then((response)=>{
-                    this.dataRecord = response.data;
-                    var myModal = new bootstrap.Modal(document.getElementById('modal-action-with-records'));
-                    myModal.show();
+
+                        this.dataRecord = response.data;
+                        var myModal = new bootstrap.Modal(document.getElementById('modal-action-with-records'));
+                        myModal.show();
+
+
                 })
         },
     }

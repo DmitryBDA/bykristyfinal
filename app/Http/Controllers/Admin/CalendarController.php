@@ -94,13 +94,25 @@ class CalendarController extends Controller
         $data = $request->all();
         $record = Record::find($data['recordId']);
 
+        $tekDate = Carbon::create($record->start)->format('Y-m-d');
+        $date = $tekDate . ' ' . $data['time'];
+
+        if($record->status == 4){
+            $record->update([
+                'title' => $data['title'],
+                'start' => $date,
+                'end' => $date,
+            ]);
+
+            return response()->json($record);
+        }
+
         $user = User::where('phone', $data['phone'])->first();
 
         if (!$user) {
             $user = $this->userRepository->createUser($request);
         }
-        $tekDate = Carbon::create($record->start)->format('Y-m-d');
-        $date = $tekDate . ' ' . $data['time'];
+
         $record->update([
             'user_id' => $user->id,
             'service_id' => $data['serviceId'],
