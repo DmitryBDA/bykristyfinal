@@ -19330,6 +19330,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _usercalendar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../usercalendar */ "./resources/js/usercalendar.js");
 //
 //
 //
@@ -19398,8 +19399,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['dataRecord'],
   data: function data() {
     return {
       recordId: null,
@@ -19407,9 +19410,10 @@ __webpack_require__.r(__webpack_exports__);
       days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
       dayWeek: null,
       date: null,
-      selectedService: 1,
+      selectedService: '',
       services: null,
-      name: null,
+      name: '',
+      surname: '',
       phone: null,
       statusRecord: null,
       isEdit: true,
@@ -19418,22 +19422,34 @@ __webpack_require__.r(__webpack_exports__);
       Toast: null
     };
   },
-  watch: {
-    dataRecord: function dataRecord(val) {
-      this.recordId = this.dataRecord.id;
-      this.time = new Date(this.dataRecord.start).toLocaleTimeString().slice(0, -3);
-      this.dayWeek = this.days[new Date(this.dataRecord.start).getDay()];
-      this.date = new Date(this.dataRecord.start).toLocaleDateString();
-      this.services = this.dataRecord.services;
-      this.selectedService = this.dataRecord.service_id ? this.dataRecord.service_id : 1;
-      this.name = this.dataRecord.user ? this.dataRecord.user.surname + ' ' + this.dataRecord.user.name : '';
-      this.phone = this.dataRecord.user ? this.dataRecord.user.phone : '';
-      this.statusRecord = this.dataRecord.status; //this.$refs.open_modal_action_records.click()
-    }
+  watch: {},
+  mounted: function mounted() {
+    var _this = this;
+
+    _usercalendar__WEBPACK_IMPORTED_MODULE_0__["default"].$on("openModalRecordUser", function (data) {
+      // data.services.unshift({
+      //     name:'Не выбрано',
+      //     id:0
+      // })
+      _this.recordId = data.id;
+      _this.time = new Date(data.start).toLocaleTimeString().slice(0, -3);
+      _this.dayWeek = _this.days[new Date(data.start).getDay()];
+      _this.date = new Date(data.start).toLocaleDateString();
+      _this.services = data.services;
+      _this.selectedService = '';
+      _this.name = '';
+      _this.surname = '';
+      _this.phone = data.user ? data.user.phone : '';
+      _this.statusRecord = data.status;
+
+      _this.$refs.open_modal_record_user.click();
+    });
   },
-  mounted: function mounted() {},
   methods: {
-    recordUser: function recordUser() {}
+    recordUser: function recordUser() {},
+    submit: function submit() {
+      console.log('submit');
+    }
     /*
             saveDataRecord(){
                 axios.post('/api/calendar/save-data-record', {
@@ -19641,6 +19657,10 @@ __webpack_require__.r(__webpack_exports__);
         _this2.calendarOptions.events = response.data;
       });
     },
+    openModalRecordUser: function openModalRecordUser(data) {
+      //As an ES6 module.
+      _usercalendar_js__WEBPACK_IMPORTED_MODULE_0__["default"].$emit("openModalRecordUser", data);
+    },
     // dateClick(record){
     //     this.date = record.dateStr
     //     this.$refs.modal_add_record.inputTime = [{
@@ -19653,12 +19673,15 @@ __webpack_require__.r(__webpack_exports__);
     //
     // },
     clickRecord: function clickRecord(record) {
+      var _this3 = this;
+
       var recordId = record.event._def.publicId;
-      axios.post('/api/calendar/get-data-record', {
-        recordId: this.recordId
+      axios.post('/api/calendar/get-data-record-user', {
+        recordId: recordId
       }).then(function (response) {
-        console.log(response.data); //this.dataRecord = response.data;
-        //this.$refs.modal_record_user.$refs.open_modal_record_user.click()
+        _this3.dataRecord = response.data;
+
+        _this3.openModalRecordUser(_this3.dataRecord);
       });
     }
   }
@@ -43323,29 +43346,7 @@ var render = function () {
       [
         _c("div", { staticClass: "modal-dialog" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-header" }, [
-              _c("h4", { staticClass: "modal-title" }, [
-                _vm._v("Выбор действия"),
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  ref: "close_modal_action_records",
-                  staticClass: "close",
-                  attrs: {
-                    type: "button",
-                    "data-dismiss": "modal",
-                    "aria-label": "Close",
-                  },
-                },
-                [
-                  _c("span", { attrs: { "aria-hidden": "true" } }, [
-                    _vm._v("×"),
-                  ]),
-                ]
-              ),
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", {}, [
               _c(
@@ -43353,6 +43354,12 @@ var render = function () {
                 {
                   staticClass: "form-horizontal _form_action_record",
                   attrs: { "data-record-id": _vm.recordId },
+                  on: {
+                    submit: function ($event) {
+                      $event.preventDefault()
+                      return _vm.submit.apply(null, arguments)
+                    },
+                  },
                 },
                 [
                   _c("div", { staticClass: "card-body" }, [
@@ -43366,11 +43373,13 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Время"),
-                      ]),
+                      _c(
+                        "label",
+                        { staticClass: "col-sm-3 label col-form-label" },
+                        [_vm._v("Время")]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
+                      _c("div", { staticClass: "col-sm-9 value" }, [
                         _c("input", {
                           directives: [
                             {
@@ -43396,11 +43405,13 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Услуга"),
-                      ]),
+                      _c(
+                        "label",
+                        { staticClass: "col-sm-3 label col-form-label" },
+                        [_vm._v("Услуга")]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
+                      _c("div", { staticClass: "col-sm-9 value" }, [
                         _c(
                           "select",
                           {
@@ -43413,6 +43424,7 @@ var render = function () {
                               },
                             ],
                             staticClass: "form-control _input_form_for_record",
+                            attrs: { required: true },
                             on: {
                               change: function ($event) {
                                 var $$selectedVal = Array.prototype.filter
@@ -43442,11 +43454,13 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Имя"),
-                      ]),
+                      _c(
+                        "label",
+                        { staticClass: "col-sm-3 label col-form-label" },
+                        [_vm._v("Имя")]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
+                      _c("div", { staticClass: "col-sm-9 value" }, [
                         _c("input", {
                           directives: [
                             {
@@ -43457,7 +43471,7 @@ var render = function () {
                             },
                           ],
                           staticClass: "form-control input-lg add_name",
-                          attrs: { type: "text" },
+                          attrs: { required: "", type: "text" },
                           domProps: { value: _vm.name },
                           on: {
                             input: function ($event) {
@@ -43472,11 +43486,45 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Телефон"),
-                      ]),
+                      _c(
+                        "label",
+                        { staticClass: "col-sm-3 label col-form-label" },
+                        [_vm._v("Фамилия")]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
+                      _c("div", { staticClass: "col-sm-9 value" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.surname,
+                              expression: "surname",
+                            },
+                          ],
+                          staticClass: "form-control input-lg add_name",
+                          attrs: { required: "", type: "text" },
+                          domProps: { value: _vm.surname },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.surname = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row mb-2" }, [
+                      _c(
+                        "label",
+                        { staticClass: "col-sm-3 label col-form-label" },
+                        [_vm._v("Телефон")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9 value" }, [
                         _c("input", {
                           directives: [
                             {
@@ -43487,7 +43535,13 @@ var render = function () {
                             },
                           ],
                           staticClass: "form-control input-lg add_name",
-                          attrs: { type: "text" },
+                          attrs: {
+                            required: "",
+                            type: "text",
+                            "data-inputmask": '"mask": "+7 (999) 999-9999"',
+                            "data-mask": "",
+                            inputmode: "text",
+                          },
                           domProps: { value: _vm.phone },
                           on: {
                             input: function ($event) {
@@ -43502,7 +43556,7 @@ var render = function () {
                     ]),
                   ]),
                   _vm._v(" "),
-                  _vm._m(0),
+                  _vm._m(1),
                 ]
               ),
             ]),
@@ -43523,12 +43577,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Форма записи")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-footer" }, [
       _c("button", { staticClass: "btn btn-info" }, [_vm._v("Записать")]),
       _vm._v(" "),
-      _c("button", { staticClass: "btn btn-danger float-right" }, [
-        _vm._v("Закрыть"),
-      ]),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default right",
+          attrs: { type: "button", "data-dismiss": "modal" },
+        },
+        [_vm._v("Закрыть")]
+      ),
     ])
   },
 ]
@@ -43597,11 +43664,6 @@ var render = function () {
         ref: "testt",
         staticStyle: { display: "none" },
         attrs: { "data-toggle": "modal", "data-target": "#modal-xl" },
-      }),
-      _vm._v(" "),
-      _c("modal-record-user-component", {
-        ref: "modal_record_user",
-        attrs: { dataRecord: _vm.dataRecord },
       }),
     ],
     1

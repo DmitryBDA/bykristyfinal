@@ -61,6 +61,9 @@
                 <div class="modal-body">
                     <usercalendar-component></usercalendar-component>
                 </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                </div>
             </div>
         </div>
     </div>
@@ -325,9 +328,13 @@
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 <script src="{{mix('js/usercalendar.js')}}"></script>
+<script>
+    //Money Euro
+    $('[data-mask]').inputmask()
+</script>
 </body>
 </html>

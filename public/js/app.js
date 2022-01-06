@@ -25082,7 +25082,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fc-title {\r\n    color: #fff;\n}\n.fc-title:hover {\r\n    cursor: pointer;\n}\n.greenEvent {\r\n    background-color:#1d8b1d;\n}\n.yellowEvent {\r\n    background-color:#a7a739;\n}\n.redEvent {\r\n    background-color:#bf0d0d;\n}\n.greyEvent {\r\n    background-color:grey;\n}\n.hiddenevent{\r\n    font-size: 9px;\n}\n.fc-daygrid-block-event .fc-event-time{\r\n    font-weight: 400!important;\n}\n.fc-daygrid-day-top a{\r\n    color: black;\n}\n.fc-event-time{\r\n    color: white;\n}\n.fc-daygrid-event-dot{\r\n    display: none;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fc-title {\n    color: #fff;\n}\n.fc-title:hover {\n    cursor: pointer;\n}\n.greenEvent {\n    background-color:#1d8b1d;\n}\n.yellowEvent {\n    background-color:#a7a739;\n}\n.redEvent {\n    background-color:#bf0d0d;\n}\n.greyEvent {\n    background-color:grey;\n}\n.hiddenevent{\n    font-size: 9px;\n}\n.fc-daygrid-block-event .fc-event-time{\n    font-weight: 400!important;\n}\n.fc-daygrid-day-top a{\n    color: black;\n}\n.fc-event-time{\n    color: white;\n}\n.fc-daygrid-event-dot{\n    display: none;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

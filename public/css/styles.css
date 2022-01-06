@@ -683,7 +683,12 @@ progress {
   padding-left: calc(var(--bs-gutter-x) * 0.5);
   margin-top: var(--bs-gutter-y);
 }
-
+.row .label{
+    width: 30%!important;
+}
+.row .value{
+    width: 70%!important;
+}
 .col {
   flex: 1 0 0%;
 }

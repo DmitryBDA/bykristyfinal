@@ -4,19 +4,15 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Выбор действия</h4>
-                        <button type="button" class="close" data-dismiss="modal" ref="close_modal_action_records"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h4 class="modal-title">Форма записи</h4>
                     </div>
                     <div class="">
-                        <form class="form-horizontal _form_action_record" :data-record-id="recordId">
+                        <form @submit.prevent="submit" class="form-horizontal _form_action_record" :data-record-id="recordId">
                             <div class="card-body">
                                 <p>Выбранный день: {{date}} {{ dayWeek }}</p>
                                 <div class="form-group row mb-2">
-                                    <label class="col-sm-3 col-form-label">Время</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-3 label col-form-label">Время</label>
+                                    <div class="col-sm-9 value">
                                         <input disabled type="time" class="form-control" v-model="time">
                                     </div>
 
@@ -24,37 +20,43 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label class="col-sm-3 col-form-label">Услуга</label>
-                                    <div class="col-sm-9">
-                                        <select v-model="selectedService" class="form-control _input_form_for_record">
+                                    <label class="col-sm-3 label col-form-label">Услуга</label>
+                                    <div class="col-sm-9 value">
+                                        <select :required="true" v-model="selectedService" class="form-control _input_form_for_record">
                                             <option v-for="item in services" :value="item.id">{{ item.name }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-2">
-                                    <label class="col-sm-3 col-form-label">Имя</label>
-                                    <div class="col-sm-9">
-                                        <input type="text"
+                                    <label class="col-sm-3 label col-form-label">Имя</label>
+                                    <div class="col-sm-9 value">
+                                        <input required type="text"
                                                class="form-control input-lg add_name"
                                                v-model="name">
 
                                     </div>
                                 </div>
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-3 label col-form-label">Фамилия</label>
+                                    <div class="col-sm-9 value">
+                                        <input required type="text"
+                                               class="form-control input-lg add_name"
+                                               v-model="surname">
+
+                                    </div>
+                                </div>
 
                                 <div class="form-group row mb-2">
-                                    <label class="col-sm-3 col-form-label">Телефон</label>
-                                    <div class="col-sm-9">
-                                        <input type="text"
-                                               class="form-control input-lg add_name"
-                                               v-model="phone">
-
+                                    <label class="col-sm-3 label col-form-label">Телефон</label>
+                                    <div class="col-sm-9 value">
+                                        <input required v-model="phone" type="text" class="form-control input-lg add_name" data-inputmask='"mask": "+7 (999) 999-9999"' data-mask inputmode="text">
                                     </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button class="btn btn-info">Записать</button>
-                                <button class="btn btn-danger float-right">Закрыть</button>
+                                <button type="button" class="btn btn-default right" data-dismiss="modal">Закрыть</button>
                             </div>
                             <!-- /.card-footer -->
                         </form>
@@ -78,9 +80,10 @@ export default {
             days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
             dayWeek: null,
             date: null,
-            selectedService:1,
+            selectedService:'',
             services:null,
-            name: null,
+            name: '',
+            surname: '',
             phone: null,
             statusRecord: null,
             isEdit: true,
@@ -94,17 +97,18 @@ export default {
     },
     mounted() {
         EventBus.$on("openModalRecordUser", (data) => {
-            data.services.unshift({
-                name:'Не выбрано',
-                id:0
-            })
+            // data.services.unshift({
+            //     name:'Не выбрано',
+            //     id:0
+            // })
             this.recordId = data.id
             this.time = new Date(data.start).toLocaleTimeString().slice(0,-3)
             this.dayWeek = this.days[new Date(data.start).getDay()]
             this.date = new Date(data.start).toLocaleDateString()
             this.services = data.services
-            this.selectedService = 0
-            this.name = data.user ? data.user.surname + ' ' + data.user.name : ''
+            this.selectedService = ''
+            this.name = ''
+            this.surname = ''
             this.phone = data.user ? data.user.phone : ''
             this.statusRecord = data.status
             this.$refs.open_modal_record_user.click()
@@ -114,6 +118,9 @@ export default {
         recordUser() {
 
         },
+        submit(){
+            console.log('submit')
+        }
 /*
         saveDataRecord(){
             axios.post('/api/calendar/save-data-record', {
