@@ -29,8 +29,7 @@ class CalendarController extends Controller
 
     public function showRecords()
     {
-
-        $recordList = $this->recordRepository->getActiveRecords();
+        $recordList = $this->recordRepository->getAllFromToday();
         return response()->json($recordList);
     }
 

@@ -17,34 +17,19 @@ class RecordRepository extends CoreRepository
     /**
      * @return mixed
      */
-    public function getActiveRecords()
+    public function getAllFromToday()
     {
         $tekDate = Carbon::today()->format('Y-m-d');
-        //Получить список записей
+        //Получить список записей от сегоднящнего дня
         $recordList = $this->startCondition()
             ->whereDate('start', '>=', $tekDate)
             ->orderBy('start', 'asc')
             ->get(['id', 'title', 'start', 'status']);
 
         //Добавить записям класс в зависимости от статуса
-        foreach ($recordList as $elem) {
-            switch ($elem->status) {
-                case 1:
-                    $elem->setAttr('className', "greenEvent");
-                    break;
-                case 2:
-                    $elem->setAttr('className', "yellowEvent");
-                    break;
-                case 3:
-                    $elem->setAttr('className', "redEvent");
-                    break;
-                case 4:
-                    $elem->setAttr('className', "greyEvent");
-                    break;
-            }
-        }
+        $finalRecordList = $this->addAttrClassNameForStatus($recordList);
 
-        return $recordList;
+        return $finalRecordList;
     }
 
     public function getActiveRecordsForUsers()
@@ -136,6 +121,26 @@ class RecordRepository extends CoreRepository
         }
 
 
+        return $recordList;
+    }
+
+    private function addAttrClassNameForStatus($recordList){
+        foreach ($recordList as $elem) {
+            switch ($elem->status) {
+                case 1:
+                    $elem->setAttr('className', "greenEvent");
+                    break;
+                case 2:
+                    $elem->setAttr('className', "yellowEvent");
+                    break;
+                case 3:
+                    $elem->setAttr('className', "redEvent");
+                    break;
+                case 4:
+                    $elem->setAttr('className', "greyEvent");
+                    break;
+            }
+        }
         return $recordList;
     }
 
