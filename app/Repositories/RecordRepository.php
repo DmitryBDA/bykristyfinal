@@ -54,21 +54,21 @@ class RecordRepository extends CoreRepository
         return $recordList;
     }
 
-    public function addRecords(Request $request){
+    public function addRecords($data){
 
-        $data = $request->date;
-        $arrRecords = $request->timeRecords;
+
+        $arrRecords = $data['timeRecords'];
 
         foreach ($arrRecords as $record) {
 
-            $date = $request->date . ' ' . $record['value'];
+            $date = $data['date'] . ' ' . $record['value'];
             $arrData = [
                 'title' => $record['title'] ? $record['title'] : '',
                 'start' => $date,
                 'end' => $date,
                 'status' => $record['status']
             ];
-            $event = $this->startCondition()::create($arrData);
+            $this->startCondition()::create($arrData);
         }
     }
 

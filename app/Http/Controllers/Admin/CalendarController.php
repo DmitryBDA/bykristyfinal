@@ -40,12 +40,6 @@ class CalendarController extends Controller
         return response()->json($recordList);
     }
 
-
-    public function createRecords(Request $request)
-    {
-        $this->recordRepository->addRecords($request);
-    }
-
     public function getDataRecord(Request $request)
     {
 

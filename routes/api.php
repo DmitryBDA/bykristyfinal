@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CalendarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('/calendar/show-records', [CalendarController::class,'showRecords'])->name('calendar.showRecords');
 Route::get('/calendar/show-records-users', [CalendarController::class,'showRecordsForUsers'])->name('calendar.showRecordsForUsers');
-Route::post('/calendar/create-records', [CalendarController::class,'createRecords'])->name('calendar.createRecords');
+Route::post('/calendar/create-records', [RecordController::class,'create'])->name('record.create');
 Route::post('/calendar/get-data-record', [CalendarController::class,'getDataRecord'])->name('calendar.getDataRecord');
 Route::post('/calendar/get-data-record-user', [CalendarController::class,'getDataRecordUser'])->name('calendar.getDataRecordUser');
 Route::post('/calendar/add-user-to-record', [CalendarController::class,'addUserToRecord'])->name('calendar.addUserToRecord');
