@@ -127,7 +127,6 @@ export default {
             this.time = new Date(this.dataRecord.start).toLocaleTimeString().slice(0,-3)
             this.dayWeek = this.days[new Date(this.dataRecord.start).getDay()]
             this.date = new Date(this.dataRecord.start).toLocaleDateString()
-            this.services = this.dataRecord.services
             this.selectedService = this.dataRecord.service_id ? this.dataRecord.service_id : 1
             this.name = this.dataRecord.user ? this.dataRecord.user.surname + ' ' + this.dataRecord.user.name : ''
             this.title = this.dataRecord.title
@@ -143,6 +142,10 @@ export default {
             showConfirmButton: false,
             timer: 3000
         });
+        axios.get('/api/calendar/get-services')
+            .then((response)=>{
+                this.services = response.data;
+            })
     },
     methods: {
         recordUser() {

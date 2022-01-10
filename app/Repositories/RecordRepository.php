@@ -105,6 +105,16 @@ class RecordRepository extends CoreRepository
         return $result;
     }
 
+    public function getById($id){
+
+        $record = $this->startCondition()
+            ->where('id' , $id)
+            ->with('user')
+            ->first();
+
+        return $record;
+    }
+
     public function getListActiveRecords($strSearch)
     {
         $tekDate = Carbon::today()->format('Y-m-d');

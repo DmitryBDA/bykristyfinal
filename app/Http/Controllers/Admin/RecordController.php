@@ -40,4 +40,12 @@ class RecordController extends Controller
 
         return response()->json($result);
     }
+
+    public function getData(Request $request)
+    {
+        $recordId = $request->recordId;
+        $record = $this->recordRepository->getById($recordId);
+
+        return response()->json($record);
+    }
 }
