@@ -19709,7 +19709,6 @@ __webpack_require__.r(__webpack_exports__);
       this.time = new Date(this.dataRecord.start).toLocaleTimeString().slice(0, -3);
       this.dayWeek = this.days[new Date(this.dataRecord.start).getDay()];
       this.date = new Date(this.dataRecord.start).toLocaleDateString();
-      this.services = this.dataRecord.services;
       this.selectedService = this.dataRecord.service_id ? this.dataRecord.service_id : 1;
       this.name = this.dataRecord.user ? this.dataRecord.user.surname + ' ' + this.dataRecord.user.name : '';
       this.title = this.dataRecord.title;
@@ -19718,16 +19717,21 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
       timer: 3000
     });
+    axios.get('/api/calendar/get-services').then(function (response) {
+      _this.services = response.data;
+    });
   },
   methods: {
     recordUser: function recordUser() {
-      var _this = this;
+      var _this2 = this;
 
       axios.post('/api/calendar/add-user-to-record', {
         recordId: this.recordId,
@@ -19736,14 +19740,14 @@ __webpack_require__.r(__webpack_exports__);
         time: this.time,
         phone: this.phone
       }).then(function (response) {
-        _this.$parent.showRecords();
+        _this2.$parent.showRecords();
 
-        var elem = _this.$refs.close_modal_action_records;
+        var elem = _this2.$refs.close_modal_action_records;
         elem.click();
       });
     },
     saveDataRecord: function saveDataRecord() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post('/api/calendar/save-data-record', {
         recordId: this.recordId,
@@ -19753,28 +19757,16 @@ __webpack_require__.r(__webpack_exports__);
         phone: this.phone,
         title: this.title
       }).then(function (response) {
-        _this2.$parent.showRecords();
+        _this3.$parent.showRecords();
 
-        var elem = _this2.$refs.mess_about_success_save;
+        var elem = _this3.$refs.mess_about_success_save;
         elem.click();
       });
     },
     confirmRecord: function confirmRecord() {
-      var _this3 = this;
-
-      axios.post('/api/calendar/confirm-record', {
-        recordId: this.recordId
-      }).then(function (response) {
-        _this3.$parent.showRecords();
-
-        var elem = _this3.$refs.close_modal_action_records;
-        elem.click();
-      });
-    },
-    cancelRecord: function cancelRecord() {
       var _this4 = this;
 
-      axios.post('/api/calendar/cancel-record', {
+      axios.post('/api/calendar/confirm-record', {
         recordId: this.recordId
       }).then(function (response) {
         _this4.$parent.showRecords();
@@ -19783,20 +19775,34 @@ __webpack_require__.r(__webpack_exports__);
         elem.click();
       });
     },
-    deleteRecord: function deleteRecord() {
+    cancelRecord: function cancelRecord() {
       var _this5 = this;
+
+      axios.post('/api/calendar/cancel-record', {
+        recordId: this.recordId
+      }).then(function (response) {
+        if (response.data) {
+          _this5.$parent.showRecords();
+
+          var elem = _this5.$refs.close_modal_action_records;
+          elem.click();
+        }
+      });
+    },
+    deleteRecord: function deleteRecord() {
+      var _this6 = this;
 
       axios.post('/api/calendar/delete-record', {
         recordId: this.recordId
       }).then(function (response) {
-        _this5.$parent.showRecords();
+        _this6.$parent.showRecords();
 
-        var elem = _this5.$refs.close_modal_action_records;
+        var elem = _this6.$refs.close_modal_action_records;
         elem.click();
       });
     },
     getDataAutocomplete: function getDataAutocomplete() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.search_data = [];
 
@@ -19805,8 +19811,8 @@ __webpack_require__.r(__webpack_exports__);
           axios.post('/api/calendar/search-autocomplete', {
             str: this.name
           }).then(function (response) {
-            _this6.search_data = response.data;
-            _this6.isActiveSearch = true;
+            _this7.search_data = response.data;
+            _this7.isActiveSearch = true;
           });
         }
       }
