@@ -26,10 +26,7 @@ class RecordRepository extends CoreRepository
             ->orderBy('start', 'asc')
             ->get(['id', 'title', 'start', 'status']);
 
-        //Добавить записям класс в зависимости от статуса
-        $finalRecordList = $this->addAttrClassNameForStatus($recordList);
-
-        return $finalRecordList;
+        return $recordList;
     }
 
     public function getActiveRecordsForUsers()
@@ -164,26 +161,6 @@ class RecordRepository extends CoreRepository
         }
 
 
-        return $recordList;
-    }
-
-    private function addAttrClassNameForStatus($recordList){
-        foreach ($recordList as $elem) {
-            switch ($elem->status) {
-                case 1:
-                    $elem->setAttr('className', "greenEvent");
-                    break;
-                case 2:
-                    $elem->setAttr('className', "yellowEvent");
-                    break;
-                case 3:
-                    $elem->setAttr('className', "redEvent");
-                    break;
-                case 4:
-                    $elem->setAttr('className', "greyEvent");
-                    break;
-            }
-        }
         return $recordList;
     }
 

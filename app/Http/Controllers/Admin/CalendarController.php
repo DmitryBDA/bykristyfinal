@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\User;
 use App\Repositories\RecordRepository;
 use App\Repositories\UserRepository;
+use App\Services\RecordService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -17,10 +18,13 @@ class CalendarController extends Controller
 {
     protected $recordRepository;
     protected $userRepository;
+    protected $recordService;
+
     public function __construct()
     {
         $this->recordRepository = app(RecordRepository::class);
         $this->userRepository = app(UserRepository::class);
+        $this->recordService = new RecordService();
     }
 
     public function index(){
@@ -30,6 +34,7 @@ class CalendarController extends Controller
     public function showRecords()
     {
         $recordList = $this->recordRepository->getAllFromToday();
+        $recordList = $this->recordService->addAttrClassName($recordList);
         return response()->json($recordList);
     }
 
