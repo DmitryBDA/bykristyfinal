@@ -21,14 +21,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('/calendar/show-records', [CalendarController::class,'showRecords'])->name('calendar.showRecords');
 Route::get('/calendar/show-records-users', [CalendarController::class,'showRecordsForUsers'])->name('calendar.showRecordsForUsers');
-Route::post('/calendar/create-records', [RecordController::class,'create'])->name('record.create');
 Route::post('/calendar/get-data-record', [CalendarController::class,'getDataRecord'])->name('calendar.getDataRecord');
 Route::post('/calendar/get-data-record-user', [CalendarController::class,'getDataRecordUser'])->name('calendar.getDataRecordUser');
 Route::post('/calendar/add-user-to-record', [CalendarController::class,'addUserToRecord'])->name('calendar.addUserToRecord');
 Route::post('/calendar/save-data-record', [CalendarController::class,'saveDataRecord'])->name('calendar.saveDataRecord');
-Route::post('/calendar/cancel-record', [CalendarController::class,'cancelRecord'])->name('calendar.cancelRecord');
-Route::post('/calendar/confirm-record', [CalendarController::class,'confirmRecord'])->name('calendar.confirmRecord');
-Route::post('/calendar/delete-record', [CalendarController::class,'deleteRecord'])->name('calendar.deleteRecord');
 Route::post('/calendar/get-list-active-records', [CalendarController::class,'getListActiveRecords'])->name('calendar.getListActiveRecords');
 Route::post('/calendar/search-autocomplete', [CalendarController::class,'searchAutocomplete'])->name('calendar.searchAutocomplete');
 Route::post('/calendar/record-user', [CalendarController::class,'recordUser'])->name('calendar.recordUser');
+
+Route::post('/calendar/cancel-record', [RecordController::class,'cancel'])->name('record.cancel');
+Route::post('/calendar/confirm-record', [RecordController::class,'confirm'])->name('record.confirm');
+Route::post('/calendar/delete-record', [RecordController::class,'delete'])->name('record.delete');
+Route::post('/calendar/create-records', [RecordController::class,'create'])->name('record.create');

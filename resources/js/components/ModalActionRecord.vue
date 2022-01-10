@@ -194,9 +194,11 @@ export default {
                 }
             )
                 .then((response) => {
-                    this.$parent.showRecords()
-                    const elem = this.$refs.close_modal_action_records
-                    elem.click();
+                    if(response.data){
+                        this.$parent.showRecords()
+                        const elem = this.$refs.close_modal_action_records
+                        elem.click();
+                    }
                 })
         },
         deleteRecord(){

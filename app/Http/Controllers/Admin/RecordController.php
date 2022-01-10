@@ -19,4 +19,25 @@ class RecordController extends Controller
         $data = $request->all();
         $this->recordRepository->addRecords($data);
     }
+
+    public function cancel(Request $request){
+        $data = $request->all();
+        $result = $this->recordRepository->cancelRecord($data);
+
+        return response()->json($result);
+    }
+
+    public function confirm(Request $request){
+        $data = $request->all();
+        $result = $this->recordRepository->confirmRecord($data);
+
+        return response()->json($result);
+    }
+
+    public function delete(Request $request){
+        $data = $request->all();
+        $result = $this->recordRepository->deleteRecord($data);
+
+        return response()->json($result);
+    }
 }

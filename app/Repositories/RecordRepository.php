@@ -72,6 +72,39 @@ class RecordRepository extends CoreRepository
         }
     }
 
+    public function cancelRecord($data){
+        $recordId = $data['recordId'];
+
+        $obRecord = $this->startCondition()
+            ->find($recordId);
+
+        $result = $obRecord->update([
+            'status' => 1,
+            'user_id' => null,
+            'service_id' => null,
+        ]);
+        return $result;
+    }
+
+    public function confirmRecord($data){
+        $recordId = $data['recordId'];
+
+        $obRecord = $this->startCondition()
+            ->find($recordId);
+        $result = $obRecord->update(['status' => 3]);
+        return $result;
+    }
+
+    public function deleteRecord($data){
+        $recordId = $data['recordId'];
+
+        $result = $this->startCondition()
+            ->find($recordId)
+            ->delete();
+
+        return $result;
+    }
+
     public function getListActiveRecords($strSearch)
     {
         $tekDate = Carbon::today()->format('Y-m-d');
