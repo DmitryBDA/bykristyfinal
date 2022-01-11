@@ -73,12 +73,8 @@ class CalendarController extends Controller
             'status' => 3,
             'service_id' => $data['serviceId']
         ]);
-        $data = [
-            'name' => $user->name,
-            'phone' => $user->phone,
-            'time' => (new RecordPresenter($record))->time(),
-        ];
-        $this->telegramService->sendNotificationNewRecord($data);
+
+        $this->telegramService->sendNotificationNewRecord($user, $record);
 
         return response()->json($record);
     }
@@ -149,7 +145,7 @@ class CalendarController extends Controller
             'service_id' => $data['serviceId'],
             'status' => 2
         ]);
-
+        $this->telegramService->sendNotificationNewRecord($user, $record);
         return response()->json($record);
 
     }

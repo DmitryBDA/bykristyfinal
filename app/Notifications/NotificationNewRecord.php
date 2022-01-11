@@ -15,6 +15,7 @@ class NotificationNewRecord extends Notification
     protected $name;
     protected $phone;
     protected $time;
+    protected $date;
 
     /**
      * Create a new notification instance.
@@ -26,6 +27,7 @@ class NotificationNewRecord extends Notification
         $this->name = $data['name'];
         $this->phone = $data['phone'];
         $this->time = $data['time'];
+        $this->date = $data['date'];
     }
 
     /**
@@ -70,7 +72,7 @@ class NotificationNewRecord extends Notification
     {
         $arMessage = [
             "https://api.whatsapp.com/send/?phone=7$this->phone&text=Здравствуйте,", "$this->name!","\nВы",
-            "записаны", "на", "маникюр","$this->time.","\nВаш",
+            "записаны", "на", "маникюр","$this->date","на","$this->time.","\nВаш",
             "мастер:", "Белоусова", "Кристина."
         ];
         $textMessage = implode('+',$arMessage);
