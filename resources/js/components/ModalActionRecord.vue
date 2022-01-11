@@ -52,7 +52,7 @@
                                 <div v-if="statusRecord !== 4" class="form-group row">
                                     <label class="col-sm-3 col-form-label">Телефон</label>
                                     <div class="input-group mb-3 col-sm-9">
-                                        <input type="text" v-model="phone"
+                                        <input v-mask="'+7 (###) ###-##-##'" type="text" v-model="phone"
                                                class="form-control">
 
                                         <a v-if="phone" :href="'whatsapp://send?phone=+7' + phone"
@@ -99,8 +99,11 @@
 </template>
 
 <script>
-
+import TheMask from 'vue-the-mask'
 export default {
+    components: {
+        TheMask
+    },
     props:['dataRecord'],
     data: function() {
         return {

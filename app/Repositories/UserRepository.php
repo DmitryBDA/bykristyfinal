@@ -34,7 +34,7 @@ class UserRepository extends CoreRepository
         $dataUser = [
             'name' => $name,
             'surname' => $surname,
-            'phone' => $data['phone'],
+            'phone' => str_replace(['+7', '(', ')', ' ', '-'],'',$data['phone']),
             'password' => Hash::make(Str::random(8)),
             'email' => "user$lastId@user.com",
         ];
