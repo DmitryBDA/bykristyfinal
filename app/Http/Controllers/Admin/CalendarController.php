@@ -6,25 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Models\Record;
 use App\Models\Service;
 use App\Models\User;
+use App\Presenters\Record\RecordPresenter;
 use App\Repositories\RecordRepository;
 use App\Repositories\UserRepository;
 use App\Services\RecordService;
+use App\Services\TelegramService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class CalendarController extends Controller
 {
     protected $recordRepository;
     protected $userRepository;
     protected $recordService;
+    protected $telegramService;
 
     public function __construct()
     {
         $this->recordRepository = app(RecordRepository::class);
         $this->userRepository = app(UserRepository::class);
         $this->recordService = new RecordService();
+        $this->telegramService = new TelegramService();
     }
 
     public function index(){
@@ -71,6 +73,12 @@ class CalendarController extends Controller
             'status' => 3,
             'service_id' => $data['serviceId']
         ]);
+        $data = [
+            'name' => $user->name,
+            'phone' => $user->phone,
+            'time' => (new RecordPresenter($record))->time(),
+        ];
+        $this->telegramService->sendNotificationNewRecord($data);
 
         return response()->json($record);
     }
