@@ -106,7 +106,6 @@ export default {
         return {
             recordId:null,
             time:null,
-            days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
             dayWeek: null,
             date: null,
             selectedService:1,
@@ -124,14 +123,14 @@ export default {
     watch: {
         dataRecord: function (val) {
             this.recordId = this.dataRecord.id
-            this.time = new Date(this.dataRecord.start).toLocaleTimeString().slice(0,-3)
-            this.dayWeek = this.days[new Date(this.dataRecord.start).getDay()]
-            this.date = new Date(this.dataRecord.start).toLocaleDateString()
-            this.selectedService = this.dataRecord.service_id ? this.dataRecord.service_id : 1
-            this.name = this.dataRecord.user ? this.dataRecord.user.surname + ' ' + this.dataRecord.user.name : ''
+            this.time = this.dataRecord.time
+            this.dayWeek = this.dataRecord.dayWeek
+            this.date = this.dataRecord.date
+            this.selectedService = this.dataRecord.selectedService
+            this.name = this.dataRecord.name
             this.title = this.dataRecord.title
-            this.phone = this.dataRecord.user ? this.dataRecord.user.phone : ''
-            this.statusRecord = this.dataRecord.status
+            this.phone = this.dataRecord.phone
+            this.statusRecord = this.dataRecord.statusRecord
             //this.$refs.open_modal_action_records.click()
         },
     },
