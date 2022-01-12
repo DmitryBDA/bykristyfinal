@@ -22,6 +22,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('send:notificationNeedRecord')
             ->timezone('Asia/Irkutsk')
             ->everyMinute();
+
+        $schedule->command('send:notificationMySelfRecord')
+            ->timezone('Asia/Irkutsk')
+            ->everyMinute();
     }
 
     /**
