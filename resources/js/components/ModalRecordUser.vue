@@ -37,6 +37,7 @@
                                         <div class="col-sm-9 value">
                                             <input required type="text"
                                                    class="form-control input-lg add_name"
+                                                   autocomplete="off"
                                                    v-model="name">
 
                                         </div>
@@ -46,6 +47,7 @@
                                         <div class="col-sm-9 value">
                                             <input required type="text"
                                                    class="form-control input-lg add_name"
+                                                   autocomplete="off"
                                                    v-model="surname">
 
                                         </div>
@@ -55,6 +57,7 @@
                                         <div class="col-sm-9 value">
 
                                             <input type="tel" v-mask="'+7 (###) ###-##-##'" required v-model="phone"
+                                                   autocomplete="off"
                                                    class="form-control input-lg add_name">
                                         </div>
                                     </div>
