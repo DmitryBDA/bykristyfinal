@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a @click="openCalendar" class="btn btn-primary btn-xl text-uppercase">Tell Me More</a>
+        <a @click="openCalendar" class="btn btn-primary btn-xl text-uppercase">Записаться</a>
     </div>
 </template>
 

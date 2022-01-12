@@ -55,9 +55,9 @@
                                     <div class="form-group row mb-2">
                                         <label class="col-sm-3 label col-form-label">Телефон</label>
                                         <div class="col-sm-9 value">
-
                                             <input type="tel" v-mask="'+7 (###) ###-##-##'" required v-model="phone"
                                                    autocomplete="off"
+                                                   placeholder="(999) 999-99-99"
                                                    class="form-control input-lg add_name">
                                         </div>
                                     </div>

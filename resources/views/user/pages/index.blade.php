@@ -3,6 +3,7 @@
 @section('title', 'Главная')
 
 @section('content')
+{{--
     <section class="page-section" id="services">
         <div class="container">
             <div class="text-center">
@@ -358,4 +359,5 @@
             </form>
         </div>
     </section>
+    --}}
 @endsection
