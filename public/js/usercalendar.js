@@ -19418,6 +19418,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -19445,7 +19448,13 @@ __webpack_require__.r(__webpack_exports__);
       isSuccessRecord: false
     };
   },
-  watch: {},
+  watch: {
+    phone: function phone(val) {
+      if (val === '+7 (8') {
+        this.phone = '+7 (';
+      }
+    }
+  },
   mounted: function mounted() {
     var _this = this;
 
@@ -43566,7 +43575,11 @@ var render = function () {
                                       ],
                                       staticClass:
                                         "form-control input-lg add_name",
-                                      attrs: { required: "", type: "text" },
+                                      attrs: {
+                                        required: "",
+                                        type: "text",
+                                        autocomplete: "off",
+                                      },
                                       domProps: { value: _vm.name },
                                       on: {
                                         input: function ($event) {
@@ -43606,7 +43619,11 @@ var render = function () {
                                       ],
                                       staticClass:
                                         "form-control input-lg add_name",
-                                      attrs: { required: "", type: "text" },
+                                      attrs: {
+                                        required: "",
+                                        type: "text",
+                                        autocomplete: "off",
+                                      },
                                       domProps: { value: _vm.surname },
                                       on: {
                                         input: function ($event) {
@@ -43652,7 +43669,12 @@ var render = function () {
                                       ],
                                       staticClass:
                                         "form-control input-lg add_name",
-                                      attrs: { type: "tel", required: "" },
+                                      attrs: {
+                                        type: "tel",
+                                        required: "",
+                                        autocomplete: "off",
+                                        placeholder: "(999) 999-99-99",
+                                      },
                                       domProps: { value: _vm.phone },
                                       on: {
                                         input: function ($event) {
@@ -43754,7 +43776,7 @@ var render = function () {
         staticClass: "btn btn-primary btn-xl text-uppercase",
         on: { click: _vm.openCalendar },
       },
-      [_vm._v("Tell Me More")]
+      [_vm._v("Записаться")]
     ),
   ])
 }

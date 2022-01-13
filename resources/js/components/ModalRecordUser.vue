@@ -116,7 +116,13 @@ export default {
             isSuccessRecord: false
         }
     },
-    watch: {},
+    watch: {
+        phone:function (val){
+            if (val === '+7 (8') {
+                this.phone = '+7 ('
+            }
+        }
+    },
     mounted() {
         EventBus.$on("openModalRecordUser", (data) => {
             // data.services.unshift({
