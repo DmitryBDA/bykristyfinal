@@ -19751,6 +19751,7 @@ __webpack_require__.r(__webpack_exports__);
           recordId: recordId
         }
       }).then(function (response) {
+        console.log(response);
         _this3.dataRecord = response.data;
 
         _this3.openModalRecordUser(_this3.dataRecord);
