@@ -92,34 +92,12 @@ export default {
         // },
         clickRecord(record) {
             const recordId = record.event._def.publicId
-            const vue = this
-            $.ajax({
-                url: '/calendar/get-data-record-user',
-                method: 'GET',
-                data:{
-                    recordId: recordId
-                },
-                success: function (data) {
-                    vue.dataRecord = data;
-                    vue.openModalRecordUser({time: '10:00'})
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-                 // axios({
-                 //     method: 'get',
-                 //     url: '/calendar/get-data-record-user' + '?nocache=' + new Date().getTime(), // Safari fix
-                 //     withCredentials: true,
-                 //     params: {
-                 //         recordId: recordId
-                 //     }
-                 // })
-                 // .then((response)=>{
-                 //     console.log(response)
-                 //     this.dataRecord = response.data;
-                 //     this.openModalRecordUser(this.dataRecord)
-                 // })
+
+             axios.post('/calendar/get-data-record-user', {recordId:recordId})
+                 .then((response)=>{
+                     this.dataRecord = response.data;
+                     this.openModalRecordUser(this.dataRecord)
+                 })
         },
     }
 }
