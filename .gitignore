@@ -13,4 +13,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+<<<<<<< HEAD
 .htaccess
+=======
+.htaccess
+>>>>>>> d8847e190f5f50b587e1ace27146d5669e74946d
