@@ -96,7 +96,16 @@ export default {
              axios.post('/calendar/get-data-record-user', {recordId:recordId})
                  .then((response)=>{
                      this.dataRecord = response.data;
-                     this.openModalRecordUser(this.dataRecord)
+                     this.openModalRecordUser({
+                         id: response.data.id,
+                         time: response.data.time,
+                         dayWeek: response.data.dayWeek,
+                         date: response.data.date,
+                         selectedService: localStorage.selectedService ? localStorage.selectedService : '',
+                         name: localStorage.name ? localStorage.name : '',
+                         surname: localStorage.surname ? localStorage.surname : '',
+                         phone: localStorage.phone ? localStorage.phone : '',
+                     })
                  })
         },
     }

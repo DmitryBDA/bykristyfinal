@@ -19464,20 +19464,21 @@ __webpack_require__.r(__webpack_exports__);
       //     id:0
       // })
       _this.recordId = data.id;
-      _this.time = new Date(data.start).toLocaleTimeString().slice(0, -3);
-      _this.dayWeek = _this.days[new Date(data.start).getDay()];
-      _this.date = new Date(data.start).toLocaleDateString();
-      _this.services = data.services;
-      _this.selectedService = localStorage.selectedService ? localStorage.selectedService : '';
-      _this.name = localStorage.name ? localStorage.name : '';
-      _this.surname = localStorage.surname ? localStorage.surname : '';
-      _this.phone = localStorage.phone ? localStorage.phone : '';
+      _this.time = data.time;
+      _this.dayWeek = data.dayWeek;
+      _this.date = data.date;
+      _this.selectedService = data.selectedService;
+      _this.name = data.name;
+      _this.surname = data.surname;
+      _this.phone = data.phone;
       _this.isRecordBusy = false;
-      _this.statusRecord = data.status;
 
       _this.$refs.open_modal_record_user.click();
 
       _this.isSuccessRecord = false;
+    });
+    axios.get('/api/calendar/get-services').then(function (response) {
+      _this.services = response.data;
     });
   },
   methods: {
@@ -19746,7 +19747,16 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this3.dataRecord = response.data;
 
-        _this3.openModalRecordUser(_this3.dataRecord);
+        _this3.openModalRecordUser({
+          id: response.data.id,
+          time: response.data.time,
+          dayWeek: response.data.dayWeek,
+          date: response.data.date,
+          selectedService: localStorage.selectedService ? localStorage.selectedService : '',
+          name: localStorage.name ? localStorage.name : '',
+          surname: localStorage.surname ? localStorage.surname : '',
+          phone: localStorage.phone ? localStorage.phone : ''
+        });
       });
     }
   }
