@@ -21,6 +21,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [UserIndexController::class, 'index'])->name('index');
+Route::get('/record', function () {
+    return redirect('/');
+});
 
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminIndexController::class, 'index'])->name('mainAdmin');
