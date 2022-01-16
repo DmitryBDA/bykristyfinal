@@ -19738,24 +19738,34 @@ __webpack_require__.r(__webpack_exports__);
     //
     // },
     clickRecord: function clickRecord(record) {
-      var _this3 = this;
-
-      var recordId = record.event._def.publicId; //axios.post('/calendar/get-data-record-user' + '?nocache=' + new Date().getTime(), {recordId:recordId})
-
-      axios({
-        method: 'get',
-        url: '/calendar/get-data-record-user' + '?nocache=' + new Date().getTime(),
-        // Safari fix
-        withCredentials: true,
-        params: {
+      var recordId = record.event._def.publicId;
+      var vue = this;
+      $.ajax({
+        url: '/calendar/get-data-record-user',
+        method: 'GET',
+        data: {
           recordId: recordId
+        },
+        success: function success(data) {
+          this.dataRecord = data;
+          vue.openModalRecordUser(this.dataRecord);
+        },
+        error: function error(_error) {
+          console.log(_error);
         }
-      }).then(function (response) {
-        console.log(response);
-        _this3.dataRecord = response.data;
-
-        _this3.openModalRecordUser(_this3.dataRecord);
-      });
+      }); // axios({
+      //     method: 'get',
+      //     url: '/calendar/get-data-record-user' + '?nocache=' + new Date().getTime(), // Safari fix
+      //     withCredentials: true,
+      //     params: {
+      //         recordId: recordId
+      //     }
+      // })
+      // .then((response)=>{
+      //     console.log(response)
+      //     this.dataRecord = response.data;
+      //     this.openModalRecordUser(this.dataRecord)
+      // })
     }
   }
 });
