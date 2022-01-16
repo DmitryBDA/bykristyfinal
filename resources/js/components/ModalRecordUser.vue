@@ -129,19 +129,19 @@ export default {
             //     name:'Не выбрано',
             //     id:0
             // })
-            this.recordId = data.id
-            this.time = new Date(data.start).toLocaleTimeString().slice(0, -3)
-            this.dayWeek = this.days[new Date(data.start).getDay()]
-            this.date = new Date(data.start).toLocaleDateString()
-            this.services = data.services
-            this.selectedService = localStorage.selectedService ? localStorage.selectedService : ''
-            this.name = localStorage.name ? localStorage.name : ''
-            this.surname = localStorage.surname ? localStorage.surname : ''
-            this.phone = localStorage.phone ? localStorage.phone : ''
-            this.isRecordBusy = false
-            this.statusRecord = data.status
-            this.$refs.open_modal_record_user.click()
-            this.isSuccessRecord = false
+            // this.recordId = data.id
+            this.time = data.time
+            // this.dayWeek = this.days[new Date(data.start).getDay()]
+            // this.date = new Date(data.start).toLocaleDateString()
+            // this.services = data.services
+            // this.selectedService = localStorage.selectedService ? localStorage.selectedService : ''
+            // this.name = localStorage.name ? localStorage.name : ''
+            // this.surname = localStorage.surname ? localStorage.surname : ''
+            // this.phone = localStorage.phone ? localStorage.phone : ''
+            // this.isRecordBusy = false
+            // this.statusRecord = data.status
+             this.$refs.open_modal_record_user.click()
+            // this.isSuccessRecord = false
         });
     },
     methods: {

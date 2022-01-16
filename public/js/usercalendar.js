@@ -19463,21 +19463,19 @@ __webpack_require__.r(__webpack_exports__);
       //     name:'Не выбрано',
       //     id:0
       // })
-      _this.recordId = data.id;
-      _this.time = new Date(data.start).toLocaleTimeString().slice(0, -3);
-      _this.dayWeek = _this.days[new Date(data.start).getDay()];
-      _this.date = new Date(data.start).toLocaleDateString();
-      _this.services = data.services;
-      _this.selectedService = localStorage.selectedService ? localStorage.selectedService : '';
-      _this.name = localStorage.name ? localStorage.name : '';
-      _this.surname = localStorage.surname ? localStorage.surname : '';
-      _this.phone = localStorage.phone ? localStorage.phone : '';
-      _this.isRecordBusy = false;
-      _this.statusRecord = data.status;
+      // this.recordId = data.id
+      _this.time = data.time; // this.dayWeek = this.days[new Date(data.start).getDay()]
+      // this.date = new Date(data.start).toLocaleDateString()
+      // this.services = data.services
+      // this.selectedService = localStorage.selectedService ? localStorage.selectedService : ''
+      // this.name = localStorage.name ? localStorage.name : ''
+      // this.surname = localStorage.surname ? localStorage.surname : ''
+      // this.phone = localStorage.phone ? localStorage.phone : ''
+      // this.isRecordBusy = false
+      // this.statusRecord = data.status
 
-      _this.$refs.open_modal_record_user.click();
+      _this.$refs.open_modal_record_user.click(); // this.isSuccessRecord = false
 
-      _this.isSuccessRecord = false;
     });
   },
   methods: {
@@ -19564,7 +19562,7 @@ __webpack_require__.r(__webpack_exports__);
             },
             getDataAutocomplete() {
                 this.search_data = []
-                  if (this.name != '') {
+                 if (this.name != '') {
                     if(this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1){
                         axios.post('/api/calendar/search-autocomplete', {str: this.name})
                             .then((response) => {
@@ -19573,7 +19571,7 @@ __webpack_require__.r(__webpack_exports__);
                             })
                     }
                 }
-              },
+             },
             succesSave(){
                 this.Toast.fire({
                     icon: 'success',
@@ -19738,16 +19736,36 @@ __webpack_require__.r(__webpack_exports__);
     //
     // },
     clickRecord: function clickRecord(record) {
-      var _this3 = this;
-
       var recordId = record.event._def.publicId;
-      axios.post('/calendar/get-data-record-user', {
-        recordId: recordId
-      }).then(function (response) {
-        _this3.dataRecord = response.data;
-
-        _this3.openModalRecordUser(_this3.dataRecord);
-      });
+      var vue = this;
+      $.ajax({
+        url: '/calendar/get-data-record-user',
+        method: 'GET',
+        data: {
+          recordId: recordId
+        },
+        success: function success(data) {
+          vue.dataRecord = data;
+          vue.openModalRecordUser({
+            time: '10:00'
+          });
+        },
+        error: function error(_error) {
+          console.log(_error);
+        }
+      }); // axios({
+      //     method: 'get',
+      //     url: '/calendar/get-data-record-user' + '?nocache=' + new Date().getTime(), // Safari fix
+      //     withCredentials: true,
+      //     params: {
+      //         recordId: recordId
+      //     }
+      // })
+      // .then((response)=>{
+      //     console.log(response)
+      //     this.dataRecord = response.data;
+      //     this.openModalRecordUser(this.dataRecord)
+      // })
     }
   }
 });
