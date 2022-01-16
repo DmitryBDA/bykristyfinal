@@ -24,7 +24,7 @@ Route::get('/', [UserIndexController::class, 'index'])->name('index');
 Route::get('/record', function () {
     return redirect('/');
 });
-Route::post('/calendar/get-data-record-user', [\App\Http\Controllers\User\UserCalendarController::class,'getDataRecordUser']);
+Route::get('/calendar/get-data-record-user', [\App\Http\Controllers\User\UserCalendarController::class,'getDataRecordUser']);
 
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminIndexController::class, 'index'])->name('mainAdmin');

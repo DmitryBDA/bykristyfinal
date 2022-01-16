@@ -93,7 +93,15 @@ export default {
         clickRecord(record) {
             const recordId = record.event._def.publicId
 
-             axios.post('/calendar/get-data-record-user', {recordId:recordId})
+             //axios.post('/calendar/get-data-record-user' + '?nocache=' + new Date().getTime(), {recordId:recordId})
+                 axios({
+                     method: 'get',
+                     url: '/calendar/get-data-record-user' + '?nocache=' + new Date().getTime(), // Safari fix
+                     withCredentials: true,
+                     params: {
+                         recordId: recordId
+                     }
+                 })
                  .then((response)=>{
                      this.dataRecord = response.data;
                      this.openModalRecordUser(this.dataRecord)

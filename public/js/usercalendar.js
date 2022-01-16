@@ -19740,9 +19740,16 @@ __webpack_require__.r(__webpack_exports__);
     clickRecord: function clickRecord(record) {
       var _this3 = this;
 
-      var recordId = record.event._def.publicId;
-      axios.post('/calendar/get-data-record-user', {
-        recordId: recordId
+      var recordId = record.event._def.publicId; //axios.post('/calendar/get-data-record-user' + '?nocache=' + new Date().getTime(), {recordId:recordId})
+
+      axios({
+        method: 'get',
+        url: '/calendar/get-data-record-user' + '?nocache=' + new Date().getTime(),
+        // Safari fix
+        withCredentials: true,
+        params: {
+          recordId: recordId
+        }
       }).then(function (response) {
         _this3.dataRecord = response.data;
 
