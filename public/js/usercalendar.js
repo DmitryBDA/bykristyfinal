@@ -19463,19 +19463,21 @@ __webpack_require__.r(__webpack_exports__);
       //     name:'Не выбрано',
       //     id:0
       // })
-      // this.recordId = data.id
-      _this.time = data.time; // this.dayWeek = this.days[new Date(data.start).getDay()]
-      // this.date = new Date(data.start).toLocaleDateString()
-      // this.services = data.services
-      // this.selectedService = localStorage.selectedService ? localStorage.selectedService : ''
-      // this.name = localStorage.name ? localStorage.name : ''
-      // this.surname = localStorage.surname ? localStorage.surname : ''
-      // this.phone = localStorage.phone ? localStorage.phone : ''
-      // this.isRecordBusy = false
-      // this.statusRecord = data.status
+      _this.recordId = data.id;
+      _this.time = new Date(data.start).toLocaleTimeString().slice(0, -3);
+      _this.dayWeek = _this.days[new Date(data.start).getDay()];
+      _this.date = new Date(data.start).toLocaleDateString();
+      _this.services = data.services;
+      _this.selectedService = localStorage.selectedService ? localStorage.selectedService : '';
+      _this.name = localStorage.name ? localStorage.name : '';
+      _this.surname = localStorage.surname ? localStorage.surname : '';
+      _this.phone = localStorage.phone ? localStorage.phone : '';
+      _this.isRecordBusy = false;
+      _this.statusRecord = data.status;
 
-      _this.$refs.open_modal_record_user.click(); // this.isSuccessRecord = false
+      _this.$refs.open_modal_record_user.click();
 
+      _this.isSuccessRecord = false;
     });
   },
   methods: {
@@ -19736,36 +19738,16 @@ __webpack_require__.r(__webpack_exports__);
     //
     // },
     clickRecord: function clickRecord(record) {
+      var _this3 = this;
+
       var recordId = record.event._def.publicId;
-      var vue = this;
-      $.ajax({
-        url: '/calendar/get-data-record-user',
-        method: 'GET',
-        data: {
-          recordId: recordId
-        },
-        success: function success(data) {
-          vue.dataRecord = data;
-          vue.openModalRecordUser({
-            time: '10:00'
-          });
-        },
-        error: function error(_error) {
-          console.log(_error);
-        }
-      }); // axios({
-      //     method: 'get',
-      //     url: '/calendar/get-data-record-user' + '?nocache=' + new Date().getTime(), // Safari fix
-      //     withCredentials: true,
-      //     params: {
-      //         recordId: recordId
-      //     }
-      // })
-      // .then((response)=>{
-      //     console.log(response)
-      //     this.dataRecord = response.data;
-      //     this.openModalRecordUser(this.dataRecord)
-      // })
+      axios.post('/calendar/get-data-record-user', {
+        recordId: recordId
+      }).then(function (response) {
+        _this3.dataRecord = response.data;
+
+        _this3.openModalRecordUser(_this3.dataRecord);
+      });
     }
   }
 });
@@ -24925,7 +24907,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fc-title {\r\n    color: #fff;\n}\n.fc-title:hover {\r\n    cursor: pointer;\n}\n.greenEvent {\r\n    background-color:#1d8b1d;\n}\n.yellowEvent {\r\n    background-color:#a7a739;\n}\n.redEvent {\r\n    background-color:#bf0d0d;\n}\n.greyEvent {\r\n    background-color:grey;\n}\n.hiddenevent{\r\n    font-size: 9px;\n}\n.fc-daygrid-block-event .fc-event-time{\r\n    font-weight: 400!important;\n}\n.fc-daygrid-day-top a{\r\n    color: black;\n}\n.fc-event-time{\r\n    color: white;\n}\n.fc-daygrid-event-dot{\r\n    display: none;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fc-title {\n    color: #fff;\n}\n.fc-title:hover {\n    cursor: pointer;\n}\n.greenEvent {\n    background-color:#1d8b1d;\n}\n.yellowEvent {\n    background-color:#a7a739;\n}\n.redEvent {\n    background-color:#bf0d0d;\n}\n.greyEvent {\n    background-color:grey;\n}\n.hiddenevent{\n    font-size: 9px;\n}\n.fc-daygrid-block-event .fc-event-time{\n    font-weight: 400!important;\n}\n.fc-daygrid-day-top a{\n    color: black;\n}\n.fc-event-time{\n    color: white;\n}\n.fc-daygrid-event-dot{\n    display: none;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
