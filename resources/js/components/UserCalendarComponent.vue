@@ -93,7 +93,7 @@ export default {
         clickRecord(record) {
             const recordId = record.event._def.publicId
 
-             axios.post('/api/calendar/get-data-record-user', {recordId:recordId})
+             axios.post('/calendar/get-data-record-user', {recordId:recordId})
                  .then((response)=>{
                      this.dataRecord = response.data;
                      this.openModalRecordUser(this.dataRecord)
