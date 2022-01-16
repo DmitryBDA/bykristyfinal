@@ -100,8 +100,8 @@ export default {
                     recordId: recordId
                 },
                 success: function (data) {
-                    this.dataRecord = data;
-                    vue.openModalRecordUser(this.dataRecord)
+                    vue.dataRecord = data;
+                    vue.openModalRecordUser(vue.dataRecord)
                 },
                 error: function (error) {
                     console.log(error);

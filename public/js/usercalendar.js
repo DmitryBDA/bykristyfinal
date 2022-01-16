@@ -19747,8 +19747,8 @@ __webpack_require__.r(__webpack_exports__);
           recordId: recordId
         },
         success: function success(data) {
-          this.dataRecord = data;
-          vue.openModalRecordUser(this.dataRecord);
+          vue.dataRecord = data;
+          vue.openModalRecordUser(vue.dataRecord);
         },
         error: function error(_error) {
           console.log(_error);
