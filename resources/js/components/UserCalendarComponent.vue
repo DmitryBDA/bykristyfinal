@@ -101,7 +101,7 @@ export default {
                 },
                 success: function (data) {
                     vue.dataRecord = data;
-                    vue.openModalRecordUser(vue.dataRecord)
+                    vue.openModalRecordUser({time: '10:00'})
                 },
                 error: function (error) {
                     console.log(error);
