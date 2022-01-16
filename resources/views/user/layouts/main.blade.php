@@ -50,7 +50,7 @@
     <header class="masthead">
         <div class="container">
             <div class="masthead-subheading">Добро пожаловать в нашу студию!</div>
-            <div class="masthead-heading text-uppercase">Рады встречи</div>
+{{--            <div class="masthead-heading text-uppercase">Рады встрече</div>--}}
             <opencalendar-component></opencalendar-component>
         </div>
     </header>
