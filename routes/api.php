@@ -24,7 +24,7 @@ Route::get('/calendar/show-records', [CalendarController::class,'showRecords'])-
 Route::get('/calendar/show-records-users', [CalendarController::class,'showRecordsForUsers'])->name('calendar.showRecordsForUsers');
 
 
-Route::post('/calendar/add-user-to-record', [CalendarController::class,'addUserToRecord'])->name('calendar.addUserToRecord');
+
 Route::post('/calendar/save-data-record', [CalendarController::class,'saveDataRecord'])->name('calendar.saveDataRecord');
 Route::post('/calendar/get-list-active-records', [CalendarController::class,'getListActiveRecords'])->name('calendar.getListActiveRecords');
 Route::post('/calendar/search-autocomplete', [CalendarController::class,'searchAutocomplete'])->name('calendar.searchAutocomplete');
@@ -35,5 +35,6 @@ Route::post('/calendar/confirm-record', [RecordController::class,'confirm'])->na
 Route::post('/calendar/delete-record', [RecordController::class,'delete'])->name('record.delete');
 Route::post('/calendar/create-records', [RecordController::class,'create'])->name('record.create');
 Route::post('/calendar/get-data-record', [RecordController::class,'getData'])->name('record.getData');
+Route::post('/calendar/add-user-to-record', [RecordController::class,'addUser'])->name('record.addUser');
 
 Route::get('/calendar/get-services', [ServiceController::class,'getAll']);

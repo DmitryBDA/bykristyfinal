@@ -6,17 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Presenters\Record\RecordPresenter;
 use App\Presenters\User\UserPresenter;
 use App\Repositories\RecordRepository;
+use App\Repositories\UserRepository;
+use App\Services\TelegramService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Jenssegers\Date\Date;
 
 class RecordController extends Controller
 {
     protected $recordRepository;
+    protected $userRepository;
+    protected $recordServices;
+    protected $telegramService;
 
     public function __construct()
     {
         $this->recordRepository = app(RecordRepository::class);
+        $this->userRepository = app(UserRepository::class);
+        $this->telegramService = new TelegramService();
     }
 
     public function create(Request $request){
@@ -65,5 +70,29 @@ class RecordController extends Controller
         ];
 
         return response()->json($result);
+    }
+
+    public function addUser(Request $request){
+        //Получить все отправленные данные
+        $data = $request->all();
+        //Получить запись по id
+        $obRecord = $this->recordRepository->getById($data['recordId']);
+        //Поиск пользователя по телефону
+        $user = $this->userRepository->findUserByPhone($data['phone']);
+        //Если пользователь не найден
+        if (!$user) {
+            //Создать нового пользователя
+            $user = $this->userRepository->createUser($request);
+        }
+        //Добавть данные из формы к записи
+        $obRecord->update([
+            'user_id' => $user->id,
+            'status' => 3,
+            'service_id' => $data['serviceId']
+        ]);
+        //Отправить уведомление о новой записи
+        $this->telegramService->sendNotificationNewRecord($user, $obRecord);
+
+        return response()->json($obRecord);
     }
 }

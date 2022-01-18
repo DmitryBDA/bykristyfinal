@@ -58,4 +58,12 @@ class UserRepository extends CoreRepository
         return $name;
     }
 
+    public function findUserByPhone($phone){
+        $user = $this->startCondition()
+            ->where('phone', $phone)
+            ->first();
+
+        return $user;
+    }
+
 }

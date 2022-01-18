@@ -50,26 +50,6 @@ class CalendarController extends Controller
 
 
 
-    public function addUserToRecord(Request $request){
-        $data = $request->all();
-        $record = Record::find($data['recordId']);
-
-        $user = User::where('phone', $data['phone'])->first();
-
-        if (!$user) {
-            $user = $this->userRepository->createUser($request);
-        }
-
-        $record->update([
-            'user_id' => $user->id,
-            'status' => 3,
-            'service_id' => $data['serviceId']
-        ]);
-
-        $this->telegramService->sendNotificationNewRecord($user, $record);
-
-        return response()->json($record);
-    }
 
     public function saveDataRecord(Request $request){
 
