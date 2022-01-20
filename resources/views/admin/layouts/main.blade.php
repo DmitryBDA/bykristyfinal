@@ -90,6 +90,12 @@
                             <p>Календарь</p>
                         </a>
                     </li>
+                    <li class="nav-item menu-open">
+                        <a href="{{route('finance.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>Доходы</p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -120,6 +126,8 @@
 <script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="/plugins/toastr/toastr.min.js"></script>
+<!-- ChartJS -->
+<script src="/plugins/chart.js/Chart.min.js"></script>
 <script>
     $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -130,7 +138,8 @@
 <script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.js"></script>
-
+<script src="/dist/js/demo.js"></script>
+@yield('custom_js')
 <script src="{{mix('js/app.js')}}"></script>
 <script>
 

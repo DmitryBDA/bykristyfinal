@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\User\IndexController as UserIndexController;
 use App\Http\Controllers\Admin\CalendarController;
-
+use App\Http\Controllers\Admin\FinanceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,4 +29,5 @@ Route::post('/calendar/get-data-record-user', [\App\Http\Controllers\User\UserCa
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminIndexController::class, 'index'])->name('mainAdmin');
     Route::get('/calendar', [CalendarController::class,'index'])->name('calendar.index');
+    Route::get('/finance', [FinanceController::class, 'index'])->name('finance.index');
 });
