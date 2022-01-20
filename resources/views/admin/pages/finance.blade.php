@@ -20,7 +20,7 @@
                 datasets: [
                     {
                         data: {!! json_encode($dataOnTekDay['arPriceService']) !!},
-                        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                        backgroundColor : ['#00a65a','#f56954', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
                     }
                 ]
             }
@@ -41,7 +41,7 @@
                 datasets: [
                     {
                         data: {!! json_encode($dataOnMonth['arPriceService']) !!},
-                        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                        backgroundColor : [ '#00a65a','#f56954', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
                     }
                 ]
             }
