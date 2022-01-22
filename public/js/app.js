@@ -19730,7 +19730,7 @@ __webpack_require__.r(__webpack_exports__);
       showConfirmButton: false,
       timer: 3000
     });
-    axios.get('/api/calendar/get-services').then(function (response) {
+    axios.get('/api/service/get-services').then(function (response) {
       _this.services = response.data;
     });
   },
@@ -19738,7 +19738,7 @@ __webpack_require__.r(__webpack_exports__);
     recordUser: function recordUser() {
       var _this2 = this;
 
-      axios.post('/api/calendar/add-user-to-record', {
+      axios.post('/api/record/add-user-to-record', {
         recordId: this.recordId,
         serviceId: this.selectedService,
         name: this.name,
@@ -19747,14 +19747,13 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this2.$parent.showRecords();
 
-        var elem = _this2.$refs.close_modal_action_records;
-        elem.click();
+        _this2.$refs.close_modal_action_records.click();
       });
     },
     saveDataRecord: function saveDataRecord() {
       var _this3 = this;
 
-      axios.post('/api/calendar/save-data-record', {
+      axios.post('/api/record/save-data-record', {
         recordId: this.recordId,
         serviceId: this.selectedService,
         name: this.name,
@@ -19764,46 +19763,42 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this3.$parent.showRecords();
 
-        var elem = _this3.$refs.mess_about_success_save;
-        elem.click();
+        _this3.$refs.mess_about_success_save.click();
       });
     },
     confirmRecord: function confirmRecord() {
       var _this4 = this;
 
-      axios.post('/api/calendar/confirm-record', {
+      axios.post('/api/record/confirm-record', {
         recordId: this.recordId
       }).then(function (response) {
         _this4.$parent.showRecords();
 
-        var elem = _this4.$refs.close_modal_action_records;
-        elem.click();
+        _this4.$refs.close_modal_action_records.click();
       });
     },
     cancelRecord: function cancelRecord() {
       var _this5 = this;
 
-      axios.post('/api/calendar/cancel-record', {
+      axios.post('/api/record/cancel-record', {
         recordId: this.recordId
       }).then(function (response) {
         if (response.data) {
           _this5.$parent.showRecords();
 
-          var elem = _this5.$refs.close_modal_action_records;
-          elem.click();
+          _this5.$refs.close_modal_action_records.click();
         }
       });
     },
     deleteRecord: function deleteRecord() {
       var _this6 = this;
 
-      axios.post('/api/calendar/delete-record', {
+      axios.post('/api/record/delete-record', {
         recordId: this.recordId
       }).then(function (response) {
         _this6.$parent.showRecords();
 
-        var elem = _this6.$refs.close_modal_action_records;
-        elem.click();
+        _this6.$refs.close_modal_action_records.click();
       });
     },
     getDataAutocomplete: function getDataAutocomplete() {
@@ -19813,7 +19808,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.name != '') {
         if (this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1) {
-          axios.post('/api/calendar/input-name-autocomplete', {
+          axios.post('/api/search/input-name-autocomplete', {
             str: this.name
           }).then(function (response) {
             _this7.search_data = response.data;
@@ -19833,8 +19828,7 @@ __webpack_require__.r(__webpack_exports__);
       this.phone = phone;
       this.isActiveSearch = false;
     }
-  },
-  validations: {}
+  }
 });
 
 /***/ }),
@@ -44469,7 +44463,7 @@ var render = function () {
         on: {
           click: function ($event) {
             $event.preventDefault()
-            return _vm.succesSave.apply(null, arguments)
+            return _vm.successSave.apply(null, arguments)
           },
         },
       },

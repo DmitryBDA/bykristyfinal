@@ -94,7 +94,7 @@
             </div>
         </div>
         <button style="display: none" data-toggle="modal" data-target="#modal-action-with-records" ref="open_modal_action_records"></button>
-        <button style="display: none" type="button" class="btn btn-success swalDefaultSuccess" @click.prevent="succesSave" ref="mess_about_success_save">Сохранено</button>
+        <button style="display: none" type="button" class="btn btn-success swalDefaultSuccess" @click.prevent="successSave" ref="mess_about_success_save">Сохранено</button>
     </div>
 </template>
 
@@ -144,14 +144,14 @@ export default {
             showConfirmButton: false,
             timer: 3000
         });
-        axios.get('/api/calendar/get-services')
+        axios.get('/api/service/get-services')
             .then((response)=>{
                 this.services = response.data;
             })
     },
     methods: {
         recordUser() {
-            axios.post('/api/calendar/add-user-to-record', {
+            axios.post('/api/record/add-user-to-record', {
                     recordId: this.recordId,
                     serviceId: this.selectedService,
                     name: this.name,
@@ -161,13 +161,12 @@ export default {
             )
                 .then((response) => {
                     this.$parent.showRecords()
-                    const elem = this.$refs.close_modal_action_records
-                    elem.click();
+                    this.$refs.close_modal_action_records.click();
                 })
 
         },
         saveDataRecord(){
-            axios.post('/api/calendar/save-data-record', {
+            axios.post('/api/record/save-data-record', {
                     recordId: this.recordId,
                     serviceId: this.selectedService,
                     name: this.name,
@@ -178,43 +177,40 @@ export default {
             )
                 .then((response) => {
                     this.$parent.showRecords()
-                    const elem = this.$refs.mess_about_success_save
-                    elem.click();
+                    this.$refs.mess_about_success_save.click();
+
                 })
         },
         confirmRecord(){
-            axios.post('/api/calendar/confirm-record', {
+            axios.post('/api/record/confirm-record', {
                     recordId: this.recordId,
                 }
             )
                 .then((response) => {
                     this.$parent.showRecords()
-                    const elem = this.$refs.close_modal_action_records
-                    elem.click();
+                    this.$refs.close_modal_action_records.click();
                 })
         },
         cancelRecord(){
-            axios.post('/api/calendar/cancel-record', {
+            axios.post('/api/record/cancel-record', {
                 recordId: this.recordId,
                 }
             )
                 .then((response) => {
                     if(response.data){
                         this.$parent.showRecords()
-                        const elem = this.$refs.close_modal_action_records
-                        elem.click();
+                        this.$refs.close_modal_action_records.click();
                     }
                 })
         },
         deleteRecord(){
-            axios.post('/api/calendar/delete-record', {
+            axios.post('/api/record/delete-record', {
                 recordId: this.recordId,
                 }
             )
                 .then((response) => {
                     this.$parent.showRecords()
-                    const elem = this.$refs.close_modal_action_records
-                    elem.click();
+                    this.$refs.close_modal_action_records.click();
                 })
         },
         getDataAutocomplete() {
@@ -222,7 +218,7 @@ export default {
 
             if (this.name != '') {
                 if(this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1){
-                    axios.post('/api/calendar/input-name-autocomplete', {str: this.name})
+                    axios.post('/api/search/input-name-autocomplete', {str: this.name})
                         .then((response) => {
                             this.search_data = response.data
                             this.isActiveSearch = true
@@ -231,7 +227,7 @@ export default {
             }
 
         },
-        succesSave(){
+        successSave(){
             this.Toast.fire({
                 icon: 'success',
                 title: 'Сохранено'
@@ -242,9 +238,6 @@ export default {
             this.phone = phone
             this.isActiveSearch = false
         },
-
-    },
-    validations: {
 
     }
 }

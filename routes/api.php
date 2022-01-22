@@ -29,16 +29,16 @@ Route::get('/calendar/show-records-users', [CalendarController::class,'showRecor
 
 
 Route::post('/calendar/get-list-active-records', [SearchController::class,'getActiveListsRecords'])->name('search.getActiveListsRecords');
-Route::post('/calendar/input-name-autocomplete', [SearchController::class,'inputNameAutocomplete'])->name('search.inputNameAutocomplete');
+Route::post('/search/input-name-autocomplete', [SearchController::class,'inputNameAutocomplete'])->name('search.inputNameAutocomplete');
 
 Route::post('/calendar/record-user', [UserCalendarController::class,'recordUser'])->name('userCalendar.recordUser');
 
-Route::post('/calendar/cancel-record', [RecordController::class,'cancel'])->name('record.cancel');
-Route::post('/calendar/confirm-record', [RecordController::class,'confirm'])->name('record.confirm');
-Route::post('/calendar/delete-record', [RecordController::class,'delete'])->name('record.delete');
+Route::post('/record/cancel-record', [RecordController::class,'cancel'])->name('record.cancel');
+Route::post('/record/confirm-record', [RecordController::class,'confirm'])->name('record.confirm');
+Route::post('/record/delete-record', [RecordController::class,'delete'])->name('record.delete');
 Route::post('/record/create-records', [RecordController::class,'create'])->name('record.create');
-Route::post('/calendar/get-data-record', [RecordController::class,'getData'])->name('record.getData');
-Route::post('/calendar/add-user-to-record', [RecordController::class,'addUser'])->name('record.addUser');
-Route::post('/calendar/save-data-record', [RecordController::class,'saveData'])->name('record.saveDataRecord');
+Route::post('/record/get-data-record', [RecordController::class,'getData'])->name('record.getData');
+Route::post('/record/add-user-to-record', [RecordController::class,'addUser'])->name('record.addUser');
+Route::post('/record/save-data-record', [RecordController::class,'saveData'])->name('record.saveDataRecord');
 
-Route::get('/calendar/get-services', [ServiceController::class,'getAll']);
+Route::get('/service/get-services', [ServiceController::class,'getAll']);
