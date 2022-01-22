@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    public function getAll(){
+    public function getAll()
+    {
         $services = Service::all();
         return response()->json($services);
     }

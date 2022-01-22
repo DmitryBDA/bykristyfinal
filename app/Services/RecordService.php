@@ -4,7 +4,8 @@ namespace App\Services;
 
 class RecordService
 {
-    public function addAttrClassName($recordList){
+    public function addAttrClassName($recordList)
+    {
         foreach ($recordList as $elem) {
             switch ($elem->status) {
                 case 1:

@@ -24,7 +24,8 @@ class CalendarController extends Controller
         $this->telegramService = new TelegramService();
     }
 
-    public function index(){
+    public function index()
+    {
         return view('admin.pages.calendar');
     }
 
@@ -42,7 +43,8 @@ class CalendarController extends Controller
         return response()->json($recordList);
     }
 
-    public function getListActiveRecords(Request $request){
+    public function getListActiveRecords(Request $request)
+    {
         $strSearch = $request->strSearch;
         $recordList = $this->recordRepository->getListActiveRecords($strSearch);
         return response()->json($recordList);

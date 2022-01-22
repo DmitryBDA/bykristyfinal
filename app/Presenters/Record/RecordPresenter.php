@@ -13,11 +13,13 @@ class RecordPresenter extends Presenter
         return Carbon::create($this->model->start)->format('d.m.Y');
     }
 
-    public function dayWeek(){
+    public function dayWeek()
+    {
         return Date::parse($this->model->start)->format('l');
     }
 
-    public function time(){
+    public function time()
+    {
         return Carbon::create($this->model->start)->format('H:s');
     }
 }

@@ -21,9 +21,10 @@ class UserRepository extends CoreRepository
      * @return mixed
      */
 
-    public function getUser($data){
+    public function getUser($data)
+    {
         //Поиск пользователя по телефону
-        $phone = str_replace(['+7', '(', ')', ' ', '-'],'',$data['phone']);
+        $phone = str_replace(['+7', '(', ')', ' ', '-'], '', $data['phone']);
         $user = $this->findUserByPhone($phone);
 
         //Если пользователь не найден
@@ -34,14 +35,15 @@ class UserRepository extends CoreRepository
         return $user;
     }
 
-    public function searchAutocomplete($query){
+    public function searchAutocomplete($query)
+    {
         $users = $this->startCondition()
-            ->where('name', 'LIKE', '%'.$query.'%')
-            ->orWhere('surname', 'LIKE', '%'.$query.'%')
+            ->where('name', 'LIKE', '%' . $query . '%')
+            ->orWhere('surname', 'LIKE', '%' . $query . '%')
             ->get();
 
         $name = [];
-        if($users){
+        if ($users) {
             foreach ($users as $user) {
                 $name[$user->phone] = $user->surname . ' ' . $user->name;
             }
@@ -49,18 +51,19 @@ class UserRepository extends CoreRepository
         return $name;
     }
 
-    private function createUser($data){
+    private function createUser($data)
+    {
 
         $arFio = explode(" ", $data['name']);
-        $surname = $arFio[0] ? $arFio[0] : "" ;
-        $name = $arFio[1] ? $arFio[1] : "" ;
+        $surname = $arFio[0] ? $arFio[0] : "";
+        $name = $arFio[1] ? $arFio[1] : "";
 
         $lastId = User::orderBy('id', 'desc')->get()->first()->id;
         $lastId++;
         $dataUser = [
             'name' => $name,
             'surname' => $surname,
-            'phone' => str_replace(['+7', '(', ')', ' ', '-'],'',$data['phone']),
+            'phone' => str_replace(['+7', '(', ')', ' ', '-'], '', $data['phone']),
             'password' => Hash::make(Str::random(8)),
             'email' => "user$lastId@user.com",
         ];
@@ -70,8 +73,8 @@ class UserRepository extends CoreRepository
     }
 
 
-
-    private function findUserByPhone($phone){
+    private function findUserByPhone($phone)
+    {
         $user = $this->startCondition()
             ->select('id', 'name', 'surname', 'phone')
             ->where('phone', $phone)

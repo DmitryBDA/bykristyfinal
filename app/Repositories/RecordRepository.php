@@ -51,7 +51,8 @@ class RecordRepository extends CoreRepository
         return $recordList;
     }
 
-    public function addRecords($data){
+    public function addRecords($data)
+    {
 
 
         $arrRecords = $data['timeRecords'];
@@ -69,7 +70,8 @@ class RecordRepository extends CoreRepository
         }
     }
 
-    public function cancelRecord($data){
+    public function cancelRecord($data)
+    {
         $recordId = $data['recordId'];
 
         $obRecord = $this->startCondition()
@@ -83,7 +85,8 @@ class RecordRepository extends CoreRepository
         return $result;
     }
 
-    public function confirmRecord($data){
+    public function confirmRecord($data)
+    {
         $recordId = $data['recordId'];
 
         $obRecord = $this->startCondition()
@@ -92,7 +95,8 @@ class RecordRepository extends CoreRepository
         return $result;
     }
 
-    public function deleteRecord($data){
+    public function deleteRecord($data)
+    {
         $recordId = $data['recordId'];
 
         $result = $this->startCondition()
@@ -102,10 +106,11 @@ class RecordRepository extends CoreRepository
         return $result;
     }
 
-    public function getById($id){
+    public function getById($id)
+    {
 
         $record = $this->startCondition()
-            ->where('id' , $id)
+            ->where('id', $id)
             ->with('user')
             ->first();
 
@@ -116,7 +121,7 @@ class RecordRepository extends CoreRepository
     {
         $tekDate = Carbon::today()->format('Y-m-d');
         //Получить список записей
-        $recordList =  $this->startCondition()
+        $recordList = $this->startCondition()
             ->whereDate('start', '>=', $tekDate)
             ->whereIn('status', [2, 3])
             ->whereHas('user', $filter = function ($query) use ($strSearch) {
@@ -130,19 +135,19 @@ class RecordRepository extends CoreRepository
         $arEventList = [];
 
         $index = 0;
-        if($recordList->isNotEmpty()){
+        if ($recordList->isNotEmpty()) {
 
             $nowDate = Carbon::create($recordList->first()->start)->format('d.m.Y');
 
-            foreach ($recordList as $event){
+            foreach ($recordList as $event) {
                 $date = Carbon::create($event->start)->format('d.m.Y');
-                if($nowDate !== $date){
+                if ($nowDate !== $date) {
                     $index = 0;
                 }
 
                 $arEventList[$date][$index]['time'] = Carbon::create($event->start)->format('H:s');
                 $arEventList[$date][$index]['phone'] = $event->user->phone;
-                $arEventList[$date][$index]['name'] = $event->user->surname . ' ' .$event->user->name ;
+                $arEventList[$date][$index]['name'] = $event->user->surname . ' ' . $event->user->name;
 
                 $nowDate = Carbon::create($event->start)->format('d.m.Y');
                 $index++;
@@ -153,7 +158,7 @@ class RecordRepository extends CoreRepository
 
         $recordList = [];
         $index = 0;
-        foreach ($arEventList as $key => $item){
+        foreach ($arEventList as $key => $item) {
             $recordList[$index]['date'] = Carbon::create($key)->format('d.m.Y');
             $recordList[$index]['value'] = $item;
 

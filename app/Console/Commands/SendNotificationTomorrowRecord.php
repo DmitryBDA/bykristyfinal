@@ -48,7 +48,7 @@ class SendNotificationTomorrowRecord extends Command
      */
     public function handle()
     {
-        $records = Record::whereDate('start', Carbon::today()->addDay(1))->whereIn('status', [2,3])->get();
+        $records = Record::whereDate('start', Carbon::today()->addDay(1))->whereIn('status', [2, 3])->get();
 
         foreach ($records as $record) {
             $user = User::find($record->user_id);

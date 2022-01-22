@@ -15,11 +15,13 @@ class FinanceController extends Controller
     {
         $this->financeRepository = app(FinanceRepository::class);
     }
-    public function index(){
+
+    public function index()
+    {
 
         $sumOnTekDay = $this->financeRepository->getSumOnToday();
         $dataOnTekDay = [];
-        foreach ($sumOnTekDay as $key => $value){
+        foreach ($sumOnTekDay as $key => $value) {
             $dataOnTekDay['arNameServices'][] = $key;
             $dataOnTekDay['arPriceService'][] = $value;
         }
@@ -29,12 +31,12 @@ class FinanceController extends Controller
         $sumForMonth = $this->financeRepository->getSumForMonth();
 
         $dataOnMonth = [];
-        foreach ($sumForMonth as $key => $value){
+        foreach ($sumForMonth as $key => $value) {
             $dataOnMonth['arNameServices'][] = $key;
             $dataOnMonth['arPriceService'][] = $value;
         }
         $dataOnMonth['arSum'] = array_sum($dataOnMonth['arPriceService']);
 
-        return view('admin.pages.finance', compact('dataOnTekDay','dataOnMonth' ));
+        return view('admin.pages.finance', compact('dataOnTekDay', 'dataOnMonth'));
     }
 }

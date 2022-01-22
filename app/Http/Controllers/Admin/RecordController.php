@@ -25,26 +25,30 @@ class RecordController extends Controller
         $this->telegramService = new TelegramService();
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $data = $request->all();
         $this->recordRepository->addRecords($data);
     }
 
-    public function cancel(Request $request){
+    public function cancel(Request $request)
+    {
         $data = $request->all();
         $result = $this->recordRepository->cancelRecord($data);
 
         return response()->json($result);
     }
 
-    public function confirm(Request $request){
+    public function confirm(Request $request)
+    {
         $data = $request->all();
         $result = $this->recordRepository->confirmRecord($data);
 
         return response()->json($result);
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         $data = $request->all();
         $result = $this->recordRepository->deleteRecord($data);
 
@@ -59,21 +63,22 @@ class RecordController extends Controller
         $record = new RecordPresenter($record);
 
         $result = [
-            'id'                => $record->id,
-            'time'              => $record->time(),
-            'dayWeek'           => $record->dayWeek(),
-            'date'              => $record->startDate(),
-            'selectedService'   => $record->service_id ?? 1,
-            'name'              => $record->user ? (new UserPresenter($record->user))->fullName(): '',
-            'title'             => $record->title,
-            'phone'             => $record->user ? $record->user->phone : '',
-            'statusRecord'      => $record->status
+            'id' => $record->id,
+            'time' => $record->time(),
+            'dayWeek' => $record->dayWeek(),
+            'date' => $record->startDate(),
+            'selectedService' => $record->service_id ?? 1,
+            'name' => $record->user ? (new UserPresenter($record->user))->fullName() : '',
+            'title' => $record->title,
+            'phone' => $record->user ? $record->user->phone : '',
+            'statusRecord' => $record->status
         ];
 
         return response()->json($result);
     }
 
-    public function addUser(Request $request){
+    public function addUser(Request $request)
+    {
         //Получить все отправленные данные
         $data = $request->all();
         //Получить запись по id
@@ -97,13 +102,14 @@ class RecordController extends Controller
         return response()->json($obRecord);
     }
 
-    public function saveData(Request $request){
+    public function saveData(Request $request)
+    {
 
         $data = $request->all();
         //Получить запись по id
         $obRecord = $this->recordRepository->getById($data['recordId']);
         //Сформировать новое дата время (2021-12-25 10:00)
-        $date = Carbon::create($obRecord->start)->format('Y-m-d'). ' ' . $data['time'];
+        $date = Carbon::create($obRecord->start)->format('Y-m-d') . ' ' . $data['time'];
         //Данные для обновления
         $dataForSave = [
             'title' => $data['title'],
@@ -113,7 +119,7 @@ class RecordController extends Controller
             'end' => $date,
         ];
 
-        if($obRecord->status != 4){
+        if ($obRecord->status != 4) {
             //получить пользователя
             $user = $this->userRepository->getUser($data);
             $dataForSave['user_id'] = $user->id;

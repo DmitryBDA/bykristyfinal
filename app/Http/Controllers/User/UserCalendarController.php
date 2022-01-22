@@ -27,28 +27,30 @@ class UserCalendarController extends Controller
         $this->telegramService = new TelegramService();
     }
 
-    public function getDataRecordUser(Request $request){
+    public function getDataRecordUser(Request $request)
+    {
         $recordId = $request->recordId;
 
         $obRecord = $this->recordRepository->getById($recordId);
         $obRecord = new RecordPresenter($obRecord);
 
         $result = [
-            'id'                => $obRecord->id,
-            'time'              => $obRecord->time(),
-            'dayWeek'           => $obRecord->dayWeek(),
-            'date'              => $obRecord->startDate(),
+            'id' => $obRecord->id,
+            'time' => $obRecord->time(),
+            'dayWeek' => $obRecord->dayWeek(),
+            'date' => $obRecord->startDate(),
         ];
 
         return response()->json($result);
     }
 
-    public function recordUser(Request $request){
+    public function recordUser(Request $request)
+    {
         $data = $request->all();
 
         $obRecord = $this->recordRepository->getById($data['recordId']);
 
-        if($obRecord->status != 1){
+        if ($obRecord->status != 1) {
             return response()->json('busy');
         }
 
