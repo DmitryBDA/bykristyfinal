@@ -36,7 +36,7 @@ Route::post('/calendar/record-user', [UserCalendarController::class,'recordUser'
 Route::post('/calendar/cancel-record', [RecordController::class,'cancel'])->name('record.cancel');
 Route::post('/calendar/confirm-record', [RecordController::class,'confirm'])->name('record.confirm');
 Route::post('/calendar/delete-record', [RecordController::class,'delete'])->name('record.delete');
-Route::post('/calendar/create-records', [RecordController::class,'create'])->name('record.create');
+Route::post('/record/create-records', [RecordController::class,'create'])->name('record.create');
 Route::post('/calendar/get-data-record', [RecordController::class,'getData'])->name('record.getData');
 Route::post('/calendar/add-user-to-record', [RecordController::class,'addUser'])->name('record.addUser');
 Route::post('/calendar/save-data-record', [RecordController::class,'saveData'])->name('record.saveDataRecord');

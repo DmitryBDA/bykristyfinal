@@ -19925,7 +19925,7 @@ __webpack_require__.r(__webpack_exports__);
     saveRecords: function saveRecords(event) {
       var _this = this;
 
-      axios.post('/api/calendar/create-records', {
+      axios.post('/api/record/create-records', {
         timeRecords: this.inputTime,
         date: this.date
       }).then(function (response) {
