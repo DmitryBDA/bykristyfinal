@@ -21,9 +21,34 @@ class UserRepository extends CoreRepository
      * @return mixed
      */
 
-    public function createUser(Request $request){
+    public function getUser($data){
+        //Поиск пользователя по телефону
+        $user = $this->findUserByPhone($data['phone']);
 
-        $data = $request->all();
+        //Если пользователь не найден
+        if (!$user) {
+            //Создать нового пользователя
+            $user = $this->createUser($data);
+        }
+        return $user;
+    }
+
+    public function searchAutocomplete($query){
+        $users = $this->startCondition()
+            ->where('name', 'LIKE', '%'.$query.'%')
+            ->orWhere('surname', 'LIKE', '%'.$query.'%')
+            ->get();
+
+        $name = [];
+        if($users){
+            foreach ($users as $user) {
+                $name[$user->phone] = $user->surname . ' ' . $user->name;
+            }
+        }
+        return $name;
+    }
+
+    private function createUser($data){
 
         $arFio = explode(" ", $data['name']);
         $surname = $arFio[0] ? $arFio[0] : "" ;
@@ -43,23 +68,11 @@ class UserRepository extends CoreRepository
         return $user;
     }
 
-    public function searchAutocomplete($query){
-        $users = $this->startCondition()
-            ->where('name', 'LIKE', '%'.$query.'%')
-            ->orWhere('surname', 'LIKE', '%'.$query.'%')
-            ->get();
 
-        $name = [];
-        if($users){
-            foreach ($users as $user) {
-                $name[$user->phone] = $user->surname . ' ' . $user->name;
-            }
-        }
-        return $name;
-    }
 
-    public function findUserByPhone($phone){
+    private function findUserByPhone($phone){
         $user = $this->startCondition()
+            ->select('id', 'name', 'surname', 'phone')
             ->where('phone', $phone)
             ->first();
 

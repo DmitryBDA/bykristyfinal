@@ -51,40 +51,6 @@ class CalendarController extends Controller
 
 
 
-    public function saveDataRecord(Request $request){
-
-        $data = $request->all();
-        $record = Record::find($data['recordId']);
-
-        $tekDate = Carbon::create($record->start)->format('Y-m-d');
-        $date = $tekDate . ' ' . $data['time'];
-
-        if($record->status == 4){
-            $record->update([
-                'title' => $data['title'],
-                'start' => $date,
-                'end' => $date,
-            ]);
-
-            return response()->json($record);
-        }
-
-        $user = User::where('phone', $data['phone'])->first();
-
-        if (!$user) {
-            $user = $this->userRepository->createUser($request);
-        }
-
-        $record->update([
-            'user_id' => $user->id,
-            'service_id' => $data['serviceId'],
-            'start' => $date,
-            'end' => $date,
-        ]);
-
-        return response()->json($record);
-    }
-
     public function getListActiveRecords(Request $request){
         $strSearch = $request->strSearch;
         $recordList = $this->recordRepository->getListActiveRecords($strSearch);
@@ -106,11 +72,8 @@ class CalendarController extends Controller
             return response()->json('busy');
         }
         $phone = str_replace(['+7', '(', ')', ' ', '-'],'',$data['phone']);
-        $user = User::where('phone', $phone)->first();
 
-        if (!$user) {
-            $user = $this->userRepository->createUser($request);
-        }
+        $user = $this->userRepository->getUser($data);
 
         $record->update([
             'user_id' => $user->id,
