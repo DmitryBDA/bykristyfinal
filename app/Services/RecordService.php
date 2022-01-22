@@ -2,26 +2,63 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Carbon;
+
 class RecordService
 {
-    public function addAttrClassName($recordList)
+    public function addAttrClassName($obRecordList)
     {
-        foreach ($recordList as $elem) {
-            switch ($elem->status) {
+        foreach ($obRecordList as $obRecord) {
+            switch ($obRecord->status) {
                 case 1:
-                    $elem->setAttr('className', "greenEvent");
+                    $obRecord->setAttr('className', "greenEvent");
                     break;
                 case 2:
-                    $elem->setAttr('className', "yellowEvent");
+                    $obRecord->setAttr('className', "yellowEvent");
                     break;
                 case 3:
-                    $elem->setAttr('className', "redEvent");
+                    $obRecord->setAttr('className', "redEvent");
                     break;
                 case 4:
-                    $elem->setAttr('className', "greyEvent");
+                    $obRecord->setAttr('className', "greyEvent");
                     break;
             }
         }
-        return $recordList;
+        return $obRecordList;
+    }
+
+    //Формирование массива в нужном формате из списка записей
+    public function generateArrayRecords($obRecordList){
+        $arRecordList = [];
+
+        $index = 0;
+        if ($obRecordList->isNotEmpty()) {
+
+            $nowDate = Carbon::parse($obRecordList->first()->start)->format('d.m.Y');
+
+            foreach ($obRecordList as $obRecord) {
+                $date = Carbon::parse($obRecord->start)->format('d.m.Y');
+                if ($nowDate !== $date) {
+                    $index = 0;
+                }
+
+                $arRecordList[$date][$index]['time'] = Carbon::parse($obRecord->start)->format('H:s');
+                $arRecordList[$date][$index]['phone'] = $obRecord->user->phone;
+                $arRecordList[$date][$index]['name'] = $obRecord->user->surname . ' ' . $obRecord->user->name;
+
+                $nowDate = Carbon::create($obRecord->start)->format('d.m.Y');
+                $index++;
+            }
+        }
+
+        $arRecordListReady = [];
+        $index = 0;
+        foreach ($arRecordList as $key => $item) {
+            $arRecordListReady[$index]['date'] = Carbon::create($key)->format('d.m.Y');
+            $arRecordListReady[$index]['value'] = $item;
+
+            $index++;
+        }
+        return $arRecordListReady;
     }
 }

@@ -28,7 +28,7 @@ Route::get('/calendar/show-records-users', [CalendarController::class,'showRecor
 
 
 
-Route::post('/calendar/get-list-active-records', [CalendarController::class,'getListActiveRecords'])->name('calendar.getListActiveRecords');
+Route::post('/calendar/get-list-active-records', [SearchController::class,'getActiveListsRecords'])->name('search.getActiveListsRecords');
 Route::post('/calendar/input-name-autocomplete', [SearchController::class,'inputNameAutocomplete'])->name('search.inputNameAutocomplete');
 
 Route::post('/calendar/record-user', [UserCalendarController::class,'recordUser'])->name('userCalendar.recordUser');

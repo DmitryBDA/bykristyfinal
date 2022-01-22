@@ -43,12 +43,7 @@ class CalendarController extends Controller
         return response()->json($recordList);
     }
 
-    public function getListActiveRecords(Request $request)
-    {
-        $strSearch = $request->strSearch;
-        $recordList = $this->recordRepository->getListActiveRecords($strSearch);
-        return response()->json($recordList);
-    }
+
 
 
 }

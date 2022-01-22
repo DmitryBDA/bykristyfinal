@@ -117,11 +117,11 @@ class RecordRepository extends CoreRepository
         return $record;
     }
 
-    public function getListActiveRecords($strSearch)
+    public function getActiveList($strSearch)
     {
         $tekDate = Carbon::today()->format('Y-m-d');
         //Получить список записей
-        $recordList = $this->startCondition()
+        $obRecordList = $this->startCondition()
             ->whereDate('start', '>=', $tekDate)
             ->whereIn('status', [2, 3])
             ->whereHas('user', $filter = function ($query) use ($strSearch) {
@@ -132,41 +132,7 @@ class RecordRepository extends CoreRepository
             ->orderBy('start', 'asc')
             ->get();
 
-        $arEventList = [];
-
-        $index = 0;
-        if ($recordList->isNotEmpty()) {
-
-            $nowDate = Carbon::create($recordList->first()->start)->format('d.m.Y');
-
-            foreach ($recordList as $event) {
-                $date = Carbon::create($event->start)->format('d.m.Y');
-                if ($nowDate !== $date) {
-                    $index = 0;
-                }
-
-                $arEventList[$date][$index]['time'] = Carbon::create($event->start)->format('H:s');
-                $arEventList[$date][$index]['phone'] = $event->user->phone;
-                $arEventList[$date][$index]['name'] = $event->user->surname . ' ' . $event->user->name;
-
-                $nowDate = Carbon::create($event->start)->format('d.m.Y');
-                $index++;
-            }
-
-            $eventList = $arEventList;
-        }
-
-        $recordList = [];
-        $index = 0;
-        foreach ($arEventList as $key => $item) {
-            $recordList[$index]['date'] = Carbon::create($key)->format('d.m.Y');
-            $recordList[$index]['value'] = $item;
-
-            $index++;
-        }
-
-
-        return $recordList;
+        return $obRecordList;
     }
 
 }
