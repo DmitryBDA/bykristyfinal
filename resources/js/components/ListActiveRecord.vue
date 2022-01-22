@@ -1,63 +1,64 @@
 <template>
 
-        <section class="content">
-            <div class="container-fluid">
+    <section class="content">
+        <div class="container-fluid">
 
 
-                <div class="row">
-                    <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
 
-                        <div class="card collapsed-card">
+                    <div class="card collapsed-card">
 
-                            <div class="card-header">
-                                <h3 class="card-title _title_active_list">Активные записи</h3>
+                        <div class="card-header">
+                            <h3 class="card-title _title_active_list">Активные записи</h3>
 
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                            title="Collapse">
-                                        <i class="fas fa-plus" @click="listUp"></i>
-                                    </button>
-                                </div>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                        title="Collapse">
+                                    <i class="fas fa-plus" @click="listUp"></i>
+                                </button>
                             </div>
-                            <div class="card-body" style="display: none; padding: 0 0 0 5px">
-                                <input v-model="search" class="form-control filter mb-2" type="text" placeholder="Ведите для поиска">
-                                <div class="timeline">
-                                    <template v-for="(item, idx) in listRecords">
-                                        <div class="time-label">
-                                            <span class="bg-green">{{ item.date }}</span>
-                                        </div>
-                                        <div>
-                                            <template v-for="elem in item.value">
-                                                <div class="timeline-item" style="position: relative">
-                                                    <span class="time"><i class="fas fa-clock"></i> {{elem.time }}</span>
-                                                    <h3 class="timeline-header">{{ elem.name }}
-                                                        <a style="position: absolute; width: 40px; right: 44px  ; top: 3px;"
-                                                           :href="'whatsapp://send?phone=+7' + elem.phone"
-                                                           class="input-group-append">
+                        </div>
+                        <div class="card-body" style="display: none; padding: 0 0 0 5px">
+                            <input v-model="search" class="form-control filter mb-2" type="text"
+                                   placeholder="Ведите для поиска">
+                            <div class="timeline">
+                                <template v-for="(item, idx) in listRecords">
+                                    <div class="time-label">
+                                        <span class="bg-green">{{ item.date }}</span>
+                                    </div>
+                                    <div>
+                                        <template v-for="elem in item.value">
+                                            <div class="timeline-item" style="position: relative">
+                                                <span class="time"><i class="fas fa-clock"></i> {{ elem.time }}</span>
+                                                <h3 class="timeline-header">{{ elem.name }}
+                                                    <a style="position: absolute; width: 40px; right: 44px  ; top: 3px;"
+                                                       :href="'whatsapp://send?phone=+7' + elem.phone"
+                                                       class="input-group-append">
                                             <span class="input-group-text"><i class="fa fa-whatsapp"
                                                                               aria-hidden="true"></i></span>
-                                                        </a>
-                                                        <a style="position: absolute; width: 40px; right: 0px; top: 3px;"
-                                                           :href="'tel:+7' + elem.phone"
-                                                           class="input-group-append">
+                                                    </a>
+                                                    <a style="position: absolute; width: 40px; right: 0px; top: 3px;"
+                                                       :href="'tel:+7' + elem.phone"
+                                                       class="input-group-append">
                                             <span class="input-group-text"><i class="fa fa-volume-control-phone"
                                                                               aria-hidden="true"></i></span>
-                                                        </a>
-                                                    </h3>
+                                                    </a>
+                                                </h3>
 
-                                                </div>
-                                            </template>
-                                        </div>
-                                    </template>
-
-                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
 
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
 </template>
 
@@ -66,13 +67,13 @@ export default {
     data() {
         return {
             listRecords: [],
-            search:''
+            search: ''
         }
     },
     watch: {
         search: function (val) {
-            if(val.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1){
-                axios.post('/api/calendar/get-list-active-records', {strSearch:val})
+            if (val.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1) {
+                axios.post('/api/search/get-list-active-records', {strSearch: val})
                     .then((response) => {
                         this.listRecords = response.data
                     })
@@ -80,7 +81,7 @@ export default {
         },
     },
     mounted() {
-        axios.post('/api/calendar/get-list-active-records',{strSearch:''})
+        axios.post('/api/search/get-list-active-records', {strSearch: ''})
             .then((response) => {
                 this.listRecords = response.data
             })

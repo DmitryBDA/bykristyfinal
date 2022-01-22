@@ -19530,6 +19530,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -19542,7 +19543,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (val.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1) {
-        axios.post('/api/calendar/get-list-active-records', {
+        axios.post('/api/search/get-list-active-records', {
           strSearch: val
         }).then(function (response) {
           _this.listRecords = response.data;
@@ -19553,7 +19554,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this2 = this;
 
-    axios.post('/api/calendar/get-list-active-records', {
+    axios.post('/api/search/get-list-active-records', {
       strSearch: ''
     }).then(function (response) {
       _this2.listRecords = response.data;
