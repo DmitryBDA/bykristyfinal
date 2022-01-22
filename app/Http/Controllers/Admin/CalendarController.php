@@ -3,16 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Record;
-use App\Models\Service;
-use App\Models\User;
-use App\Presenters\Record\RecordPresenter;
 use App\Repositories\RecordRepository;
 use App\Repositories\UserRepository;
 use App\Services\RecordService;
 use App\Services\TelegramService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class CalendarController extends Controller
 {
@@ -47,10 +42,6 @@ class CalendarController extends Controller
         return response()->json($recordList);
     }
 
-
-
-
-
     public function getListActiveRecords(Request $request){
         $strSearch = $request->strSearch;
         $recordList = $this->recordRepository->getListActiveRecords($strSearch);
@@ -62,26 +53,5 @@ class CalendarController extends Controller
         $query = $request->str;
         $arNames = $this->userRepository->searchAutocomplete($query);
         return response()->json($arNames);
-    }
-
-    public function recordUser(Request $request){
-        $data = $request->all();
-        $record = Record::find($data['recordId']);
-
-        if($record->status != 1){
-            return response()->json('busy');
-        }
-        $phone = str_replace(['+7', '(', ')', ' ', '-'],'',$data['phone']);
-
-        $user = $this->userRepository->getUser($data);
-
-        $record->update([
-            'user_id' => $user->id,
-            'service_id' => $data['serviceId'],
-            'status' => 2
-        ]);
-        $this->telegramService->sendNotificationNewRecord($user, $record);
-        return response()->json($record);
-
     }
 }

@@ -23,7 +23,8 @@ class UserRepository extends CoreRepository
 
     public function getUser($data){
         //Поиск пользователя по телефону
-        $user = $this->findUserByPhone($data['phone']);
+        $phone = str_replace(['+7', '(', ')', ' ', '-'],'',$data['phone']);
+        $user = $this->findUserByPhone($phone);
 
         //Если пользователь не найден
         if (!$user) {
