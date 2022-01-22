@@ -7,7 +7,6 @@ use App\Repositories\RecordRepository;
 use App\Repositories\UserRepository;
 use App\Services\RecordService;
 use App\Services\TelegramService;
-use Illuminate\Http\Request;
 
 class CalendarController extends Controller
 {
@@ -39,11 +38,10 @@ class CalendarController extends Controller
     public function showRecordsForUsers()
     {
 
-        $recordList = $this->recordRepository->getActiveRecordsForUsers();
-        return response()->json($recordList);
+        $obRecordList = $this->recordRepository->getActiveRecordsForUsers();
+        $obRecordList = $this->recordService->addAttrClassName($obRecordList);
+        return response()->json($obRecordList);
     }
-
-
 
 
 }
