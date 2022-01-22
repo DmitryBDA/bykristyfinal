@@ -85,13 +85,13 @@
                         </a>
                     </li>
                     <li class="nav-item menu-open">
-                        <a href="{{route('calendar.index')}}" class="nav-link">
+                        <a href="{{route('admin.calendar.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Календарь</p>
                         </a>
                     </li>
                     <li class="nav-item menu-open">
-                        <a href="{{route('finance.index')}}" class="nav-link">
+                        <a href="{{route('admin.finance.index')}}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Доходы</p>
                         </a>

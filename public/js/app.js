@@ -19389,7 +19389,7 @@ __webpack_require__.r(__webpack_exports__);
     showRecords: function showRecords() {
       var _this = this;
 
-      axios.get('/api/calendar/show-records').then(function (response) {
+      axios.get('/admin/calendar/show-records').then(function (response) {
         _this.calendarOptions.events = response.data;
       });
     },
@@ -19408,9 +19408,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.recordId = record.event._def.publicId;
-      axios.post('/api/record/get-data-record', {
-        recordId: this.recordId
-      }).then(function (response) {
+      axios.get('/admin/records/' + this.recordId).then(function (response) {
         _this2.$refs.modal_action_record.dataRecord = response.data;
 
         _this2.$refs.modal_action_record.$refs.open_modal_action_records.click();
@@ -19540,25 +19538,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     search: function search(val) {
-      var _this = this;
-
-      if (val.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1) {
-        axios.post('/api/search/get-list-active-records', {
-          strSearch: val
-        }).then(function (response) {
-          _this.listRecords = response.data;
-        });
+      if (val.match(/([A-Za-zа-яА-ЯеЁ]+)/g)) {
+        this.getListActiveRecords(val);
       }
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
-
-    axios.post('/api/search/get-list-active-records', {
-      strSearch: ''
-    }).then(function (response) {
-      _this2.listRecords = response.data;
-    });
+    this.getListActiveRecords('');
   },
   methods: {
     listUp: function listUp() {
@@ -19566,6 +19552,17 @@ __webpack_require__.r(__webpack_exports__);
         scrollTop: $("._title_active_list").offset().top // класс объекта к которому приезжаем
 
       }, 500); // Скорость прокрутки
+    },
+    getListActiveRecords: function getListActiveRecords(val) {
+      var _this = this;
+
+      axios.get('/admin/search/get-list-active-records', {
+        params: {
+          strSearch: val
+        }
+      }).then(function (response) {
+        _this.listRecords = response.data;
+      });
     }
   }
 });
@@ -19731,7 +19728,7 @@ __webpack_require__.r(__webpack_exports__);
       showConfirmButton: false,
       timer: 3000
     });
-    axios.get('/api/service/get-services').then(function (response) {
+    axios.get('/admin/service').then(function (response) {
       _this.services = response.data;
     });
   },
@@ -19739,12 +19736,12 @@ __webpack_require__.r(__webpack_exports__);
     recordUser: function recordUser() {
       var _this2 = this;
 
-      axios.post('/api/record/add-user-to-record', {
-        recordId: this.recordId,
+      axios.put('/admin/records/' + this.recordId, {
         serviceId: this.selectedService,
         name: this.name,
         time: this.time,
-        phone: this.phone
+        phone: this.phone,
+        title: this.title
       }).then(function (response) {
         _this2.$parent.showRecords();
 
@@ -19754,8 +19751,7 @@ __webpack_require__.r(__webpack_exports__);
     saveDataRecord: function saveDataRecord() {
       var _this3 = this;
 
-      axios.post('/api/record/save-data-record', {
-        recordId: this.recordId,
+      axios.put('/admin/records/' + this.recordId, {
         serviceId: this.selectedService,
         name: this.name,
         time: this.time,
@@ -19770,9 +19766,7 @@ __webpack_require__.r(__webpack_exports__);
     confirmRecord: function confirmRecord() {
       var _this4 = this;
 
-      axios.post('/api/record/confirm-record', {
-        recordId: this.recordId
-      }).then(function (response) {
+      axios.put('/admin/records/confirm/' + this.recordId).then(function (response) {
         _this4.$parent.showRecords();
 
         _this4.$refs.close_modal_action_records.click();
@@ -19781,9 +19775,7 @@ __webpack_require__.r(__webpack_exports__);
     cancelRecord: function cancelRecord() {
       var _this5 = this;
 
-      axios.post('/api/record/cancel-record', {
-        recordId: this.recordId
-      }).then(function (response) {
+      axios.put('/admin/records/cancel/' + this.recordId).then(function (response) {
         if (response.data) {
           _this5.$parent.showRecords();
 
@@ -19794,9 +19786,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteRecord: function deleteRecord() {
       var _this6 = this;
 
-      axios.post('/api/record/delete-record', {
-        recordId: this.recordId
-      }).then(function (response) {
+      axios["delete"]('/admin/records/' + this.recordId).then(function (response) {
         _this6.$parent.showRecords();
 
         _this6.$refs.close_modal_action_records.click();
@@ -19809,8 +19799,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.name != '') {
         if (this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1) {
-          axios.post('/api/search/input-name-autocomplete', {
-            str: this.name
+          axios.get('/admin/search/input-name-autocomplete', {
+            params: {
+              str: this.name
+            }
           }).then(function (response) {
             _this7.search_data = response.data;
             _this7.isActiveSearch = true;
@@ -19920,7 +19912,7 @@ __webpack_require__.r(__webpack_exports__);
     saveRecords: function saveRecords(event) {
       var _this = this;
 
-      axios.post('/api/record/create-records', {
+      axios.post('/admin/records', {
         timeRecords: this.inputTime,
         date: this.date
       }).then(function (response) {

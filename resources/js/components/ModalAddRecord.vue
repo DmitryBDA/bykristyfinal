@@ -74,7 +74,7 @@ export default {
             }
         },
         saveRecords(event){
-             axios.post('/api/record/create-records', {timeRecords:this.inputTime, date:this.date})
+             axios.post('/admin/records', {timeRecords:this.inputTime, date:this.date})
                  .then((response)=>{
                      this.$parent.showRecords()
                      this.$refs._close_modal_add_records.click()

@@ -54,7 +54,7 @@ export default {
     methods: {
         showRecords(){
             axios
-                .get('/api/calendar/show-records').then((response)=>{
+                .get('/admin/calendar/show-records').then((response)=>{
                 this.calendarOptions.events = response.data
             })
         },
@@ -71,7 +71,7 @@ export default {
         },
         clickRecord(record) {
             this.recordId = record.event._def.publicId
-            axios.post('/api/record/get-data-record', {recordId:this.recordId})
+            axios.get('/admin/records/' + this.recordId)
                 .then((response)=>{
                     this.$refs.modal_action_record.dataRecord = response.data;
                     this.$refs.modal_action_record.$refs.open_modal_action_records.click()

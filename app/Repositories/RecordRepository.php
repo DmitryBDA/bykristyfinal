@@ -61,10 +61,8 @@ class RecordRepository extends CoreRepository
         }
     }
 
-    public function cancelRecord($data)
+    public function cancelRecord($recordId)
     {
-        $recordId = $data['recordId'];
-
         $obRecord = $this->startCondition()
             ->find($recordId);
 
@@ -76,20 +74,17 @@ class RecordRepository extends CoreRepository
         return $result;
     }
 
-    public function confirmRecord($data)
+    public function confirmRecord($recordId)
     {
-        $recordId = $data['recordId'];
+        $obRecord = $this->startCondition()->find($recordId);
 
-        $obRecord = $this->startCondition()
-            ->find($recordId);
         $result = $obRecord->update(['status' => 3]);
+
         return $result;
     }
 
-    public function deleteRecord($data)
+    public function deleteRecord($recordId)
     {
-        $recordId = $data['recordId'];
-
         $result = $this->startCondition()
             ->find($recordId)
             ->delete();

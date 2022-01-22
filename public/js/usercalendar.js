@@ -19477,7 +19477,7 @@ __webpack_require__.r(__webpack_exports__);
 
       _this.isSuccessRecord = false;
     });
-    axios.get('/api/calendar/get-services').then(function (response) {
+    axios.get('/service').then(function (response) {
       _this.services = response.data;
     });
   },
@@ -19486,8 +19486,7 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this2 = this;
 
-      axios.post('/api/calendar/record-user', {
-        recordId: this.recordId,
+      axios.post('/records/' + this.recordId, {
         serviceId: this.selectedService,
         name: this.surname + ' ' + this.name,
         phone: this.phone
@@ -19515,79 +19514,6 @@ __webpack_require__.r(__webpack_exports__);
       //As an ES6 module.
       _usercalendar__WEBPACK_IMPORTED_MODULE_0__["default"].$emit("updateCalendar");
     }
-    /*
-            saveDataRecord(){
-                axios.post('/api/calendar/save-data-record', {
-                        recordId: this.recordId,
-                        serviceId: this.selectedService,
-                        name: this.name,
-                        time: this.time,
-                        phone: this.phone
-                    }
-                )
-                    .then((response) => {
-                        const elem = this.$refs.mess_about_success_save
-                        elem.click();
-                    })
-            },
-            confirmRecord(){
-                axios.post('/api/calendar/confirm-record', {
-                        recordId: this.recordId,
-                    }
-                )
-                    .then((response) => {
-                        this.$parent.showRecords()
-                        const elem = this.$refs.close_modal_action_records
-                        elem.click();
-                    })
-            },
-            cancelRecord(){
-                axios.post('/api/calendar/cancel-record', {
-                    recordId: this.recordId,
-                    }
-                )
-                    .then((response) => {
-                        this.$parent.showRecords()
-                        const elem = this.$refs.close_modal_action_records
-                        elem.click();
-                    })
-            },
-            deleteRecord(){
-                axios.post('/api/calendar/delete-record', {
-                    recordId: this.recordId,
-                    }
-                )
-                    .then((response) => {
-                        this.$parent.showRecords()
-                        const elem = this.$refs.close_modal_action_records
-                        elem.click();
-                    })
-            },
-            getDataAutocomplete() {
-                this.search_data = []
-                 if (this.name != '') {
-                    if(this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1){
-                        axios.post('/api/calendar/search-autocomplete', {str: this.name})
-                            .then((response) => {
-                                this.search_data = response.data
-                                this.isActiveSearch = true
-                            })
-                    }
-                }
-             },
-            succesSave(){
-                this.Toast.fire({
-                    icon: 'success',
-                    title: 'Сохранено'
-                })
-            },
-            pasteName(name, phone) {
-                this.name = name
-                this.phone = phone
-                this.isActiveSearch = false
-            },
-            */
-
   },
   validations: {}
 });
@@ -19715,7 +19641,7 @@ __webpack_require__.r(__webpack_exports__);
     showRecords: function showRecords() {
       var _this2 = this;
 
-      axios.get('/api/calendar/show-records-users').then(function (response) {
+      axios.get('/records').then(function (response) {
         if (_this2.clickOpenCalendar) {
           _this2.$refs.testt.click();
         }
@@ -19727,24 +19653,11 @@ __webpack_require__.r(__webpack_exports__);
       //As an ES6 module.
       _usercalendar_js__WEBPACK_IMPORTED_MODULE_0__["default"].$emit("openModalRecordUser", data);
     },
-    // dateClick(record){
-    //     this.date = record.dateStr
-    //     this.$refs.modal_add_record.inputTime = [{
-    //             typeRecord:false,
-    //             value:'00:00',
-    //             status: 1,
-    //             title: ''
-    //         }]
-    //     this.$refs.modal_add_record.$refs._open_modal_add_record.click()
-    //
-    // },
     clickRecord: function clickRecord(record) {
       var _this3 = this;
 
       var recordId = record.event._def.publicId;
-      axios.post('/calendar/get-data-record-user', {
-        recordId: recordId
-      }).then(function (response) {
+      axios.get('/records/' + recordId).then(function (response) {
         _this3.dataRecord = response.data;
 
         _this3.openModalRecordUser({

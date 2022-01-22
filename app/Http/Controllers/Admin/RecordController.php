@@ -31,33 +31,29 @@ class RecordController extends Controller
         $this->recordRepository->addRecords($data);
     }
 
-    public function cancel(Request $request)
+    public function cancel($recordId)
     {
-        $data = $request->all();
-        $result = $this->recordRepository->cancelRecord($data);
+        $result = $this->recordRepository->cancelRecord($recordId);
 
         return response()->json($result);
     }
 
-    public function confirm(Request $request)
+    public function confirm($recordId)
     {
-        $data = $request->all();
-        $result = $this->recordRepository->confirmRecord($data);
+        $result = $this->recordRepository->confirmRecord($recordId);
 
         return response()->json($result);
     }
 
-    public function delete(Request $request)
+    public function delete($recordId)
     {
-        $data = $request->all();
-        $result = $this->recordRepository->deleteRecord($data);
+        $result = $this->recordRepository->deleteRecord($recordId);
 
         return response()->json($result);
     }
 
-    public function getData(Request $request)
+    public function getData($recordId, Request $request)
     {
-        $recordId = $request->recordId;
 
         $record = $this->recordRepository->getById($recordId);
         $record = new RecordPresenter($record);
@@ -77,57 +73,39 @@ class RecordController extends Controller
         return response()->json($result);
     }
 
-    public function addUser(Request $request)
-    {
-        //Получить все отправленные данные
-        $data = $request->all();
-        //Получить запись по id
-        $obRecord = $this->recordRepository->getById($data['recordId']);
-        //Поиск пользователя по телефону
+    public function update($recordId, Request $request){
+
+      $data = $request->all();
+      //Получить запись по id
+      $obRecord = $this->recordRepository->getById($recordId);
+
+      //Сформировать новое дата время (2021-12-25 10:00)
+      $date = Carbon::create($obRecord->start)->format('Y-m-d') . ' ' . $data['time'];
+      //Данные для обновления
+      $dataForSave = [
+        'title' => $data['title'],
+        'user_id' => null,
+        'service_id' => null,
+        'start' => $date,
+        'end' => $date,
+      ];
+
+      if ($obRecord->status != 4) {
+        //получить пользователя
         $user = $this->userRepository->getUser($data);
-        //Если пользователь не найден
-        if (!$user) {
-            //Создать нового пользователя
-            $user = $this->userRepository->createUser($request);
+        $dataForSave['user_id'] = $user->id;
+        $dataForSave['service_id'] = $data['serviceId'];
+        $dataForSave['status'] = 3;
+
+        if($obRecord->status == 1 || $obRecord->user_id != $user->id) {
+          $this->telegramService->sendNotificationNewRecord($user, $obRecord);
         }
-        //Добавть данные из формы к записи
-        $obRecord->update([
-            'user_id' => $user->id,
-            'status' => 3,
-            'service_id' => $data['serviceId']
-        ]);
-        //Отправить уведомление о новой записи
-        $this->telegramService->sendNotificationNewRecord($user, $obRecord);
+      }
 
-        return response()->json($obRecord);
-    }
+      //Обновить данные записи
+      $obRecord->update($dataForSave);
 
-    public function saveData(Request $request)
-    {
+      return response()->json($obRecord);
 
-        $data = $request->all();
-        //Получить запись по id
-        $obRecord = $this->recordRepository->getById($data['recordId']);
-        //Сформировать новое дата время (2021-12-25 10:00)
-        $date = Carbon::create($obRecord->start)->format('Y-m-d') . ' ' . $data['time'];
-        //Данные для обновления
-        $dataForSave = [
-            'title' => $data['title'],
-            'user_id' => null,
-            'service_id' => null,
-            'start' => $date,
-            'end' => $date,
-        ];
-
-        if ($obRecord->status != 4) {
-            //получить пользователя
-            $user = $this->userRepository->getUser($data);
-            $dataForSave['user_id'] = $user->id;
-            $dataForSave['service_id'] = $data['serviceId'];
-        }
-        //Обновить данные записи
-        $obRecord->update($dataForSave);
-
-        return response()->json($obRecord);
     }
 }

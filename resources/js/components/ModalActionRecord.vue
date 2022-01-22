@@ -144,19 +144,19 @@ export default {
             showConfirmButton: false,
             timer: 3000
         });
-        axios.get('/api/service/get-services')
+        axios.get('/admin/service')
             .then((response)=>{
                 this.services = response.data;
             })
     },
     methods: {
         recordUser() {
-            axios.post('/api/record/add-user-to-record', {
-                    recordId: this.recordId,
+            axios.put('/admin/records/' + this.recordId, {
                     serviceId: this.selectedService,
                     name: this.name,
                     time: this.time,
                     phone: this.phone,
+                    title: this.title
                 }
             )
                 .then((response) => {
@@ -166,8 +166,7 @@ export default {
 
         },
         saveDataRecord(){
-            axios.post('/api/record/save-data-record', {
-                    recordId: this.recordId,
+            axios.put('/admin/records/' + this.recordId, {
                     serviceId: this.selectedService,
                     name: this.name,
                     time: this.time,
@@ -182,20 +181,14 @@ export default {
                 })
         },
         confirmRecord(){
-            axios.post('/api/record/confirm-record', {
-                    recordId: this.recordId,
-                }
-            )
+            axios.put('/admin/records/confirm/' + this.recordId)
                 .then((response) => {
                     this.$parent.showRecords()
                     this.$refs.close_modal_action_records.click();
                 })
         },
         cancelRecord(){
-            axios.post('/api/record/cancel-record', {
-                recordId: this.recordId,
-                }
-            )
+            axios.put('/admin/records/cancel/' + this.recordId)
                 .then((response) => {
                     if(response.data){
                         this.$parent.showRecords()
@@ -204,10 +197,7 @@ export default {
                 })
         },
         deleteRecord(){
-            axios.post('/api/record/delete-record', {
-                recordId: this.recordId,
-                }
-            )
+            axios.delete('/admin/records/'+ this.recordId)
                 .then((response) => {
                     this.$parent.showRecords()
                     this.$refs.close_modal_action_records.click();
@@ -218,7 +208,7 @@ export default {
 
             if (this.name != '') {
                 if(this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1){
-                    axios.post('/api/search/input-name-autocomplete', {str: this.name})
+                    axios.get('/admin/search/input-name-autocomplete', { params: {str: this.name} })
                         .then((response) => {
                             this.search_data = response.data
                             this.isActiveSearch = true

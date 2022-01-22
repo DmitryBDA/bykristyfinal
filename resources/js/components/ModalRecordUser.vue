@@ -141,7 +141,7 @@ export default {
             this.$refs.open_modal_record_user.click()
             this.isSuccessRecord = false
         });
-        axios.get('/api/calendar/get-services')
+        axios.get('/service')
             .then((response)=>{
                 this.services = response.data;
             })
@@ -151,8 +151,7 @@ export default {
 
         },
         submit() {
-            axios.post('/api/calendar/record-user', {
-                    recordId: this.recordId,
+            axios.post('/records/' + this.recordId, {
                     serviceId: this.selectedService,
                     name: this.surname + ' ' + this.name,
                     phone: this.phone
@@ -182,81 +181,6 @@ export default {
             //As an ES6 module.
             EventBus.$emit("updateCalendar");
         },
-        /*
-                saveDataRecord(){
-                    axios.post('/api/calendar/save-data-record', {
-                            recordId: this.recordId,
-                            serviceId: this.selectedService,
-                            name: this.name,
-                            time: this.time,
-                            phone: this.phone
-                        }
-                    )
-                        .then((response) => {
-                            const elem = this.$refs.mess_about_success_save
-                            elem.click();
-                        })
-                },
-                confirmRecord(){
-                    axios.post('/api/calendar/confirm-record', {
-                            recordId: this.recordId,
-                        }
-                    )
-                        .then((response) => {
-                            this.$parent.showRecords()
-                            const elem = this.$refs.close_modal_action_records
-                            elem.click();
-                        })
-                },
-                cancelRecord(){
-                    axios.post('/api/calendar/cancel-record', {
-                        recordId: this.recordId,
-                        }
-                    )
-                        .then((response) => {
-                            this.$parent.showRecords()
-                            const elem = this.$refs.close_modal_action_records
-                            elem.click();
-                        })
-                },
-                deleteRecord(){
-                    axios.post('/api/calendar/delete-record', {
-                        recordId: this.recordId,
-                        }
-                    )
-                        .then((response) => {
-                            this.$parent.showRecords()
-                            const elem = this.$refs.close_modal_action_records
-                            elem.click();
-                        })
-                },
-                getDataAutocomplete() {
-                    this.search_data = []
-
-                    if (this.name != '') {
-                        if(this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1){
-                            axios.post('/api/calendar/search-autocomplete', {str: this.name})
-                                .then((response) => {
-                                    this.search_data = response.data
-                                    this.isActiveSearch = true
-                                })
-                        }
-                    }
-
-                },
-                succesSave(){
-                    this.Toast.fire({
-                        icon: 'success',
-                        title: 'Сохранено'
-                    })
-                },
-                pasteName(name, phone) {
-                    this.name = name
-                    this.phone = phone
-                    this.isActiveSearch = false
-                },
-                */
-
     },
     validations: {}
 }

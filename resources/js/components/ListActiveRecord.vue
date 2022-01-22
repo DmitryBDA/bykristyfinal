@@ -72,25 +72,26 @@ export default {
     },
     watch: {
         search: function (val) {
-            if (val.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1) {
-                axios.post('/api/search/get-list-active-records', {strSearch: val})
-                    .then((response) => {
-                        this.listRecords = response.data
-                    })
+            if (val.match(/([A-Za-zа-яА-ЯеЁ]+)/g)) {
+              this.getListActiveRecords(val)
             }
         },
     },
     mounted() {
-        axios.post('/api/search/get-list-active-records', {strSearch: ''})
-            .then((response) => {
-                this.listRecords = response.data
-            })
+       this.getListActiveRecords('')
     },
     methods: {
         listUp() {
             $('html, body').animate({
                 scrollTop: $("._title_active_list").offset().top  // класс объекта к которому приезжаем
             }, 500); // Скорость прокрутки
+        },
+        getListActiveRecords(val){
+
+          axios.get('/admin/search/get-list-active-records', { params: {strSearch: val} })
+            .then((response) => {
+              this.listRecords = response.data
+            })
         }
     }
 
