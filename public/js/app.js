@@ -19813,7 +19813,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.name != '') {
         if (this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1) {
-          axios.post('/api/calendar/search-autocomplete', {
+          axios.post('/api/calendar/input-name-autocomplete', {
             str: this.name
           }).then(function (response) {
             _this7.search_data = response.data;

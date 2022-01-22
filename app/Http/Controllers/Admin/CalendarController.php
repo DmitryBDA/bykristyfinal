@@ -50,10 +50,5 @@ class CalendarController extends Controller
         return response()->json($recordList);
     }
 
-    public function searchAutocomplete(Request $request)
-    {
-        $query = $request->str;
-        $arNames = $this->userRepository->searchAutocomplete($query);
-        return response()->json($arNames);
-    }
+
 }

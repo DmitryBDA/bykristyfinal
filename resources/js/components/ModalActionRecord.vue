@@ -222,7 +222,7 @@ export default {
 
             if (this.name != '') {
                 if(this.name.match(/([A-Za-zа-яА-ЯеЁ]+)/g).length == 1){
-                    axios.post('/api/calendar/search-autocomplete', {str: this.name})
+                    axios.post('/api/calendar/input-name-autocomplete', {str: this.name})
                         .then((response) => {
                             this.search_data = response.data
                             this.isActiveSearch = true

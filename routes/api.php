@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RecordController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\User\UserCalendarController;
+use App\Http\Controllers\Admin\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,7 @@ Route::get('/calendar/show-records-users', [CalendarController::class,'showRecor
 
 
 Route::post('/calendar/get-list-active-records', [CalendarController::class,'getListActiveRecords'])->name('calendar.getListActiveRecords');
-Route::post('/calendar/search-autocomplete', [CalendarController::class,'searchAutocomplete'])->name('calendar.searchAutocomplete');
+Route::post('/calendar/input-name-autocomplete', [SearchController::class,'inputNameAutocomplete'])->name('search.inputNameAutocomplete');
 
 Route::post('/calendar/record-user', [UserCalendarController::class,'recordUser'])->name('userCalendar.recordUser');
 

@@ -35,20 +35,15 @@ class UserRepository extends CoreRepository
         return $user;
     }
 
-    public function searchAutocomplete($query)
+    public function searchUsers($strSearch)
     {
         $users = $this->startCondition()
-            ->where('name', 'LIKE', '%' . $query . '%')
-            ->orWhere('surname', 'LIKE', '%' . $query . '%')
+            ->select('name', 'surname', 'phone')
+            ->where('name', 'LIKE', '%' . $strSearch . '%')
+            ->orWhere('surname', 'LIKE', '%' . $strSearch . '%')
             ->get();
 
-        $name = [];
-        if ($users) {
-            foreach ($users as $user) {
-                $name[$user->phone] = $user->surname . ' ' . $user->name;
-            }
-        }
-        return $name;
+        return $users;
     }
 
     private function createUser($data)
