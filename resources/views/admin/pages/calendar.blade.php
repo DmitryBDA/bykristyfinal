@@ -1,22 +1,7 @@
 @extends('admin.layouts.main')
 
 @section('custom_css')
-    <link rel="stylesheet" href="/plugins/fullcalendar/main.css">
-    <style>
-        .timeline>div>.timeline-item{
-            margin-left: 0!important;
-            margin-right: 0!important;
-        }
-        .timeline>div>.timeline-item>.time{
-            float: left;
-        }
-        .list-group-item{
-            padding: 3px 8px;
-        }
-        .fc-event-title-container{
-            display: none!important;
-        }
-    </style>
+
 @endsection
 
 @section('title', 'Главная')

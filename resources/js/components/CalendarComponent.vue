@@ -59,7 +59,7 @@ export default {
             })
         },
         dateClick(record){
-            this.date = record.dateStr
+            this.$refs.modal_add_record.date = record.dateStr
             this.$refs.modal_add_record.inputTime = [{
                     typeRecord:false,
                     value:'00:00',
@@ -73,12 +73,8 @@ export default {
             this.recordId = record.event._def.publicId
             axios.post('/api/calendar/get-data-record', {recordId:this.recordId})
                 .then((response)=>{
-
-                        this.dataRecord = response.data;
-                        var myModal = new bootstrap.Modal(document.getElementById('modal-action-with-records'));
-                        myModal.show();
-
-
+                    this.$refs.modal_action_record.dataRecord = response.data;
+                    this.$refs.modal_action_record.$refs.open_modal_action_records.click()
                 })
         },
     }
@@ -87,12 +83,24 @@ export default {
 <template>
     <div>
         <FullCalendar :options="calendarOptions" />
-        <modal-add-record :date="this.date" ref="modal_add_record"></modal-add-record>
-        <modal-action-record :dataRecord="dataRecord"></modal-action-record>
+        <modal-add-record ref="modal_add_record"></modal-add-record>
+        <modal-action-record ref="modal_action_record"></modal-action-record>
     </div>
 </template>
 <style>
-
+.timeline>div>.timeline-item{
+    margin-left: 0!important;
+    margin-right: 0!important;
+}
+.timeline>div>.timeline-item>.time{
+    float: left;
+}
+.list-group-item{
+    padding: 3px 8px;
+}
+.fc-event-title-container{
+    display: none!important;
+}
 .fc-title {
     color: #fff;
 }

@@ -19394,7 +19394,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     dateClick: function dateClick(record) {
-      this.date = record.dateStr;
+      this.$refs.modal_add_record.date = record.dateStr;
       this.$refs.modal_add_record.inputTime = [{
         typeRecord: false,
         value: '00:00',
@@ -19411,9 +19411,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/calendar/get-data-record', {
         recordId: this.recordId
       }).then(function (response) {
-        _this2.dataRecord = response.data;
-        var myModal = new bootstrap.Modal(document.getElementById('modal-action-with-records'));
-        myModal.show();
+        _this2.$refs.modal_action_record.dataRecord = response.data;
+
+        _this2.$refs.modal_action_record.$refs.open_modal_action_records.click();
       });
     }
   }
@@ -19689,7 +19689,6 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     TheMask: (vue_the_mask__WEBPACK_IMPORTED_MODULE_0___default())
   },
-  props: ['dataRecord'],
   data: function data() {
     return {
       recordId: null,
@@ -19705,7 +19704,8 @@ __webpack_require__.r(__webpack_exports__);
       isEdit: true,
       isActiveSearch: false,
       search_data: [],
-      Toast: null
+      Toast: null,
+      dataRecord: []
     };
   },
   watch: {
@@ -19893,7 +19893,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['date'],
   data: function data() {
     return {
       inputTime: [{
@@ -19902,7 +19901,8 @@ __webpack_require__.r(__webpack_exports__);
         status: 1,
         title: ''
       }],
-      isDisabled: false
+      isDisabled: false,
+      date: ''
     };
   },
   methods: {
@@ -25108,7 +25108,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fc-title {\n    color: #fff;\n}\n.fc-title:hover {\n    cursor: pointer;\n}\n.greenEvent {\n    background-color:#1d8b1d;\n}\n.yellowEvent {\n    background-color:#a7a739;\n}\n.redEvent {\n    background-color:#bf0d0d;\n}\n.greyEvent {\n    background-color:grey;\n}\n.hiddenevent{\n    font-size: 9px;\n}\n.fc-daygrid-block-event .fc-event-time{\n    font-weight: 400!important;\n}\n.fc-daygrid-day-top a{\n    color: black;\n}\n.fc-event-time{\n    color: white;\n}\n.fc-daygrid-event-dot{\n    display: none;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.timeline>div>.timeline-item{\n    margin-left: 0!important;\n    margin-right: 0!important;\n}\n.timeline>div>.timeline-item>.time{\n    float: left;\n}\n.list-group-item{\n    padding: 3px 8px;\n}\n.fc-event-title-container{\n    display: none!important;\n}\n.fc-title {\n    color: #fff;\n}\n.fc-title:hover {\n    cursor: pointer;\n}\n.greenEvent {\n    background-color:#1d8b1d;\n}\n.yellowEvent {\n    background-color:#a7a739;\n}\n.redEvent {\n    background-color:#bf0d0d;\n}\n.greyEvent {\n    background-color:grey;\n}\n.hiddenevent{\n    font-size: 9px;\n}\n.fc-daygrid-block-event .fc-event-time{\n    font-weight: 400!important;\n}\n.fc-daygrid-day-top a{\n    color: black;\n}\n.fc-event-time{\n    color: white;\n}\n.fc-daygrid-event-dot{\n    display: none;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -43763,12 +43763,9 @@ var render = function () {
     [
       _c("FullCalendar", { attrs: { options: _vm.calendarOptions } }),
       _vm._v(" "),
-      _c("modal-add-record", {
-        ref: "modal_add_record",
-        attrs: { date: this.date },
-      }),
+      _c("modal-add-record", { ref: "modal_add_record" }),
       _vm._v(" "),
-      _c("modal-action-record", { attrs: { dataRecord: _vm.dataRecord } }),
+      _c("modal-action-record", { ref: "modal_action_record" }),
     ],
     1
   )

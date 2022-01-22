@@ -104,7 +104,6 @@ export default {
     components: {
         TheMask
     },
-    props:['dataRecord'],
     data: function() {
         return {
             recordId:null,
@@ -120,7 +119,8 @@ export default {
             isEdit: true,
             isActiveSearch:false,
             search_data: [],
-            Toast:null
+            Toast:null,
+            dataRecord:[]
         }
     },
     watch: {

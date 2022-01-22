@@ -42,7 +42,6 @@
 
 <script>
 export default {
-    props: ['date'],
     data() {
         return {
             inputTime: [
@@ -54,6 +53,7 @@ export default {
                 }
             ],
             isDisabled:false,
+            date:''
         }
     },
     methods: {

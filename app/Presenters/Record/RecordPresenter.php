@@ -20,6 +20,6 @@ class RecordPresenter extends Presenter
 
     public function time()
     {
-        return Carbon::create($this->model->start)->format('H:s');
+        return Carbon::create($this->model->start)->format('H:i');
     }
 }
