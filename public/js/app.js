@@ -19408,7 +19408,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.recordId = record.event._def.publicId;
-      axios.post('/api/calendar/get-data-record', {
+      axios.post('/api/record/get-data-record', {
         recordId: this.recordId
       }).then(function (response) {
         _this2.$refs.modal_action_record.dataRecord = response.data;
@@ -19817,7 +19817,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    succesSave: function succesSave() {
+    successSave: function successSave() {
       this.Toast.fire({
         icon: 'success',
         title: 'Сохранено'
