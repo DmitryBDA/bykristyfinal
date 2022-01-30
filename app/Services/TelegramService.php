@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Notification;
 
 class TelegramService
 {
+    private $telegramAdminId;
+
+    public function setTelegramAdminId($telegramId){
+      $this->telegramAdminId = $telegramId;
+    }
     public function sendNotificationNewRecord($user, $record)
     {
         $data = [
@@ -19,7 +24,7 @@ class TelegramService
             'time' => (new RecordPresenter($record))->time(),
             'date' => (new RecordPresenter($record))->startDate(),
         ];
-        Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))
+        Notification::route('telegram', $this->telegramAdminId)
             ->notify(new NotificationNewRecord($data));
     }
 
@@ -31,7 +36,7 @@ class TelegramService
             'time' => (new RecordPresenter($record))->time(),
             'date' => (new RecordPresenter($record))->startDate(),
         ];
-        Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))
+        Notification::route('telegram', $this->telegramAdminId)
             ->notify(new NotificationTomorrowRecord($data));
     }
 
@@ -41,7 +46,7 @@ class TelegramService
             'name' => $user->name,
             'phone' => $user->phone,
         ];
-        Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))
+        Notification::route('telegram', $this->telegramAdminId)
             ->notify(new NotificationNeedRecord($data));
     }
 
@@ -51,7 +56,7 @@ class TelegramService
             'title' => $record->title,
             'time' => (new RecordPresenter($record))->time(),
         ];
-        Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))
+        Notification::route('telegram', $this->telegramAdminId)
             ->notify(new NotificationMySelfRecord($data));
     }
 }

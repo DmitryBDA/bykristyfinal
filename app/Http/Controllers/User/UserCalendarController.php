@@ -17,14 +17,12 @@ class UserCalendarController extends Controller
 
     protected $recordRepository;
     protected $userRepository;
-    protected $telegramService;
 
 
     public function __construct()
     {
         $this->recordRepository = app(RecordRepository::class);
         $this->userRepository = app(UserRepository::class);
-        $this->telegramService = new TelegramService();
     }
 
     public function getDataRecordUser($recordId)
@@ -42,7 +40,7 @@ class UserCalendarController extends Controller
         return response()->json($result);
     }
 
-    public function recordUser($recordId, Request $request)
+    public function recordUser($recordId, Request $request, TelegramService $telegramService)
     {
 
         $obRecord = $this->recordRepository->getById($recordId);
@@ -59,7 +57,7 @@ class UserCalendarController extends Controller
             'service_id' => $data['serviceId'],
             'status' => 2
         ]);
-        $this->telegramService->sendNotificationNewRecord($obUser, $obRecord);
+        $telegramService->sendNotificationNewRecord($obUser, $obRecord);
         return response()->json($obRecord);
 
     }

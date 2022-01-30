@@ -16,13 +16,11 @@ class RecordController extends Controller
     protected $recordRepository;
     protected $userRepository;
     protected $recordServices;
-    protected $telegramService;
 
     public function __construct()
     {
         $this->recordRepository = app(RecordRepository::class);
         $this->userRepository = app(UserRepository::class);
-        $this->telegramService = new TelegramService();
     }
 
     public function create(Request $request)
@@ -73,7 +71,7 @@ class RecordController extends Controller
         return response()->json($result);
     }
 
-    public function update($recordId, Request $request){
+    public function update($recordId, Request $request, TelegramService $telegramService){
 
       $data = $request->all();
       //Получить запись по id
@@ -98,7 +96,7 @@ class RecordController extends Controller
         $dataForSave['status'] = 3;
 
         if($obRecord->status == 1 || $obRecord->user_id != $user->id) {
-          $this->telegramService->sendNotificationNewRecord($user, $obRecord);
+          $telegramService->sendNotificationNewRecord($user, $obRecord);
         }
       }
 

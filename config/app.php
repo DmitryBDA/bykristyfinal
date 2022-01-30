@@ -178,6 +178,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
 
         Jenssegers\Date\DateServiceProvider::class,
+        App\Providers\TelegramServiceProvider::class,
 
     ],
 
