@@ -4,29 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\FinanceRepository;
+use App\Services\FinanceService;
 use Illuminate\Http\Request;
 
 class FinanceController extends Controller
 {
     protected $financeRepository;
+    protected $financeService;
 
 
     public function __construct()
     {
         $this->financeRepository = app(FinanceRepository::class);
+        $this->financeService = app(FinanceService::class);
     }
 
     public function index()
     {
 
-        $sumOnTekDay = $this->financeRepository->getSumOnToday();
-        $dataOnTekDay = [];
-        foreach ($sumOnTekDay as $key => $value) {
-            $dataOnTekDay['arNameServices'][] = $key;
-            $dataOnTekDay['arPriceService'][] = $value;
-        }
-        $dataOnTekDay['arSum'] = array_sum($dataOnTekDay['arPriceService']);
-
+      $obRecordList = $this->financeRepository->getRecordListToday();
+      $dataOnTekDay = $this->financeService->sumByTypeService($obRecordList);
 
         $sumForMonth = $this->financeRepository->getSumForMonth();
 
