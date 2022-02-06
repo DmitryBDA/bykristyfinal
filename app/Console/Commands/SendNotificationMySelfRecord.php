@@ -15,7 +15,6 @@ use Jenssegers\Date\Date;
 
 class SendNotificationMySelfRecord extends Command
 {
-    protected $telegramService;
     /**
      * The name and signature of the console command.
      *
@@ -38,7 +37,6 @@ class SendNotificationMySelfRecord extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->telegramService = new TelegramService();
     }
 
     /**
@@ -46,7 +44,7 @@ class SendNotificationMySelfRecord extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(TelegramService $telegramService)
     {
         $records = Record::whereDate('start', Carbon::today()->addDay(1))
             ->where('status', 4)
@@ -54,7 +52,7 @@ class SendNotificationMySelfRecord extends Command
             ->get();
 
         foreach ($records as $record) {
-            $this->telegramService->sendNotificationMySelfRecord($record);
+          $telegramService->sendNotificationMySelfRecord($record);
         }
     }
 }
