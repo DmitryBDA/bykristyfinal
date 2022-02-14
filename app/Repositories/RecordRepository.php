@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\DTO\CreateRecordDto;
 use App\Models\Record as Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -42,15 +43,14 @@ class RecordRepository extends CoreRepository
         return $obRecordList;
     }
 
-    public function addRecords($data)
+    public function addRecords(CreateRecordDto $dto)
     {
 
-
-        $arrRecords = $data['timeRecords'];
+        $arrRecords = $dto->timeRecords;
 
         foreach ($arrRecords as $record) {
 
-            $date = $data['date'] . ' ' . $record['value'];
+            $date = $dto->date . ' ' . $record['value'];
             $arrData = [
                 'title' => $record['title'] ? $record['title'] : '',
                 'start' => $date,

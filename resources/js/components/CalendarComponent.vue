@@ -66,6 +66,7 @@ export default {
                     status: 1,
                     title: ''
                 }]
+            this.$refs.modal_add_record.isDisabled = false
             this.$refs.modal_add_record.$refs._open_modal_add_record.click()
 
         },

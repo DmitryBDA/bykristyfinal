@@ -19401,6 +19401,7 @@ __webpack_require__.r(__webpack_exports__);
         status: 1,
         title: ''
       }];
+      this.$refs.modal_add_record.isDisabled = false;
 
       this.$refs.modal_add_record.$refs._open_modal_add_record.click();
     },
@@ -19879,6 +19880,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -19889,7 +19895,8 @@ __webpack_require__.r(__webpack_exports__);
         title: ''
       }],
       isDisabled: false,
-      date: ''
+      date: '',
+      errorMessage: []
     };
   },
   methods: {
@@ -19900,6 +19907,7 @@ __webpack_require__.r(__webpack_exports__);
         status: type ? 4 : 1,
         title: ''
       });
+      this.errorMessage = [];
       this.isDisabled = false;
     },
     inputDelete: function inputDelete(idx) {
@@ -19919,6 +19927,10 @@ __webpack_require__.r(__webpack_exports__);
         _this.$parent.showRecords();
 
         _this.$refs._close_modal_add_records.click();
+      })["catch"](function (err) {
+        if (err.response) {
+          _this.errorMessage = err.response.data.errors;
+        }
       });
     }
   }
@@ -44567,6 +44579,14 @@ var render = function () {
                     _vm.inputTime.length === 0
                       ? _c("p", [_vm._v("Добавьте новую запись")])
                       : _vm._e(),
+                    _vm._v(" "),
+                    _vm._l(_vm.errorMessage, function (arrErrors) {
+                      return _vm._l(arrErrors, function (message) {
+                        return _c("small", { staticClass: "text-danger" }, [
+                          _vm._v(_vm._s(message)),
+                        ])
+                      })
+                    }),
                     _vm._v(" "),
                     _vm._l(_vm.inputTime, function (item, idx) {
                       return [

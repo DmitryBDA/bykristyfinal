@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DTO\CreateRecordDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateRecordRequest;
 use App\Presenters\Record\RecordPresenter;
 use App\Presenters\User\UserPresenter;
 use App\Repositories\RecordRepository;
@@ -23,10 +25,10 @@ class RecordController extends Controller
         $this->userRepository = app(UserRepository::class);
     }
 
-    public function create(Request $request)
+    public function create(CreateRecordRequest $request)
     {
-        $data = $request->all();
-        $this->recordRepository->addRecords($data);
+        $dto = CreateRecordDto::fromRequest($request);
+        $this->recordRepository->addRecords($dto);
     }
 
     public function cancel($recordId)

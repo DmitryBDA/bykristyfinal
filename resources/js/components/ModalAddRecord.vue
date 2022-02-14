@@ -16,6 +16,11 @@
                                 <label>Время</label>
                             </div>
                             <p v-if="inputTime.length === 0">Добавьте новую запись</p>
+
+                            <template v-for="arrErrors in errorMessage">
+                              <small class="text-danger" v-for="message in arrErrors">{{message}}</small>
+                            </template>
+
                             <template v-for="(item, idx) in inputTime">
                                 <div class="input-group mb-3 _time_record">
                                     <input type="time" v-model="item.value" class="form-control">
@@ -53,7 +58,8 @@ export default {
                 }
             ],
             isDisabled:false,
-            date:''
+            date:'',
+            errorMessage:[]
         }
     },
     methods: {
@@ -64,7 +70,7 @@ export default {
                 status: type ? 4 : 1,
                 title: ''
             })
-
+            this.errorMessage = []
             this.isDisabled = false
         },
         inputDelete(idx) {
@@ -78,7 +84,12 @@ export default {
                  .then((response)=>{
                      this.$parent.showRecords()
                      this.$refs._close_modal_add_records.click()
-             })
+                 })
+                 .catch(err => {
+                   if (err.response) {
+                     this.errorMessage = err.response.data.errors
+                   }
+                 })
         },
     }
 
