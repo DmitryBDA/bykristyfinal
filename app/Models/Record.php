@@ -16,6 +16,7 @@ class Record extends Model
         'status',
         'service_id',
         'user_id',
+        'comment'
     ];
 
     public function user()

@@ -69,6 +69,13 @@
                                     </div>
                                 </div>
 
+                              <div v-if="statusRecord !== 4" class="form-group row">
+                                <label class="col-sm-3 col-form-label">Коммент</label>
+                                <div class="col-sm-9">
+                                  <textarea v-model="comment" class="form-control" rows="3" placeholder="Введите текс сообщения"></textarea>
+                                </div>
+                              </div>
+
                                 <div v-if="statusRecord === 4" class="form-group row">
                                     <label class="col-sm-3 col-form-label">Название</label>
                                     <div class="col-sm-9">
@@ -120,7 +127,8 @@ export default {
             isActiveSearch:false,
             search_data: [],
             Toast:null,
-            dataRecord:[]
+            dataRecord:[],
+            comment:''
         }
     },
     watch: {
@@ -134,6 +142,7 @@ export default {
             this.title = this.dataRecord.title
             this.phone = this.dataRecord.phone
             this.statusRecord = this.dataRecord.statusRecord
+            this.comment = this.dataRecord.comment
             //this.$refs.open_modal_action_records.click()
         },
     },
@@ -156,7 +165,8 @@ export default {
                     name: this.name,
                     time: this.time,
                     phone: this.phone,
-                    title: this.title
+                    title: this.title,
+                    comment: this.comment
                 }
             )
                 .then((response) => {
@@ -171,7 +181,8 @@ export default {
                     name: this.name,
                     time: this.time,
                     phone: this.phone,
-                    title: this.title
+                    title: this.title,
+                    comment: this.comment
                 }
             )
                 .then((response) => {

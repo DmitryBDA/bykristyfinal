@@ -19421,6 +19421,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -19445,7 +19453,8 @@ __webpack_require__.r(__webpack_exports__);
       search_data: [],
       Toast: null,
       isRecordBusy: false,
-      isSuccessRecord: false
+      isSuccessRecord: false,
+      comment: ''
     };
   },
   watch: {
@@ -19489,7 +19498,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/records/' + this.recordId, {
         serviceId: this.selectedService,
         name: this.surname + ' ' + this.name,
-        phone: this.phone
+        phone: this.phone,
+        comment: this.comment
       }).then(function (response) {
         if (response.data == 'busy') {
           localStorage.name = _this2.name;
@@ -43462,7 +43472,7 @@ var render = function () {
                                           [
                                             _vm._v(
                                               _vm._s(item.name) +
-                                                "\n                                            "
+                                                "\n                      "
                                             ),
                                           ]
                                         )
@@ -43611,6 +43621,48 @@ var render = function () {
                                   ]),
                                 ]
                               ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "form-group row mb-2" },
+                                [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "col-sm-3 label col-form-label",
+                                    },
+                                    [_vm._v("Комент")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-sm-9 value" }, [
+                                    _c("textarea", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.comment,
+                                          expression: "comment",
+                                        },
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        rows: "3",
+                                        placeholder: "Введите текст сообщения",
+                                      },
+                                      domProps: { value: _vm.comment },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.comment = $event.target.value
+                                        },
+                                      },
+                                    }),
+                                  ]),
+                                ]
+                              ),
                             ]
                           : _c("div", { staticClass: "text-success" }, [
                               _c("p", [_vm._v("Вы успешно записаны")]),
@@ -43641,7 +43693,7 @@ var render = function () {
                           staticClass: "btn btn-default right",
                           attrs: { type: "button", "data-dismiss": "modal" },
                         },
-                        [_vm._v("Закрыть\n                            ")]
+                        [_vm._v("Закрыть\n              ")]
                       ),
                     ]),
                   ]

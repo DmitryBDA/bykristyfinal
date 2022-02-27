@@ -19683,6 +19683,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -19704,7 +19711,8 @@ __webpack_require__.r(__webpack_exports__);
       isActiveSearch: false,
       search_data: [],
       Toast: null,
-      dataRecord: []
+      dataRecord: [],
+      comment: ''
     };
   },
   watch: {
@@ -19717,7 +19725,8 @@ __webpack_require__.r(__webpack_exports__);
       this.name = this.dataRecord.name;
       this.title = this.dataRecord.title;
       this.phone = this.dataRecord.phone;
-      this.statusRecord = this.dataRecord.statusRecord; //this.$refs.open_modal_action_records.click()
+      this.statusRecord = this.dataRecord.statusRecord;
+      this.comment = this.dataRecord.comment; //this.$refs.open_modal_action_records.click()
     }
   },
   mounted: function mounted() {
@@ -19742,7 +19751,8 @@ __webpack_require__.r(__webpack_exports__);
         name: this.name,
         time: this.time,
         phone: this.phone,
-        title: this.title
+        title: this.title,
+        comment: this.comment
       }).then(function (response) {
         _this2.$parent.showRecords();
 
@@ -19757,7 +19767,8 @@ __webpack_require__.r(__webpack_exports__);
         name: this.name,
         time: this.time,
         phone: this.phone,
-        title: this.title
+        title: this.title,
+        comment: this.comment
       }).then(function (response) {
         _this3.$parent.showRecords();
 
@@ -44324,6 +44335,43 @@ var render = function () {
                                 : _vm._e(),
                             ]
                           ),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.statusRecord !== 4
+                      ? _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-sm-3 col-form-label" },
+                            [_vm._v("Коммент")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-9" }, [
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.comment,
+                                  expression: "comment",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                rows: "3",
+                                placeholder: "Введите текс сообщения",
+                              },
+                              domProps: { value: _vm.comment },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.comment = $event.target.value
+                                },
+                              },
+                            }),
+                          ]),
                         ])
                       : _vm._e(),
                     _vm._v(" "),

@@ -55,7 +55,8 @@ class UserCalendarController extends Controller
         $obRecord->update([
             'user_id' => $obUser->id,
             'service_id' => $data['serviceId'],
-            'status' => 2
+            'status' => 2,
+            'comment' => $data['comment']
         ]);
         $telegramService->sendNotificationNewRecord($obUser, $obRecord);
         return response()->json($obRecord);

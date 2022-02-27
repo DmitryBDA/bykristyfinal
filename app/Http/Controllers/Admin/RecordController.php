@@ -67,7 +67,8 @@ class RecordController extends Controller
             'name' => $record->user ? (new UserPresenter($record->user))->fullName() : '',
             'title' => $record->title,
             'phone' => $record->user ? $record->user->phone : '',
-            'statusRecord' => $record->status
+            'statusRecord' => $record->status,
+            'comment' => $record->comment,
         ];
 
         return response()->json($result);
@@ -88,6 +89,7 @@ class RecordController extends Controller
         'service_id' => null,
         'start' => $date,
         'end' => $date,
+        'comment' => $data['comment']
       ];
 
       if ($obRecord->status != 4) {
