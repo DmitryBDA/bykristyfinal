@@ -9,6 +9,7 @@ use App\Presenters\Record\RecordPresenter;
 use App\Presenters\User\UserPresenter;
 use App\Repositories\RecordRepository;
 use App\Repositories\UserRepository;
+use App\Services\RecordService;
 use App\Services\TelegramService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -52,10 +53,14 @@ class RecordController extends Controller
         return response()->json($result);
     }
 
-    public function getData($recordId, Request $request)
+    public function getData($recordId, Request $request, RecordService $recordService)
     {
 
         $record = $this->recordRepository->getById($recordId);
+        if($record->user){
+          $otherRecords = $this->recordRepository->getRecordsByUserId($record->user->id, $record->start);
+          $otherTimeRecords = $recordService->modArrOtherTime($otherRecords);
+        }
         $record = new RecordPresenter($record);
 
         $result = [
@@ -69,6 +74,7 @@ class RecordController extends Controller
             'phone' => $record->user ? $record->user->phone : '',
             'statusRecord' => $record->status,
             'comment' => $record->comment,
+            'otherTimeRecords' => $otherTimeRecords ?? [],
         ];
 
         return response()->json($result);

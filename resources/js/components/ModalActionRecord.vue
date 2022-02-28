@@ -76,6 +76,13 @@
                                 </div>
                               </div>
 
+                              <div v-if="otherTimeRecords.length !== 0" class="form-group row">
+                                <label class="col-sm-3 col-form-label">Также</label>
+                                <div class="col-sm-9">
+                                  <span style="display: block" v-for="item in otherTimeRecords">{{ item.date }} {{ item.time }}</span>
+                                </div>
+                              </div>
+
                                 <div v-if="statusRecord === 4" class="form-group row">
                                     <label class="col-sm-3 col-form-label">Название</label>
                                     <div class="col-sm-9">
@@ -128,7 +135,8 @@ export default {
             search_data: [],
             Toast:null,
             dataRecord:[],
-            comment:''
+            comment:'',
+            otherTimeRecords:[]
         }
     },
     watch: {
@@ -143,6 +151,8 @@ export default {
             this.phone = this.dataRecord.phone
             this.statusRecord = this.dataRecord.statusRecord
             this.comment = this.dataRecord.comment
+            this.otherTimeRecords = this.dataRecord.otherTimeRecords
+          console.log(this.otherTimeRecords)
             //this.$refs.open_modal_action_records.click()
         },
     },

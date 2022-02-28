@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Presenters\Record\RecordPresenter;
 use Illuminate\Support\Carbon;
 
 class RecordService
@@ -60,5 +61,17 @@ class RecordService
             $index++;
         }
         return $arRecordListReady;
+    }
+
+    public function modArrOtherTime($obRecordList){
+      $result = [];
+      $i = 0;
+      foreach ($obRecordList as $obRecord){
+        $record = new RecordPresenter($obRecord);
+        $result[$i]['time'] = $record->time();
+        $result[$i]['date'] = $record->startDate();
+        $i++;
+      }
+      return $result;
     }
 }

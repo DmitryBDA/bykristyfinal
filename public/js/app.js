@@ -19690,6 +19690,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -19712,7 +19719,8 @@ __webpack_require__.r(__webpack_exports__);
       search_data: [],
       Toast: null,
       dataRecord: [],
-      comment: ''
+      comment: '',
+      otherTimeRecords: []
     };
   },
   watch: {
@@ -19726,7 +19734,9 @@ __webpack_require__.r(__webpack_exports__);
       this.title = this.dataRecord.title;
       this.phone = this.dataRecord.phone;
       this.statusRecord = this.dataRecord.statusRecord;
-      this.comment = this.dataRecord.comment; //this.$refs.open_modal_action_records.click()
+      this.comment = this.dataRecord.comment;
+      this.otherTimeRecords = this.dataRecord.otherTimeRecords;
+      console.log(this.otherTimeRecords); //this.$refs.open_modal_action_records.click()
     }
   },
   mounted: function mounted() {
@@ -44372,6 +44382,33 @@ var render = function () {
                               },
                             }),
                           ]),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.otherTimeRecords.length !== 0
+                      ? _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-sm-3 col-form-label" },
+                            [_vm._v("Также")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-sm-9" },
+                            _vm._l(_vm.otherTimeRecords, function (item) {
+                              return _c(
+                                "span",
+                                { staticStyle: { display: "block" } },
+                                [
+                                  _vm._v(
+                                    _vm._s(item.date) + " " + _vm._s(item.time)
+                                  ),
+                                ]
+                              )
+                            }),
+                            0
+                          ),
                         ])
                       : _vm._e(),
                     _vm._v(" "),
