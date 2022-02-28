@@ -15,8 +15,8 @@
                             <div class="card-body">
                                 <p>Выбранный день: {{date}} {{ dayWeek }}</p>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Время</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-3 col-form-label">Время</label>
+                                    <div class="col-9">
                                         <input type="time" class="form-control" v-model="time">
                                     </div>
 
@@ -24,16 +24,16 @@
                                 </div>
 
                                 <div v-if="statusRecord !== 4" class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Услуга</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-3 col-form-label">Услуга</label>
+                                    <div class="col-9">
                                         <select v-model="selectedService" class="form-control _input_form_for_record">
                                             <option v-for="item in services" :value="item.id">{{ item.name }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div v-if="statusRecord !== 4" class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Имя</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-3 col-form-label">Имя</label>
+                                    <div class="col-9">
                                         <input type="text"
                                                class="form-control input-lg add_name"
                                                @keyup="getDataAutocomplete()"
@@ -50,8 +50,8 @@
                                 </div>
 
                                 <div v-if="statusRecord !== 4" class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Телефон</label>
-                                    <div class="input-group mb-3 col-sm-9">
+                                    <label class="col-3 col-form-label">Телефон</label>
+                                    <div class="input-group mb-3 col-9">
                                         <input v-mask="'##########'" type="text" v-model="phone"
                                                class="form-control">
 
@@ -70,22 +70,22 @@
                                 </div>
 
                               <div v-if="statusRecord !== 4" class="form-group row">
-                                <label class="col-sm-3 col-form-label">Коммент</label>
-                                <div class="col-sm-9">
+                                <label class="col-3 col-form-label">Коммент</label>
+                                <div class="col-9">
                                   <textarea v-model="comment" class="form-control" rows="3" placeholder="Введите текс сообщения"></textarea>
                                 </div>
                               </div>
 
                               <div v-if="otherTimeRecords.length !== 0" class="form-group row">
-                                <label class="col-sm-3 col-form-label">Также</label>
-                                <div class="col-sm-9">
+                                <label class="col-3 col-form-label">Также</label>
+                                <div class="col-9">
                                   <span style="display: block" v-for="item in otherTimeRecords">{{ item.date }} {{ item.time }}</span>
                                 </div>
                               </div>
 
                                 <div v-if="statusRecord === 4" class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Название</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-3 col-form-label">Название</label>
+                                    <div class="col-9">
                                         <input type="text"
                                                class="form-control input-lg add_name"
                                                v-model="title">

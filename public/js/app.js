@@ -44115,11 +44115,11 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
+                      _c("label", { staticClass: "col-3 col-form-label" }, [
                         _vm._v("Время"),
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
+                      _c("div", { staticClass: "col-9" }, [
                         _c("input", {
                           directives: [
                             {
@@ -44146,13 +44146,11 @@ var render = function () {
                     _vm._v(" "),
                     _vm.statusRecord !== 4
                       ? _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            { staticClass: "col-sm-3 col-form-label" },
-                            [_vm._v("Услуга")]
-                          ),
+                          _c("label", { staticClass: "col-3 col-form-label" }, [
+                            _vm._v("Услуга"),
+                          ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-sm-9" }, [
+                          _c("div", { staticClass: "col-9" }, [
                             _c(
                               "select",
                               {
@@ -44201,13 +44199,11 @@ var render = function () {
                     _vm._v(" "),
                     _vm.statusRecord !== 4
                       ? _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            { staticClass: "col-sm-3 col-form-label" },
-                            [_vm._v("Имя")]
-                          ),
+                          _c("label", { staticClass: "col-3 col-form-label" }, [
+                            _vm._v("Имя"),
+                          ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-sm-9" }, [
+                          _c("div", { staticClass: "col-9" }, [
                             _c("input", {
                               directives: [
                                 {
@@ -44280,83 +44276,74 @@ var render = function () {
                     _vm._v(" "),
                     _vm.statusRecord !== 4
                       ? _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            { staticClass: "col-sm-3 col-form-label" },
-                            [_vm._v("Телефон")]
-                          ),
+                          _c("label", { staticClass: "col-3 col-form-label" }, [
+                            _vm._v("Телефон"),
+                          ]),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "input-group mb-3 col-sm-9" },
-                            [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "mask",
-                                    rawName: "v-mask",
-                                    value: "##########",
-                                    expression: "'##########'",
-                                  },
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.phone,
-                                    expression: "phone",
-                                  },
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text" },
-                                domProps: { value: _vm.phone },
-                                on: {
-                                  input: function ($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.phone = $event.target.value
-                                  },
+                          _c("div", { staticClass: "input-group mb-3 col-9" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "mask",
+                                  rawName: "v-mask",
+                                  value: "##########",
+                                  expression: "'##########'",
                                 },
-                              }),
-                              _vm._v(" "),
-                              _vm.phone
-                                ? _c(
-                                    "a",
-                                    {
-                                      staticClass: "input-group-append",
-                                      attrs: {
-                                        href:
-                                          "whatsapp://send?phone=+7" +
-                                          _vm.phone,
-                                      },
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.phone,
+                                  expression: "phone",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.phone },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.phone = $event.target.value
+                                },
+                              },
+                            }),
+                            _vm._v(" "),
+                            _vm.phone
+                              ? _c(
+                                  "a",
+                                  {
+                                    staticClass: "input-group-append",
+                                    attrs: {
+                                      href:
+                                        "whatsapp://send?phone=+7" + _vm.phone,
                                     },
-                                    [_vm._m(0)]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.phone
-                                ? _c(
-                                    "a",
-                                    {
-                                      staticClass: "input-group-append",
-                                      attrs: { href: "tel:+7" + _vm.phone },
-                                    },
-                                    [_vm._m(1)]
-                                  )
-                                : _vm._e(),
-                            ]
-                          ),
+                                  },
+                                  [_vm._m(0)]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.phone
+                              ? _c(
+                                  "a",
+                                  {
+                                    staticClass: "input-group-append",
+                                    attrs: { href: "tel:+7" + _vm.phone },
+                                  },
+                                  [_vm._m(1)]
+                                )
+                              : _vm._e(),
+                          ]),
                         ])
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.statusRecord !== 4
                       ? _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            { staticClass: "col-sm-3 col-form-label" },
-                            [_vm._v("Коммент")]
-                          ),
+                          _c("label", { staticClass: "col-3 col-form-label" }, [
+                            _vm._v("Коммент"),
+                          ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-sm-9" }, [
+                          _c("div", { staticClass: "col-9" }, [
                             _c("textarea", {
                               directives: [
                                 {
@@ -44387,15 +44374,13 @@ var render = function () {
                     _vm._v(" "),
                     _vm.otherTimeRecords.length !== 0
                       ? _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            { staticClass: "col-sm-3 col-form-label" },
-                            [_vm._v("Также")]
-                          ),
+                          _c("label", { staticClass: "col-3 col-form-label" }, [
+                            _vm._v("Также"),
+                          ]),
                           _vm._v(" "),
                           _c(
                             "div",
-                            { staticClass: "col-sm-9" },
+                            { staticClass: "col-9" },
                             _vm._l(_vm.otherTimeRecords, function (item) {
                               return _c(
                                 "span",
@@ -44414,13 +44399,11 @@ var render = function () {
                     _vm._v(" "),
                     _vm.statusRecord === 4
                       ? _c("div", { staticClass: "form-group row" }, [
-                          _c(
-                            "label",
-                            { staticClass: "col-sm-3 col-form-label" },
-                            [_vm._v("Название")]
-                          ),
+                          _c("label", { staticClass: "col-3 col-form-label" }, [
+                            _vm._v("Название"),
+                          ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-sm-9" }, [
+                          _c("div", { staticClass: "col-9" }, [
                             _c("input", {
                               directives: [
                                 {
