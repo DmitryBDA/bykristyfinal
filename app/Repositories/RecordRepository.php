@@ -30,7 +30,7 @@ class RecordRepository extends CoreRepository
         return $recordList;
     }
 
-    public function getActiveRecordsForUsers()
+    public function getAllWithStatusOne()
     {
         $tekDate = Carbon::today()->format('Y-m-d');
         //Получить список записей

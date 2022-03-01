@@ -36,8 +36,11 @@ class CalendarController extends Controller
 
     public function showRecordsWithStatusOne(): \Illuminate\Http\JsonResponse
     {
-        $obRecordList = $this->recordRepository->getActiveRecordsForUsers();
+        //Получить список всех записей со статусом 1
+        $obRecordList = $this->recordRepository->getAllWithStatusOne();
+        //Добавить класс(цвет) в зависимости от статуса записи
         $this->recordService->addAttrClassName($obRecordList);
+
         return response()->json($obRecordList->toArray());
     }
 
