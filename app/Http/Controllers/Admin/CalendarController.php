@@ -30,9 +30,12 @@ class CalendarController extends Controller
 
     public function showRecords()
     {
+        //Получить список всех записей
         $recordList = $this->recordRepository->getAllFromToday();
-        $recordList = $this->recordService->addAttrClassName($recordList);
-        return response()->json($recordList);
+        //Добавить класс(цвет) в зависимости от статуса записи
+        $this->recordService->addAttrClassName($recordList);
+
+        return response()->json($recordList->toArray());
     }
 
     public function showRecordsForUsers()

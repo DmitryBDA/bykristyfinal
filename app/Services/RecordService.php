@@ -25,7 +25,6 @@ class RecordService
                     break;
             }
         }
-        return $obRecordList;
     }
 
     //Формирование массива в нужном формате из списка записей

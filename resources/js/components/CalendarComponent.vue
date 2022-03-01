@@ -54,8 +54,9 @@ export default {
     methods: {
         showRecords(){
             axios
-                .get('/admin/calendar/show-records').then((response)=>{
-                this.calendarOptions.events = response.data
+                .get('/admin/calendar/show-records')
+                .then((response)=>{
+                  this.calendarOptions.events = response.data
             })
         },
         dateClick(record){
