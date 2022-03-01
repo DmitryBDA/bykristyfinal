@@ -11,16 +11,12 @@ use App\Services\TelegramService;
 class CalendarController extends Controller
 {
     protected $recordRepository;
-    protected $userRepository;
     protected $recordService;
-    protected $telegramService;
 
     public function __construct()
     {
         $this->recordRepository = app(RecordRepository::class);
-        $this->userRepository = app(UserRepository::class);
         $this->recordService = new RecordService();
-        $this->telegramService = new TelegramService();
     }
 
     public function index()
@@ -28,7 +24,7 @@ class CalendarController extends Controller
         return view('admin.pages.calendar');
     }
 
-    public function showRecords()
+    public function showRecords(): \Illuminate\Http\JsonResponse
     {
         //Получить список всех записей
         $recordList = $this->recordRepository->getAllFromToday();
@@ -38,12 +34,11 @@ class CalendarController extends Controller
         return response()->json($recordList->toArray());
     }
 
-    public function showRecordsForUsers()
+    public function showRecordsWithStatusOne(): \Illuminate\Http\JsonResponse
     {
-
         $obRecordList = $this->recordRepository->getActiveRecordsForUsers();
-        $obRecordList = $this->recordService->addAttrClassName($obRecordList);
-        return response()->json($obRecordList);
+        $this->recordService->addAttrClassName($obRecordList);
+        return response()->json($obRecordList->toArray());
     }
 
 

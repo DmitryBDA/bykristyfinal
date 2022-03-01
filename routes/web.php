@@ -33,7 +33,7 @@ Route::get('/record', function () {
 Route::get('/records/{record_id}', [UserCalendarController::class, 'getDataRecordUser']);
 Route::post('/records/{record_id}', [UserCalendarController::class, 'recordUser'])->name('userCalendar.recordUser');
 Route::get('/service', [ServiceController::class, 'get']);
-Route::get('/records', [CalendarController::class,'showRecordsForUsers'])->name('calendar.showRecordsForUsers');
+Route::get('/records', [CalendarController::class,'showRecordsWithStatusOne'])->name('calendar.showRecordsWithStatusOne');
 
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {
 
