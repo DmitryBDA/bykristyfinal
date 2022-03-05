@@ -46,6 +46,23 @@ class UserRepository extends CoreRepository
         return $users;
     }
 
+    public function getAll()
+    {
+      $obUserList = $this->startCondition()
+        ->select('id', 'name', 'surname', 'phone',)
+        ->get();
+      return $obUserList;
+    }
+
+    public function getById($user_id)
+    {
+      $obUser = $this->startCondition()
+        ->select('id', 'name', 'surname', 'phone')
+        ->where('id', '=', $user_id)
+        ->first();
+      return $obUser;
+    }
+
     private function createUser($data)
     {
 

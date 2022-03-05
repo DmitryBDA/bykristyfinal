@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\RecordController;
 use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\ServiceController;
@@ -42,6 +43,13 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
   Route::prefix('calendar')->group(function () {
     Route::get('/', [CalendarController::class, 'index'])->name('admin.calendar.index');
     Route::get('/show-records', [CalendarController::class, 'showRecords'])->name('admin.calendar.showRecords');
+  });
+
+  Route::prefix('clients')->group(function () {
+    Route::get('/', [ClientController::class, 'index'])->name('admin.client.index');
+    Route::get('/{user_id}', [ClientController::class, 'show'])->name('admin.client.show');
+    Route::put('/{user_id}', [ClientController::class, 'update'])->name('admin.client.update');
+
   });
 
   Route::prefix('records')->group(function () {
