@@ -121,7 +121,7 @@ class RecordRepository extends CoreRepository
         return $obRecordList;
     }
 
-    public function getRecordsByUserId($userId, $start){
+    public function getRecordsByUserId($userId, $start = null){
       $tekDate = Carbon::today()->format('Y-m-d');
 
       $obRecordList = $this->startCondition()

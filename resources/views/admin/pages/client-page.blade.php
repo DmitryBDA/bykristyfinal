@@ -74,6 +74,9 @@
                   <button type="submit" class="btn btn-primary">Сохранить</button>
                   <a href="{{ route('admin.client.index') }}" type="submit" class="btn btn-primary">Назад к списку</a>
                 </div>
+                <div class="card-footer">
+                  <a href="{{ route('admin.client.sendnotification', $obUser->id) }}" type="submit" class="btn btn-primary">Отправить уведомление о записи</a>
+                </div>
               </form>
             </div>
           </div>

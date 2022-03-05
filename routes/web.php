@@ -49,6 +49,7 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::get('/', [ClientController::class, 'index'])->name('admin.client.index');
     Route::get('/{user_id}', [ClientController::class, 'show'])->name('admin.client.show');
     Route::put('/{user_id}', [ClientController::class, 'update'])->name('admin.client.update');
+    Route::get('/sendnotification/{user_id}', [ClientController::class, 'sendNotification'])->name('admin.client.sendnotification');
 
   });
 

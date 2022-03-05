@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\RecordRepository;
 use App\Repositories\UserRepository;
+use App\Services\TelegramService;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -34,6 +36,23 @@ class ClientController extends Controller
       return redirect()
         ->route('admin.client.show', $obUser->id)
         ->with(['success' => 'Успешно сохранено']);
+    }
+  }
+
+  public function sendNotification($userId,
+                                   RecordRepository $recordRepository,
+                                   TelegramService $telegramService,
+                                   UserRepository $userRepository)
+  {
+    $obRecordList = $recordRepository->getRecordsByUserId($userId);
+    if($obRecordList->isNotEmpty()){
+      foreach ($obRecordList as $obRecord){
+        $obUser = $userRepository->getById($userId);
+        $telegramService->sendNotificationNewRecord($obUser, $obRecord);
+      }
+      return redirect()
+        ->route('admin.client.show', $obUser->id)
+        ->with(['success' => 'Уведомления отправлены']);
     }
   }
 }
