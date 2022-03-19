@@ -60,6 +60,7 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::put('/cancel/{record_id}', [RecordController::class, 'cancel'])->name('admin.records.cancel');
     Route::put('/confirm/{record_id}', [RecordController::class, 'confirm'])->name('admin.records.confirm');
     Route::put('/{record_id}', [RecordController::class, 'update'])->name('admin.records.update');
+    Route::get('/total/all',  [RecordController::class, 'total'])->name('admin.records.total');
   });
 
   Route::prefix('service')->group(function () {

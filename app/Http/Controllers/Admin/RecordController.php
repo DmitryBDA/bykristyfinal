@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\DTO\CreateRecordDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRecordRequest;
+use App\Models\Record;
+use App\Models\User;
 use App\Presenters\Record\RecordPresenter;
 use App\Presenters\User\UserPresenter;
 use App\Repositories\RecordRepository;
@@ -115,5 +117,69 @@ class RecordController extends Controller
 
       return response()->json($obRecord);
 
+    }
+
+    public function total()
+    {
+      $data = now()->subMonth(2);
+      $nameMonth = [
+        now()->subMonth(2)->monthName,
+        now()->subMonth(1)->monthName,
+        now()->monthName,
+      ];
+
+      $countNewUsers = [
+        $this->getCountNewUsers(now()->subMonth(2)),
+        $this->getCountNewUsers(now()->subMonth(1)),
+        $this->getCountNewUsers(now()),
+      ];
+
+      $firstDay = $data->format('Y-m-01');
+      $lastDay = date('Y-m-t');
+
+      $recordTotal = Record::toBase()
+        ->select('id', 'start')
+        ->where('start', '>=', $firstDay)
+        ->where('status', '=', 3)
+        ->where('start', '<=', $lastDay)
+        ->get();
+
+      $arr = [];
+
+      foreach ($recordTotal as $record) {
+        $numberMonth = Carbon::create($record->start)->month;
+        $lastNumberMonth = $numberMonth;
+        if($numberMonth == $lastNumberMonth){
+          if(array_key_exists($numberMonth, $arr)){
+            $arr[$numberMonth] = $arr[$numberMonth] + 1;
+          } else {
+            $arr[$numberMonth] = 1;
+          }
+
+        }
+      }
+      $newAr = [];
+      foreach ($arr as $item){
+        $newAr[] = $item;
+      }
+     $data =[
+       'nameMonth' => $nameMonth,
+       'countClients' => $newAr,
+       'countNewUsers' => $countNewUsers
+     ];
+      return response()->json($data);
+    }
+
+    private function getCountNewUsers($date){
+      $firstDay = $date->format('Y-m-01');
+      $lastDay = $date->format('Y-m-t');
+      $count = User::toBase()
+        ->select('id')
+        ->where('created_at', '>=', $firstDay)
+        ->where('created_at', '<=', $lastDay)
+        ->get()
+        ->count();
+
+      return $count;
     }
 }

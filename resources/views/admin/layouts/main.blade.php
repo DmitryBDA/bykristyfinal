@@ -139,6 +139,8 @@
 <script src="/plugins/toastr/toastr.min.js"></script>
 <!-- ChartJS -->
 <script src="/plugins/chart.js/Chart.min.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="/dist/js/pages/dashboard3.js"></script>
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -159,27 +161,7 @@
 <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
 
-    $('[data-mask]').inputmask()
-  });
-
-
-</script>
 <script src="/dist/js/adminlte.js"></script>
 <script src="/dist/js/demo.js"></script>
 @yield('custom_js')
