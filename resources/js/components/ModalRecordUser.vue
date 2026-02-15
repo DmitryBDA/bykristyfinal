@@ -32,6 +32,17 @@
                       </select>
                     </div>
                   </div>
+
+                  <div class="form-group row mb-2">
+                    <label class="col-sm-3 label col-form-label">Телефон</label>
+                    <div class="col-sm-9 value">
+                      <input type="tel" v-mask="'+7 (###) ###-##-##'" required v-model="phone"
+                             autocomplete="off"
+                             placeholder="(999) 999-99-99"
+                             class="form-control input-lg add_name">
+                    </div>
+                  </div>
+
                   <div class="form-group row mb-2">
                     <label class="col-sm-3 label col-form-label">Имя</label>
                     <div class="col-sm-9 value">
@@ -52,15 +63,7 @@
 
                     </div>
                   </div>
-                  <div class="form-group row mb-2">
-                    <label class="col-sm-3 label col-form-label">Телефон</label>
-                    <div class="col-sm-9 value">
-                      <input type="tel" v-mask="'+7 (###) ###-##-##'" required v-model="phone"
-                             autocomplete="off"
-                             placeholder="(999) 999-99-99"
-                             class="form-control input-lg add_name">
-                    </div>
-                  </div>
+
 
                   <div class="form-group row mb-2">
                     <label class="col-sm-3 label col-form-label">Комент</label>
@@ -130,6 +133,10 @@ export default {
       if (val === '+7 (8') {
         this.phone = '+7 ('
       }
+      // Проверяем, что длина строки совпадает с полной маской
+      if (val.replace(/\D/g, '').length === 11) { // только цифры, +7 = 1 цифра
+        this.onPhoneComplete();
+      }
     }
   },
   mounted() {
@@ -191,6 +198,13 @@ export default {
       //As an ES6 module.
       EventBus.$emit("updateCalendar");
     },
+    onPhoneComplete() {
+      axios.get('/data-user?phone=' + this.phone)
+        .then((response) => {
+          this.name = response.data.data.name
+          this.surname = response.data.data.surname
+        })
+    }
   },
   validations: {}
 }

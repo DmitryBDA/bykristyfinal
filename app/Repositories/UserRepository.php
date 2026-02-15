@@ -54,6 +54,14 @@ class UserRepository extends CoreRepository
       return $obUserList;
     }
 
+  public function getByPhone($phone)
+  {
+    return $this->startCondition()
+      ->where('phone', '=', $phone)
+      ->select('name', 'surname', 'phone')
+      ->first();
+  }
+
     public function getById($user_id)
     {
       $obUser = $this->startCondition()

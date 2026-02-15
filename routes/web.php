@@ -35,6 +35,7 @@ Route::get('/records/{record_id}', [UserCalendarController::class, 'getDataRecor
 Route::post('/records/{record_id}', [UserCalendarController::class, 'recordUser'])->name('userCalendar.recordUser');
 Route::get('/service', [ServiceController::class, 'get']);
 Route::get('/records', [CalendarController::class,'showRecordsWithStatusOne'])->name('calendar.showRecordsWithStatusOne');
+Route::get('/data-user', [ClientController::class, 'getData'])->name('client.getData');
 
 Route::middleware(['role:admin'])->prefix('admin')->group(function () {
 

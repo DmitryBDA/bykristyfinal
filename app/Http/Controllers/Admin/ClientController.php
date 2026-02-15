@@ -16,6 +16,20 @@ class ClientController extends Controller
     return view('admin.pages.client', compact('obUserList'));
   }
 
+  public function getData(Request $request, UserRepository $userRepository): \Illuminate\Http\JsonResponse
+  {
+    $phone = str_replace(['(', ')', '-', ' '], '', $request->get('phone'));
+    $phone = substr($phone, 1);
+    if ($phone) {
+      $dataUser = $userRepository->getByPhone($phone);
+    }
+
+    return response()->json(['data' => [
+      'name' => $dataUser?->name,
+      'surname' => $dataUser?->surname,
+    ]]);
+  }
+
   public function show($userId, UserRepository $userRepository){
 
     $obUser = $userRepository->getById($userId);
